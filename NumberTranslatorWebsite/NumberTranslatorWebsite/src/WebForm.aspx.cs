@@ -21,8 +21,8 @@ public partial class src_WebForm : System.Web.UI.Page
     {
         ServiceReference1.ServiceClient translator = new ServiceReference1.ServiceClient();
 
-        String cardinal = translator.getCardinalNumber(number.Text);
-        String ordinal = translator.getOrdinalNumber(number.Text);
+        //String cardinal = translator.getCardinalNumber(number.Text);
+        //String ordinal = translator.getOrdinalNumber(number.Text);
 
         ArrayList cardinalTab = translator.getCardinalNumberTab(number.Text);
         ArrayList ordinalTab = translator.getOrdinalNumberTab(number.Text);
@@ -72,38 +72,40 @@ public partial class src_WebForm : System.Web.UI.Page
         for(int i = 1; i < cardinalTab.Count; i++)
         {
             String text = cardinalTab[i].ToString();
-
-            switch (text[0])
+            if (!text.Equals(""))
             {
-                case '#':
-                    HtmlGenericControl greyContainer = new HtmlGenericControl("div");
-                    currentContainer.Controls.Add(greyContainer);
+                switch (text[0])
+                {
+                    case '#':
+                        HtmlGenericControl greyContainer = new HtmlGenericControl("div");
+                        currentContainer.Controls.Add(greyContainer);
 
-                    HtmlGenericControl greyContainerTitle = new HtmlGenericControl("div");
-                    greyContainerTitle.Attributes["style"] = "background-color:#d6d6d6;";
-                    greyContainer.Controls.Add(greyContainerTitle);
+                        HtmlGenericControl greyContainerTitle = new HtmlGenericControl("div");
+                        greyContainerTitle.Attributes["style"] = "background-color:#d6d6d6;";
+                        greyContainer.Controls.Add(greyContainerTitle);
 
-                    HtmlGenericControl greyContainerTitleIcon = new HtmlGenericControl("i");
-                    greyContainerTitleIcon.Attributes["class"] = "glyphicon glyphicon-plus";
-                    greyContainerTitleIcon.Attributes["style"] = "font-size:32px;padding:10px;";
-                    greyContainerTitle.Controls.Add(greyContainerTitleIcon);
+                        HtmlGenericControl greyContainerTitleIcon = new HtmlGenericControl("i");
+                        greyContainerTitleIcon.Attributes["class"] = "glyphicon glyphicon-plus";
+                        greyContainerTitleIcon.Attributes["style"] = "font-size:32px;padding:10px;";
+                        greyContainerTitle.Controls.Add(greyContainerTitleIcon);
 
-                    HtmlGenericControl greyTitleSpan = new HtmlGenericControl("span");
-                    greyTitleSpan.Attributes["style"] = "font-size:32px;padding:0px;";
-                    greyTitleSpan.InnerHtml = text.Substring(1);
-                    greyContainerTitle.Controls.Add(greyTitleSpan);
+                        HtmlGenericControl greyTitleSpan = new HtmlGenericControl("span");
+                        greyTitleSpan.Attributes["style"] = "font-size:32px;padding:0px;";
+                        greyTitleSpan.InnerHtml = text.Substring(1);
+                        greyContainerTitle.Controls.Add(greyTitleSpan);
 
-                    HtmlGenericControl greyContainerBody = new HtmlGenericControl("div");
-                    greyContainerBody.Attributes["style"] = "padding:10px;";
-                    greyContainer.Controls.Add(greyContainerBody);
-                    currentContainer = greyContainerBody;
-                    break;
-                default:
-                    HtmlGenericControl p = new HtmlGenericControl("p");
-                    p.InnerText = text;
-                    currentContainer.Controls.Add(p);
-                    break;
+                        HtmlGenericControl greyContainerBody = new HtmlGenericControl("div");
+                        greyContainerBody.Attributes["style"] = "padding:10px;";
+                        greyContainer.Controls.Add(greyContainerBody);
+                        currentContainer = greyContainerBody;
+                        break;
+                    default:
+                        HtmlGenericControl p = new HtmlGenericControl("p");
+                        p.InnerText = text;
+                        currentContainer.Controls.Add(p);
+                        break;
 
+                }
             }
         }
 

@@ -40,7 +40,7 @@
   <xs:element name="getCardinalNumberResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" name="getCardinalNumberResult" nillable="true" type="xs:string" />
+        <xs:element xmlns:q3="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="getCardinalNumberResult" nillable="true" type="q3:ArrayOfanyType" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -54,7 +54,7 @@
   <xs:element name="getCardinalNumberTabResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q3="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="getCardinalNumberTabResult" nillable="true" type="q3:ArrayOfanyType" />
+        <xs:element xmlns:q4="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="getCardinalNumberTabResult" nillable="true" type="q4:ArrayOfanyType" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -68,7 +68,7 @@
   <xs:element name="getOrdinalNumberResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" name="getOrdinalNumberResult" nillable="true" type="xs:string" />
+        <xs:element xmlns:q5="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="getOrdinalNumberResult" nillable="true" type="q5:ArrayOfanyType" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -82,7 +82,7 @@
   <xs:element name="getOrdinalNumberTabResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q4="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="getOrdinalNumberTabResult" nillable="true" type="q4:ArrayOfanyType" />
+        <xs:element xmlns:q6="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="getOrdinalNumberTabResult" nillable="true" type="q6:ArrayOfanyType" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

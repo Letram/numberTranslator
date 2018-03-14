@@ -8,7 +8,8 @@ using System.Web;
 /// </summary>
 public class Number
 {
-    private String cardinal = "";
+    private String cardinalLongScale = "";
+    private String cardinalShortScale = "";
     private String ordinal = "";
     private static Number instance = null;
     public Number(){}
@@ -18,18 +19,26 @@ public class Number
         return instance;
     }
 
-    public void setCardinal(String value)
+    public void setCardinalLong(String value)
     {
-        this.cardinal = value;
+        this.cardinalLongScale = value;
+    }
+    public void setCardinalShort(String value)
+    {
+        this.cardinalShortScale = value;
     }
     public void setOrdinal(String value)
     {
         this.ordinal = value;
     }
 
-    public String getCardinal()
+    public String getCardinalLong()
     {
-        return this.cardinal;
+        return this.cardinalLongScale;
+    }
+    public String getCardinalShort()
+    {
+        return this.cardinalShortScale;
     }
     public String getOrdinal()
     {

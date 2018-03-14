@@ -18,12 +18,12 @@ public interface IService
 	CompositeType GetDataUsingDataContract(CompositeType composite);
 
     [OperationContract]
-    string getCardinalNumber(string number);
+    ArrayList getCardinalNumber(string number);
     [OperationContract]
     ArrayList getCardinalNumberTab(String number);
 
     [OperationContract]
-    String getOrdinalNumber(String number);
+    ArrayList getOrdinalNumber(String number);
     [OperationContract]
     ArrayList getOrdinalNumberTab(String number);
     // TODO: agregue aquí sus operaciones de servicio

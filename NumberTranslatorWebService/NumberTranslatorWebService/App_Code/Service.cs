@@ -11,7 +11,7 @@ using System.Text;
 public class Service : IService
 {
 
-    private String[] bigNumbers =
+    private String[] bigNumbersLongScale =
     {
         "mille",        
         "million",      
@@ -53,7 +53,49 @@ public class Service : IService
         "novemdécilliard",
         "vigintillon"
     };
-	public string GetData(int value)
+    private String[] bigNumbersShortScale =
+{
+        "mille",
+        "million",
+        "billion",
+        "trillion",
+        "quadrillion",
+        "quintillion",
+        "sextillion",
+        "septillion",
+        "octillion",
+        "nonillion",
+        "decillion",
+        "undecillion",
+        "duodecillion",
+        "trédécillon",
+        "quatturdézillon",
+        "quindécillon",
+        "sexdécillon",
+        "septendécillon",
+        "octodécillon",
+        "novemdécillon",
+        "vigintillion",
+        "unvigintillion",
+        "duovigintillion",
+        "trévigintillion",
+        "quattuorvigintillion",
+        "quinvigintillion",
+        "sexvigintillion",
+        "septenvigintillion",
+        "octovigintillion",
+        "novemvigintillion",
+        "trigintillion",
+        "untrigintillion",
+        "duotrigintillion",
+        "trétrigintillion",
+        "quattuortrigintillion",
+        "quintrigintillion",
+        "sextrigintillion",
+        "septentrigintillion",
+        "octotrigintillion"
+    };
+    public string GetData(int value)
 	{
 		return string.Format("You entered: {0}", value);
 	}
@@ -71,17 +113,21 @@ public class Service : IService
 		return composite;
 	}
 
-    public string getCardinalNumber(string number)
+    public ArrayList getCardinalNumber(string number)
     {
+        ArrayList cardinalNumberArrayList = new ArrayList();
         StringBuilder numericValue = new StringBuilder(number);
         string aux = new string('0', GetMask(numericValue.Length));
         StringBuilder mask = new StringBuilder(aux);
         StringBuilder parsedNumber = mask.Append(numericValue);
-        string result = "";
+        string longScaleNumber = "";
+        string shortScaleNumber = "";
         Number resultNumber = Number.getInstance();
 
         //we parse the first group apart so we can add some more control to our translation process
-        result = new LessThanAThousand(parsedNumber.ToString(parsedNumber.Length - 3, 3)).Translate();
+
+        //tanto en LongScale(default) como ShortScale
+        longScaleNumber = new LessThanAThousand(parsedNumber.ToString(parsedNumber.Length - 3, 3)).Translate();
         int bigNumberIndex = 0;
         for (int i = parsedNumber.Length - 6; i >= 0; i -= 3)
         {
@@ -90,21 +136,49 @@ public class Service : IService
             {
                 if (bigNumberIndex == 0)
                 {
-                    if (translatedGroup.Equals("un")) result = bigNumbers[bigNumberIndex] + " " + result;
-                    else result = translatedGroup + " " + bigNumbers[bigNumberIndex] + " " + result;
+                    if (translatedGroup.Equals("un"))
+                    {
+                        longScaleNumber = bigNumbersLongScale[bigNumberIndex] + " " + longScaleNumber;
+                        shortScaleNumber = bigNumbersShortScale[bigNumberIndex] + " " + shortScaleNumber;
+                    }
+                    else
+                    {
+                        longScaleNumber = translatedGroup + " " + bigNumbersLongScale[bigNumberIndex] + " " + longScaleNumber;
+                        shortScaleNumber = translatedGroup + " " + bigNumbersShortScale[bigNumberIndex] + " " + shortScaleNumber;
+                    }
                 }
                 else
                 {
-                    if (!translatedGroup.Equals("un")) result = translatedGroup + " " + bigNumbers[bigNumberIndex] + "s " + result;
-                    else result = translatedGroup + " " + bigNumbers[bigNumberIndex] + " " + result;
+                    if (!translatedGroup.Equals("un"))
+                    {
+                        longScaleNumber = translatedGroup + " " + bigNumbersLongScale[bigNumberIndex] + "s " + longScaleNumber;
+                        shortScaleNumber = translatedGroup + " " + bigNumbersShortScale[bigNumberIndex] + "s " + shortScaleNumber;
+                    }
+
+                    else
+                    {
+                        longScaleNumber = translatedGroup + " " + bigNumbersLongScale[bigNumberIndex] + " " + longScaleNumber;
+                        shortScaleNumber = translatedGroup + " " + bigNumbersShortScale[bigNumberIndex] + " " + shortScaleNumber;
+                    }
                 }
             }
             bigNumberIndex++;
         }
         bigNumberIndex = 0;
-        if (result.Equals(" ")) resultNumber.setCardinal("zèro");
-        else resultNumber.setCardinal(result.Trim());
-        return resultNumber.getCardinal();
+        if (longScaleNumber.Equals(" "))
+        {
+            resultNumber.setCardinalLong("zèro");
+            resultNumber.setCardinalShort("zèro");
+        }
+        else
+        {
+            resultNumber.setCardinalLong(longScaleNumber.Trim());
+            resultNumber.setCardinalShort(shortScaleNumber.Trim());
+        }
+        cardinalNumberArrayList.Add(longScaleNumber);
+        cardinalNumberArrayList.Add(shortScaleNumber);
+        
+        return cardinalNumberArrayList;
     }
     private int GetMask(int length)
     {
@@ -121,29 +195,44 @@ public class Service : IService
     }
     public ArrayList getCardinalNumberTab(string number)
     {
+        ArrayList cardinalNumberConverted = getCardinalNumber(number);
         ArrayList cardinalTab = new ArrayList();
         cardinalTab.Add("#Cardinal");
         cardinalTab.Add("Los números cardinales expresan cantidad en relación con los números naturales.");
         cardinalTab.Add("#Número traducido a texto cardinal");
-        cardinalTab.Add(getCardinalNumber(number));
+        cardinalTab.Add(cardinalNumberConverted[0].ToString());
+        cardinalTab.Add("#Otras versiones:");
+        for(int i = 1; i < cardinalNumberConverted.Count; i++)
+        {
+            cardinalTab.Add(cardinalNumberConverted[i].ToString());
+        }
         return cardinalTab;
     }
 
-    public string getOrdinalNumber(string number)
+    public ArrayList getOrdinalNumber(string number)
     {
-        String ordinalNumber = getCardinalNumber(number);
+        String ordinalNumber = getCardinalNumber(number)[0].ToString();
+        ArrayList ordinalNumberArrayList = new ArrayList();
         //special cases such as first, zero and those numbers ending with 5 (cinq -> cinqu + ième) or 9 (neuf -> neuv + ième)
 
         //one
         if (ordinalNumber.Equals("un")){
-            return "première";
+            ordinalNumberArrayList.Add("prèmier");
+            ordinalNumberArrayList.Add("prèmiere");
+            return ordinalNumberArrayList;
         }
 
         //zero
         if (ordinalNumber.Equals("zèro")){
-            return "Este número no existe en esta forma";
+            return ordinalNumberArrayList;
         }
 
+        if (ordinalNumber.Equals("deux"))
+        {
+            ordinalNumberArrayList.Add("deuxième");
+            ordinalNumberArrayList.Add("second");
+            return ordinalNumberArrayList;
+        }
         //five and nine
         if(ordinalNumber[ordinalNumber.Length - 1].Equals('q'))
         {
@@ -160,16 +249,23 @@ public class Service : IService
         if (ordinalNumber[ordinalNumber.Length - 1].Equals('e') || ordinalNumber[ordinalNumber.Length - 1].Equals('s'))
             ordinalNumber = ordinalNumber.Substring(0, ordinalNumber.Length - 1);
         ordinalNumber = ordinalNumber + ending;
-        return ordinalNumber;
+        ordinalNumberArrayList.Add(ordinalNumber);
+        return ordinalNumberArrayList;
     }
 
     public ArrayList getOrdinalNumberTab(string number)
     {
+        ArrayList ordinalNumberConverted = getOrdinalNumber(number);
         ArrayList ordinalTab = new ArrayList();
         ordinalTab.Add("#Ordinal");
         ordinalTab.Add("Los números ordinales expresan orden o sucesión e indican el lugar que ocupa el elemento en una serie ordenada.");
         ordinalTab.Add("#Número traducido a texto ordinal");
-        ordinalTab.Add(getOrdinalNumber(number));
+        ordinalTab.Add(ordinalNumberConverted[0].ToString());
+        ordinalTab.Add("#Otras versiones:");
+        for (int i = 1; i < ordinalNumberConverted.Count; i++)
+        {
+            ordinalTab.Add(ordinalNumberConverted[i].ToString());
+        }
         return ordinalTab;
     }
 }
