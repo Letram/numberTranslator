@@ -44,6 +44,12 @@
   <wsdl:message name="IService_getOrdinalNumberTab_OutputMessage">
     <wsdl:part name="parameters" element="tns:getOrdinalNumberTabResponse" />
   </wsdl:message>
+  <wsdl:message name="IService_getTabs_InputMessage">
+    <wsdl:part name="parameters" element="tns:getTabs" />
+  </wsdl:message>
+  <wsdl:message name="IService_getTabs_OutputMessage">
+    <wsdl:part name="parameters" element="tns:getTabsResponse" />
+  </wsdl:message>
   <wsdl:portType name="IService">
     <wsdl:operation name="GetData">
       <wsdl:input wsaw:Action="http://tempuri.org/IService/GetData" message="tns:IService_GetData_InputMessage" />
@@ -68,6 +74,10 @@
     <wsdl:operation name="getOrdinalNumberTab">
       <wsdl:input wsaw:Action="http://tempuri.org/IService/getOrdinalNumberTab" message="tns:IService_getOrdinalNumberTab_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IService/getOrdinalNumberTabResponse" message="tns:IService_getOrdinalNumberTab_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="getTabs">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/getTabs" message="tns:IService_getTabs_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/getTabsResponse" message="tns:IService_getTabs_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IService" type="tns:IService">
@@ -119,6 +129,15 @@
     </wsdl:operation>
     <wsdl:operation name="getOrdinalNumberTab">
       <soap:operation soapAction="http://tempuri.org/IService/getOrdinalNumberTab" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getTabs">
+      <soap:operation soapAction="http://tempuri.org/IService/getTabs" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

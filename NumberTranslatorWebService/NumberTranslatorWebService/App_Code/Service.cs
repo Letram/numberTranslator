@@ -113,7 +113,7 @@ public class Service : IService
 		return composite;
 	}
 
-    public ArrayList getCardinalNumber(string number)
+    private ArrayList getCardinalNumber(string number)
     {
         ArrayList cardinalNumberArrayList = new ArrayList();
         StringBuilder numericValue = new StringBuilder(number);
@@ -128,6 +128,7 @@ public class Service : IService
 
         //tanto en LongScale(default) como ShortScale
         longScaleNumber = new LessThanAThousand(parsedNumber.ToString(parsedNumber.Length - 3, 3)).Translate();
+        shortScaleNumber = longScaleNumber;
         int bigNumberIndex = 0;
         for (int i = parsedNumber.Length - 6; i >= 0; i -= 3)
         {
@@ -209,11 +210,11 @@ public class Service : IService
         return cardinalTab;
     }
 
-    public ArrayList getOrdinalNumber(string number)
+    private ArrayList getOrdinalNumber(string number)
     {
         String ordinalNumber = getCardinalNumber(number)[0].ToString();
         ArrayList ordinalNumberArrayList = new ArrayList();
-        //special cases such as first, zero and those numbers ending with 5 (cinq -> cinqu + ième) or 9 (neuf -> neuv + ième)
+        //special cases such as first, zero and those numbers ending with 5 (cinq -> cinqu + ième) or 9 (neuf -> neuv + ième) or when the numbers ends with -s
 
         //one
         if (ordinalNumber.Equals("un")){
@@ -244,10 +245,12 @@ public class Service : IService
             ordinalNumber = ordinalNumber + "v";
         }
         String ending = "ième";
-        
+
         //regular cases
         if (ordinalNumber[ordinalNumber.Length - 1].Equals('e') || ordinalNumber[ordinalNumber.Length - 1].Equals('s'))
             ordinalNumber = ordinalNumber.Substring(0, ordinalNumber.Length - 1);
+        else if (ordinalNumber.Substring(ordinalNumber.Length - 2).Equals("s "))
+            ordinalNumber = ordinalNumber.Substring(0, ordinalNumber.Length - 2);
         ordinalNumber = ordinalNumber + ending;
         ordinalNumberArrayList.Add(ordinalNumber);
         return ordinalNumberArrayList;
@@ -267,5 +270,67 @@ public class Service : IService
             ordinalTab.Add(ordinalNumberConverted[i].ToString());
         }
         return ordinalTab;
+    }
+
+    private ArrayList getFractionaryNumber(string number)
+    {
+        if (number.Length == 1)
+            return justOne(Convert.ToInt32(number));
+        String res = getOrdinalNumber(number)[0].ToString();
+        ArrayList aux = new ArrayList();
+        aux.Add(res);
+        return aux;
+        
+    }
+
+    private ArrayList getFractionaryNumberTab(string number)
+    {
+        ArrayList fractionaryNumberConverted = getFractionaryNumber(number);
+        ArrayList fractionaryTab = new ArrayList();
+        fractionaryTab.Add("#Fraccionario");
+        fractionaryTab.Add("Los números fraccionarios expresan división de un todo en partes y designan las fracciones iguales en que se ha dividido la unidad.");
+        fractionaryTab.Add("#Número traducido a texto fraccional");
+        fractionaryTab.Add(fractionaryNumberConverted[0].ToString());
+        fractionaryTab.Add("#Otras versiones:");
+        for (int i = 1; i < fractionaryNumberConverted.Count; i++)
+        {
+            fractionaryTab.Add(fractionaryNumberConverted[i].ToString());
+        }
+        return fractionaryTab;
+
+    }
+    private ArrayList justOne(int v)
+    {
+        ArrayList res = new ArrayList();
+        switch (v)
+        {
+            case 1:
+                res.Add("une unité");
+                res.Add("l'unité");
+                break;
+            case 2:
+                res.Add("un demi");
+                break;
+            case 3:
+                res.Add("un tiers");
+                break;
+            case 4:
+                res.Add("un quart");
+                break;
+            default:
+                res.Add("un " + getOrdinalNumber(v.ToString())[0].ToString());
+                break;
+        }
+        return res;
+    }
+
+
+    public ArrayList getTabs(string number)
+    {
+        ArrayList result = new ArrayList();
+        result.Add(getCardinalNumberTab(number));
+        result.Add(getOrdinalNumberTab(number));
+        result.Add(getFractionaryNumberTab(number));
+        return result;
     }
 }
