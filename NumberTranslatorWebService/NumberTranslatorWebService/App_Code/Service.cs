@@ -202,10 +202,13 @@ public class Service : IService
         cardinalTab.Add("Los números cardinales expresan cantidad en relación con los números naturales.");
         cardinalTab.Add("#Número traducido a texto cardinal");
         cardinalTab.Add(cardinalNumberConverted[0].ToString());
-        cardinalTab.Add("#Otras versiones:");
-        for(int i = 1; i < cardinalNumberConverted.Count; i++)
+        if(cardinalNumberConverted.Count > 1)
         {
-            cardinalTab.Add(cardinalNumberConverted[i].ToString());
+            cardinalTab.Add("#Otras versiones:");
+            for (int i = 1; i < cardinalNumberConverted.Count; i++)
+            {
+                cardinalTab.Add(cardinalNumberConverted[i].ToString());
+            }
         }
         return cardinalTab;
     }
@@ -264,10 +267,13 @@ public class Service : IService
         ordinalTab.Add("Los números ordinales expresan orden o sucesión e indican el lugar que ocupa el elemento en una serie ordenada.");
         ordinalTab.Add("#Número traducido a texto ordinal");
         ordinalTab.Add(ordinalNumberConverted[0].ToString());
-        ordinalTab.Add("#Otras versiones:");
-        for (int i = 1; i < ordinalNumberConverted.Count; i++)
+        if(ordinalNumberConverted.Count > 1)
         {
-            ordinalTab.Add(ordinalNumberConverted[i].ToString());
+            ordinalTab.Add("#Otras versiones:");
+            for (int i = 1; i < ordinalNumberConverted.Count; i++)
+            {
+                ordinalTab.Add(ordinalNumberConverted[i].ToString());
+            }
         }
         return ordinalTab;
     }
@@ -291,10 +297,13 @@ public class Service : IService
         fractionaryTab.Add("Los números fraccionarios expresan división de un todo en partes y designan las fracciones iguales en que se ha dividido la unidad.");
         fractionaryTab.Add("#Número traducido a texto fraccional");
         fractionaryTab.Add(fractionaryNumberConverted[0].ToString());
-        fractionaryTab.Add("#Otras versiones:");
-        for (int i = 1; i < fractionaryNumberConverted.Count; i++)
+        if(fractionaryNumberConverted.Count > 1)
         {
-            fractionaryTab.Add(fractionaryNumberConverted[i].ToString());
+            fractionaryTab.Add("#Otras versiones:");
+            for (int i = 1; i < fractionaryNumberConverted.Count; i++)
+            {
+                fractionaryTab.Add(fractionaryNumberConverted[i].ToString());
+            }
         }
         return fractionaryTab;
 
@@ -323,14 +332,26 @@ public class Service : IService
         }
         return res;
     }
-
+    private ArrayList getNegativeNumberTab(String number)
+    {
+        ArrayList res = new ArrayList();
+        res.Add("#Negativo");
+        res.Add("Los números negativos expresan pérdidas, deudas, disminuciones, etc. en relaciones con los números naturales.");
+        res.Add("#Número traducido a texto cardinal.");
+        res.Add("moins " + getCardinalNumber(number.Substring(1))[0].ToString());
+        return res;
+    }
 
     public ArrayList getTabs(string number)
     {
         ArrayList result = new ArrayList();
-        result.Add(getCardinalNumberTab(number));
-        result.Add(getOrdinalNumberTab(number));
-        result.Add(getFractionaryNumberTab(number));
+        if (!number[0].ToString().Equals("-"))
+        {
+            result.Add(getCardinalNumberTab(number));
+            result.Add(getOrdinalNumberTab(number));
+            result.Add(getFractionaryNumberTab(number));
+        }
+        else result.Add(getNegativeNumberTab(number));
         return result;
     }
 }
