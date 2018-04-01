@@ -123,9 +123,9 @@ public class TratamientoInicial
                 }
 
                 // Comprueba si es un número romano
-                
-                bool esRomano = false;
                 /*
+                bool esRomano = false;
+                
                 if ((expRistra == null) && (signoMenos == null) && (!signoMas) &&
                     (cadParteDecimal == null) && (cadParteEntera.Length > 0))
                 {
@@ -152,7 +152,7 @@ public class TratamientoInicial
                 */
 
                 // Si los blancos en los miles y millones están mal colocados se arreglan.
-                if ((!esRomano) && ((blancosMal) || ((cadAux.Length > 3) && (tieneBlancos)) || ((tieneBlancos == false) && (cadAux.Length > 4))))
+                if (/*(!esRomano) && */((blancosMal) || ((cadAux.Length > 3) && (tieneBlancos)) || ((tieneBlancos == false) && (cadAux.Length > 4))))
                 {
                     cadParteEntera = "";
                     numeroText = "";
