@@ -6,6 +6,7 @@ using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.ServiceModel.Web;
 using System.Text;
+using System.Threading;
 
 // NOTA: puede usar el comando "Rename" del menú "Refactorizar" para cambiar el nombre de clase "Service1" en el código, en svc y en el archivo de configuración.
 public class Service : IService
@@ -122,7 +123,6 @@ public class Service : IService
         StringBuilder parsedNumber = mask.Append(numericValue);
         string longScaleNumber = "";
         string shortScaleNumber = "";
-        Number resultNumber = Number.getInstance();
 
         //we parse the first group apart so we can add some more control to our translation process
 
@@ -166,18 +166,8 @@ public class Service : IService
             bigNumberIndex++;
         }
         bigNumberIndex = 0;
-        if (longScaleNumber.Equals(" "))
-        {
-            resultNumber.setCardinalLong("zèro");
-            resultNumber.setCardinalShort("zèro");
-        }
-        else
-        {
-            resultNumber.setCardinalLong(longScaleNumber.Trim());
-            resultNumber.setCardinalShort(shortScaleNumber.Trim());
-        }
-        cardinalNumberArrayList.Add(longScaleNumber);
-        cardinalNumberArrayList.Add(shortScaleNumber);
+        cardinalNumberArrayList.Add(longScaleNumber.Trim());
+        cardinalNumberArrayList.Add(shortScaleNumber.Trim());
         
         return cardinalNumberArrayList;
     }
@@ -213,76 +203,11 @@ public class Service : IService
         return cardinalTab;
     }
 
-    private ArrayList getOrdinalNumber(string number)
-    {
-        String ordinalNumber = getCardinalNumber(number)[0].ToString();
-        ArrayList ordinalNumberArrayList = new ArrayList();
-        //special cases such as first, zero and those numbers ending with 5 (cinq -> cinqu + ième) or 9 (neuf -> neuv + ième) or when the numbers ends with -s
-
-        //one
-        if (ordinalNumber.Equals("un")){
-            ordinalNumberArrayList.Add("prèmier");
-            ordinalNumberArrayList.Add("prèmiere");
-            return ordinalNumberArrayList;
-        }
-
-        //zero
-        if (ordinalNumber.Equals("zèro")){
-            return ordinalNumberArrayList;
-        }
-
-        if (ordinalNumber.Equals("deux"))
-        {
-            ordinalNumberArrayList.Add("deuxième");
-            ordinalNumberArrayList.Add("second");
-            return ordinalNumberArrayList;
-        }
-        //five and nine
-        if(ordinalNumber[ordinalNumber.Length - 1].Equals('q'))
-        {
-            ordinalNumber = ordinalNumber + "u";
-        }
-        else if(ordinalNumber[ordinalNumber.Length - 1].Equals('f'))
-        {
-            ordinalNumber = ordinalNumber.Substring(0, ordinalNumber.Length - 1);
-            ordinalNumber = ordinalNumber + "v";
-        }
-        String ending = "ième";
-
-        //regular cases
-        if (ordinalNumber[ordinalNumber.Length - 1].Equals('e') || ordinalNumber[ordinalNumber.Length - 1].Equals('s'))
-            ordinalNumber = ordinalNumber.Substring(0, ordinalNumber.Length - 1);
-        else if (ordinalNumber.Substring(ordinalNumber.Length - 2).Equals("s "))
-            ordinalNumber = ordinalNumber.Substring(0, ordinalNumber.Length - 2);
-        ordinalNumber = ordinalNumber + ending;
-        ordinalNumberArrayList.Add(ordinalNumber);
-        return ordinalNumberArrayList;
-    }
-
-    public ArrayList getOrdinalNumberTab(string number)
-    {
-        ArrayList ordinalNumberConverted = getOrdinalNumber(number);
-        ArrayList ordinalTab = new ArrayList();
-        ordinalTab.Add("#Ordinal");
-        ordinalTab.Add("Los números ordinales expresan orden o sucesión e indican el lugar que ocupa el elemento en una serie ordenada.");
-        ordinalTab.Add("#Número traducido a texto ordinal");
-        ordinalTab.Add(ordinalNumberConverted[0].ToString());
-        if(ordinalNumberConverted.Count > 1)
-        {
-            ordinalTab.Add("#Otras versiones:");
-            for (int i = 1; i < ordinalNumberConverted.Count; i++)
-            {
-                ordinalTab.Add(ordinalNumberConverted[i].ToString());
-            }
-        }
-        return ordinalTab;
-    }
-
     private ArrayList getFractionaryNumber(string number)
     {
         if (number.Length == 1)
             return justOne(Convert.ToInt32(number));
-        String res = getOrdinalNumber(number)[0].ToString();
+        String res = "";
         ArrayList aux = new ArrayList();
         aux.Add(res);
         return aux;
@@ -327,7 +252,7 @@ public class Service : IService
                 res.Add("un quart");
                 break;
             default:
-                res.Add("un " + getOrdinalNumber(v.ToString())[0].ToString());
+                //res.Add("un " + getOrdinalNumber(v.ToString())[0].ToString());
                 break;
         }
         return res;
@@ -344,14 +269,35 @@ public class Service : IService
 
     public ArrayList getTabs(string number)
     {
+        String unformattedNumber = number;
+        String minusSign = "";
+        String nonDecimal = "";
+        String decimalPart = "";
+        String divider = "";
+        int exit = TratamientoInicial.InitialTratement(ref unformattedNumber, ref minusSign, ref nonDecimal, ref decimalPart, ref divider);
+
+        Fraction fractionNumberTranslation= new Fraction();
+        Cardinal cardinalNumberTranslation= new Cardinal();
+        Ordinal ordinalNumberTranslation= new Ordinal();
+
         ArrayList result = new ArrayList();
+
+        //result.Add("Numero: " + unformattedNumber.Replace(" ", ""));
+        //result.Add("Menos: " + minusSign);
+        //result.Add("Parte entera: " + nonDecimal);
+        //result.Add("Parte decimal: " + decimalPart);
+        //result.Add("Divisor: " + divider);
+        //result.Add(exit);
+        //return result;
         if (!number[0].ToString().Equals("-"))
         {
-            result.Add(getCardinalNumberTab(number));
-            result.Add(getOrdinalNumberTab(number));
-            result.Add(getFractionaryNumberTab(number));
+            result.Add(cardinalNumberTranslation.getCardinalTab(nonDecimal));
+            result.Add(ordinalNumberTranslation.getOrdinalNumberTab(nonDecimal));
+            result.Add(fractionNumberTranslation.getFractionTab(nonDecimal, divider));
         }
         else result.Add(getNegativeNumberTab(number));
+        
         return result;
+        
     }
 }

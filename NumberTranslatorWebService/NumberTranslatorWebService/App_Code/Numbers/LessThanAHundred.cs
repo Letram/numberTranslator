@@ -3,9 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-/// <summary>
-/// Descripción breve de LessThanAHundred
-/// </summary>
 public class LessThanAHundred
 {
     private static String[] dizaines = {

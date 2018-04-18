@@ -36,7 +36,7 @@ public partial class src_WebForm : System.Web.UI.Page
         ServiceReference1.ServiceClient translator = new ServiceReference1.ServiceClient();
 
         ArrayList serviceTabs = translator.getTabs(number.Text);
-
+        //foreach (String text in serviceTabs) { }
         Boolean firstSet = false;
         for(int i = 0; i < serviceTabs.Count; i++)
         {
