@@ -58,6 +58,7 @@ public class Service : IService
         Cardinal cardinalNumberTranslation= new Cardinal();
         Ordinal ordinalNumberTranslation= new Ordinal();
         Negative negativeNumberTranslation= new Negative();
+        Decimal decimalNumberTranslation = new Decimal();
 
         ArrayList result = new ArrayList();
 
@@ -74,14 +75,26 @@ public class Service : IService
             Thread cardinalThread = new Thread(() => result.Add(cardinalNumberTranslation.getCardinalTab(nonDecimal)));
             Thread ordinalThread = new Thread(() => result.Add(ordinalNumberTranslation.getOrdinalNumberTab(nonDecimal)));
             Thread fractionThread = new Thread(() => result.Add(fractionNumberTranslation.getFractionTab(nonDecimal, divider)));
+            Thread decimalThread = new Thread(()=>result.Add(decimalNumberTranslation.getDecimalTab(nonDecimal, decimalPart)));
 
-            cardinalThread.Start();
-            ordinalThread.Start();
-            fractionThread.Start();
 
-            cardinalThread.Join();
-            ordinalThread.Join();
-            fractionThread.Join();
+
+            if (!decimalPart.Equals(""))
+            {
+                decimalThread.Start();
+                decimalThread.Join();
+            }
+            else
+            {
+                cardinalThread.Start();
+                ordinalThread.Start();
+                fractionThread.Start();
+
+                cardinalThread.Join();
+                ordinalThread.Join();
+                fractionThread.Join();
+            }
+
 
         }
         else return negativeNumberTranslation.getNegativeTabs(nonDecimal, decimalPart, divider);
