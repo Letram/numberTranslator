@@ -17,9 +17,9 @@ public class Fraction
         ordinal = new Ordinal();
     }
 
-    public ArrayList getFractionTab(String numerator, String denominator)
+    public ArrayList getFractionTab(String numerator, String denominator, Boolean isNegative = false)
     {
-        ArrayList fractionaryNumberConverted = getFractionaryNumber(numerator, denominator);
+        ArrayList fractionaryNumberConverted = getFractionaryNumber(numerator, denominator, isNegative);
         ArrayList fractionaryTab = new ArrayList();
         fractionaryTab.Add("#Fraccionario");
         fractionaryTab.Add("Los números fraccionarios expresan división de un todo en partes y designan las fracciones iguales en que se ha dividido la unidad.");
@@ -36,22 +36,22 @@ public class Fraction
         return fractionaryTab;
     }
 
-    private ArrayList getFractionaryNumber(string numerator, string denominator)
+    private ArrayList getFractionaryNumber(string numerator, string denominator, Boolean isNegative = false)
     {
         ArrayList fractionaryNumber = new ArrayList();
         
         if (numerator.Equals("1") && !denominator.Equals(""))
         {
-            return justOne(denominator);
+            return justOne(denominator, isNegative);
         }
         if (denominator.Equals(""))
         {
-            return cardinal.getCardinalNumber(numerator);
+            return justOne(numerator, isNegative);
         }
         
         String fraction = "";
         if(!numerator.Equals("") && !denominator.Equals(""))
-            fraction = cardinal.getCardinalNumber(numerator)[0].ToString().Trim() + " " + ordinal.getOrdinalNumber(denominator)[0].ToString().Trim();
+            fraction = cardinal.getCardinalNumber(numerator, isNegative)[0].ToString().Trim() + " " + ordinal.getOrdinalNumber(denominator)[0].ToString().Trim();
         fractionaryNumber.Add(pluralize(fraction.Trim()));
         return fractionaryNumber;
     }
@@ -62,7 +62,7 @@ public class Fraction
         return v;
     }
 
-    private ArrayList justOne(String v)
+    private ArrayList justOne(String v, Boolean isNegative = false)
     {
         ArrayList res = new ArrayList();
         switch (v)
@@ -85,6 +85,14 @@ public class Fraction
                 res.Add("un " + ordinal.getOrdinalNumber(v)[0].ToString().Trim());
                 break;
         }
+        if (isNegative)
+        {
+            for (int i = 0; i < res.Count; i++)
+            {
+                res[i] = "moins " + res[i].ToString().Trim();
+            }
+        }
+
         return res;
     }
 }

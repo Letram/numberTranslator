@@ -46,6 +46,7 @@ public class Service : IService
 
     public ArrayList getTabs(string number)
     {
+        if (number.Equals("")) return new ArrayList();
         String unformattedNumber = number;
         String minusSign = "";
         String nonDecimal = "";
@@ -56,6 +57,7 @@ public class Service : IService
         Fraction fractionNumberTranslation= new Fraction();
         Cardinal cardinalNumberTranslation= new Cardinal();
         Ordinal ordinalNumberTranslation= new Ordinal();
+        Negative negativeNumberTranslation= new Negative();
 
         ArrayList result = new ArrayList();
 
@@ -67,7 +69,7 @@ public class Service : IService
         //result.Add(exit);
         //return result;
 
-        if (!number[0].ToString().Equals("-"))
+        if (minusSign.Equals(""))
         {
             Thread cardinalThread = new Thread(() => result.Add(cardinalNumberTranslation.getCardinalTab(nonDecimal)));
             Thread ordinalThread = new Thread(() => result.Add(ordinalNumberTranslation.getOrdinalNumberTab(nonDecimal)));
@@ -81,7 +83,8 @@ public class Service : IService
             ordinalThread.Join();
             fractionThread.Join();
 
-        }else result.Add(getNegativeNumberTab(number));
+        }
+        else return negativeNumberTranslation.getNegativeTabs(nonDecimal, decimalPart, divider);
         
         return result;
         

@@ -13,7 +13,7 @@ public class Cardinal
     String[] bigNumbersShortScale = Scales.getShortScale();
     public Cardinal(){}
 
-    public ArrayList getCardinalNumber(string number){
+    public ArrayList getCardinalNumber(string number, Boolean isNegative = false){
         ArrayList cardinalNumberArrayList = new ArrayList();
         StringBuilder numericValue = new StringBuilder(number);
         string aux = new string('0', Scales.GetMask(numericValue.Length));
@@ -21,7 +21,8 @@ public class Cardinal
         StringBuilder parsedNumber = mask.Append(numericValue);
         string longScaleNumber = "";
         string shortScaleNumber = "";
-
+        string negative = "";
+        if (isNegative) negative = "moins ";
         if(number.Length == 1 && number[0].Equals("0"))
         {
             cardinalNumberArrayList.Add("zéro");
@@ -69,17 +70,17 @@ public class Cardinal
             bigNumberIndex++;
         }
         bigNumberIndex = 0;
-        cardinalNumberArrayList.Add(longScaleNumber);
-        cardinalNumberArrayList.Add(shortScaleNumber);
+        cardinalNumberArrayList.Add(negative + longScaleNumber);
+        cardinalNumberArrayList.Add(negative + shortScaleNumber);
 
         return cardinalNumberArrayList;
     }
 
 
 
-    public ArrayList getCardinalTab(String number)
+    public ArrayList getCardinalTab(String number, Boolean isNegative = false)
     {
-        ArrayList cardinalNumberConverted = getCardinalNumber(number);
+        ArrayList cardinalNumberConverted = getCardinalNumber(number, isNegative);
         ArrayList cardinalTab = new ArrayList();
         cardinalTab.Add("#Cardinal");
         cardinalTab.Add("Los números cardinales expresan cantidad en relación con los números naturales.");
