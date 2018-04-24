@@ -21,6 +21,11 @@ public class Ordinal
         StringBuilder mask = new StringBuilder(aux);
         StringBuilder parsedNumber = mask.Append(numericValue);
         String ordinalNumberTranslated = "";
+        if (number.Length == 1 && number.Equals("0"))
+        {
+            ordinalNumberArrayList.Add("zéro");
+            return ordinalNumberArrayList;
+        }
         //traducimos los primeros tres números
 
         ordinalNumberTranslated = new LessThanAThousand(parsedNumber.ToString(parsedNumber.Length - 3, 3)).Translate();

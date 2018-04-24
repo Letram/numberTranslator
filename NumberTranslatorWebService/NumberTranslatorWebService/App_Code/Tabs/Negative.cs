@@ -23,12 +23,16 @@ public class Negative
         Thread fractionTab = new Thread(() => negativeTabs.Add(fraction.getFractionTab(nonDecimal, divider, true)));
 
         
-        cardinalTab.Start();
-        cardinalTab.Join();
+
         if (!divider.Equals(""))
         {
             fractionTab.Start();
             fractionTab.Join();
+        }
+        else
+        {
+            cardinalTab.Start();
+            cardinalTab.Join();
         }
 
 

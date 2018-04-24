@@ -22,8 +22,8 @@ public class Cardinal
         string longScaleNumber = "";
         string shortScaleNumber = "";
         string negative = "";
-        if (isNegative) negative = "moins ";
-        if(number.Length == 1 && number[0].Equals("0"))
+        if (isNegative) negative = "<b>moins</b> ";
+        if(number.Length == 1 && number.Equals("0"))
         {
             cardinalNumberArrayList.Add("zéro");
             return cardinalNumberArrayList;
@@ -33,6 +33,7 @@ public class Cardinal
         //tanto en LongScale(default) como ShortScale
         longScaleNumber = new LessThanAThousand(parsedNumber.ToString(parsedNumber.Length - 3, 3)).Translate();
         shortScaleNumber = longScaleNumber;
+        Boolean hasShortScale = false;
         int bigNumberIndex = 0;
         for (int i = parsedNumber.Length - 6; i >= 0; i -= 3)
         {
@@ -44,12 +45,20 @@ public class Cardinal
                     if (translatedGroup.Equals("un"))
                     {
                         longScaleNumber = bigNumbersLongScale[bigNumberIndex] + " " + longScaleNumber;
-                        shortScaleNumber = bigNumbersShortScale[bigNumberIndex] + " " + shortScaleNumber;
+                        if(bigNumberIndex >= 2)
+                        {
+                            shortScaleNumber = bigNumbersShortScale[bigNumberIndex] + " " + shortScaleNumber;
+                            hasShortScale = true;
+                        }
                     }
                     else
                     {
                         longScaleNumber = translatedGroup + " " + bigNumbersLongScale[bigNumberIndex] + " " + longScaleNumber;
-                        shortScaleNumber = translatedGroup + " " + bigNumbersShortScale[bigNumberIndex] + " " + shortScaleNumber;
+                        if (bigNumberIndex >= 2)
+                        {
+                            hasShortScale = true;
+                            shortScaleNumber = translatedGroup + " " + bigNumbersShortScale[bigNumberIndex] + " " + shortScaleNumber;
+                        }
                     }
                 }
                 else
@@ -57,13 +66,21 @@ public class Cardinal
                     if (!translatedGroup.Equals("un"))
                     {
                         longScaleNumber = translatedGroup + " " + bigNumbersLongScale[bigNumberIndex] + "s " + longScaleNumber;
-                        shortScaleNumber = translatedGroup + " " + bigNumbersShortScale[bigNumberIndex] + "s " + shortScaleNumber;
+                        if (bigNumberIndex >= 2)
+                        {
+                            hasShortScale = true;
+                            shortScaleNumber = translatedGroup + " " + bigNumbersShortScale[bigNumberIndex] + "s " + shortScaleNumber;
+                        }
                     }
 
                     else
                     {
                         longScaleNumber = translatedGroup + " " + bigNumbersLongScale[bigNumberIndex] + " " + longScaleNumber;
-                        shortScaleNumber = translatedGroup + " " + bigNumbersShortScale[bigNumberIndex] + " " + shortScaleNumber;
+                        if (bigNumberIndex >= 2)
+                        {
+                            hasShortScale = true;
+                            shortScaleNumber = translatedGroup + " " + bigNumbersShortScale[bigNumberIndex] + " " + shortScaleNumber;
+                        }
                     }
                 }
             }
@@ -71,7 +88,8 @@ public class Cardinal
         }
         bigNumberIndex = 0;
         cardinalNumberArrayList.Add(negative + longScaleNumber);
-        cardinalNumberArrayList.Add(negative + shortScaleNumber);
+        if(hasShortScale)
+            cardinalNumberArrayList.Add(negative + shortScaleNumber);
 
         return cardinalNumberArrayList;
     }
@@ -88,12 +106,13 @@ public class Cardinal
         cardinalTab.Add(cardinalNumberConverted[0].ToString());
         if (cardinalNumberConverted.Count > 1)
         {
-            cardinalTab.Add("#Otras versiones:");
+            cardinalTab.Add("&&Otras versiones:");
             for (int i = 1; i < cardinalNumberConverted.Count; i++)
             {
                 cardinalTab.Add(cardinalNumberConverted[i].ToString());
             }
         }
+        cardinalTab.Add(isNegative);
         return cardinalTab;
     }
 }

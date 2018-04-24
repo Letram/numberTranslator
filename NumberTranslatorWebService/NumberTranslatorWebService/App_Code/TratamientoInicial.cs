@@ -2,21 +2,21 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-
+using System.Text.RegularExpressions;
 /// <summary>
 /// Descripción breve de TratamientoInicial
 /// </summary>
 public class TratamientoInicial
 {
     public TratamientoInicial(){}
-    public static int InitialTratement(ref String numeroText, ref String signoMenos, ref String cadParteEntera, ref String cadParteDecimal, ref String cadDivisor)
+    public static int InitialTratement(ref String numeroText, ref String signoMenos, ref String cadParteEntera, ref String cadParteDecimal, ref String cadDivisor, ref Boolean minusSign)
     {
         String cadAux, cadAux1, expRistra = null;
         String Digitos = "0123456789";
         bool tieneCero = false, signoMas = false, blancosMal = false, tieneBlancos = false;
         int cantidadPuntos = 0, cantidadComas = 0;
         char especial = ' ';
-
+        if (numeroText[0] == '-') minusSign = true;
         try
         {
             //Se eliminan el $ y el €
@@ -71,10 +71,19 @@ public class TratamientoInicial
                 {
                     if (expRistra == null)
                     {
+                        Match match = Regex.Match(cadAux.Replace(" ", ""), @"(\d+)\/(\d*)");
+                        if (match.Success)
+                        {
+                            cadParteEntera = match.Groups[1].Value;
+                            cadDivisor = match.Groups[2].Value;
+                            if (signoMenos != null) numeroText = "-" + numeroText;
+                        }
+                        /*
                         cadParteEntera = cadAux.Substring(0, cadAux.IndexOf('/')).Trim();
                         cadDivisor = cadAux.Substring(cadAux.IndexOf('/') + 1).Trim();
                         numeroText = cadParteEntera + "/" + cadDivisor;
                         if (signoMenos != null) numeroText = '-' + numeroText;
+                        */
                     }
                     if ((cadParteEntera.Length == 0) || (cadDivisor.Length == 0)) return 3; // El número es incorrecto.
                 }
