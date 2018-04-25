@@ -108,9 +108,65 @@ public partial class src_WebForm : System.Web.UI.Page
                         greyContainer.Controls.Add(greyContainerBody);
                         currentContainer = greyContainerBody;
                         break;
+                    case '&':
+                        if (text[1].Equals('&'))
+                        {
+                            HtmlGenericControl blueContainer = new HtmlGenericControl("div");
+                            currentContainer.Controls.Add(blueContainer);
+
+                            HtmlGenericControl blueContainerTitle = new HtmlGenericControl("div");
+                            blueContainerTitle.Attributes["style"] = "background-color:#B3E5FC;";
+                            blueContainer.Controls.Add(blueContainerTitle);
+
+                            HtmlGenericControl blueContainerTitleIcon = new HtmlGenericControl("span");
+                            blueContainerTitleIcon.Attributes["id"] = "blueContainerIcon";
+                            blueContainerTitleIcon.InnerText = "+";
+                            blueContainerTitleIcon.Attributes["style"] = "font-size:32px;padding:10px;";
+                            blueContainerTitle.Controls.Add(blueContainerTitleIcon);
+
+                            HtmlGenericControl blueTitleSpan = new HtmlGenericControl("span");
+                            blueTitleSpan.Attributes["style"] = "font-size:32px;padding:0px;";
+                            blueTitleSpan.InnerHtml = text.Substring(2);
+                            blueContainerTitle.Controls.Add(blueTitleSpan);
+
+                            HtmlGenericControl blueContainerBody = new HtmlGenericControl("div");
+                            blueContainerBody.Attributes["id"] = "blueContainer";
+                            blueContainerBody.Attributes["class"] += "hideOnStart";
+                            blueContainerBody.Attributes["style"] = "padding:10px;";
+                            blueContainer.Controls.Add(blueContainerBody);
+                            currentContainer = blueContainerBody;
+                        }
+                        else
+                        {
+                            HtmlGenericControl purpleContainer = new HtmlGenericControl("div");
+                            currentContainer.Controls.Add(purpleContainer);
+
+                            HtmlGenericControl purpleContainerTitle = new HtmlGenericControl("div");
+                            purpleContainerTitle.Attributes["style"] = "background-color:#D1C4E9;";
+                            purpleContainer.Controls.Add(purpleContainerTitle);
+
+                            HtmlGenericControl purpleContainerTitleIcon = new HtmlGenericControl("span");
+                            purpleContainerTitleIcon.Attributes["id"] = "purpleContainerIcon";
+                            purpleContainerTitleIcon.InnerText = "+";
+                            purpleContainerTitleIcon.Attributes["style"] = "font-size:32px;padding:10px;";
+                            purpleContainerTitle.Controls.Add(purpleContainerTitleIcon);
+
+                            HtmlGenericControl purpleTitleSpan = new HtmlGenericControl("span");
+                            purpleTitleSpan.Attributes["style"] = "font-size:32px;padding:0px;";
+                            purpleTitleSpan.InnerHtml = text.Substring(1);
+                            purpleContainerTitle.Controls.Add(purpleTitleSpan);
+
+                            HtmlGenericControl purpleContainerBody = new HtmlGenericControl("div");
+                            purpleContainerBody.Attributes["id"] = "purpleContainer";
+                            purpleContainerBody.Attributes["class"] += "hideOnStart";
+                            purpleContainerBody.Attributes["style"] = "padding:10px;";
+                            purpleContainer.Controls.Add(purpleContainerBody);
+                            currentContainer = purpleContainerBody;
+                        }
+                        break;
                     default:
                         HtmlGenericControl p = new HtmlGenericControl("p");
-                        p.InnerText = text;
+                        p.InnerHtml = text;
                         currentContainer.Controls.Add(p);
                         break;
 

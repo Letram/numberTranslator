@@ -12,6 +12,7 @@ public class Fraction
     String[] bigNumbersLargeScale = Scales.getLargeScale();
     Cardinal cardinal;
     Ordinal ordinal;
+
     public Fraction(){
         cardinal = new Cardinal();
         ordinal = new Ordinal();
@@ -27,19 +28,30 @@ public class Fraction
         fractionaryTab.Add(fractionaryNumberConverted[0].ToString());
         if (fractionaryNumberConverted.Count > 1)
         {
-            fractionaryTab.Add("#Otras versiones:");
+            fractionaryTab.Add("&&Otras versiones:");
             for (int i = 1; i < fractionaryNumberConverted.Count; i++)
             {
                 fractionaryTab.Add(fractionaryNumberConverted[i].ToString());
             }
         }
+        fractionaryTab.Add(isNegative);
         return fractionaryTab;
     }
 
     private ArrayList getFractionaryNumber(string numerator, string denominator, Boolean isNegative = false)
     {
         ArrayList fractionaryNumber = new ArrayList();
-        
+        if (numerator.Equals("0"))
+        {
+            fractionaryNumber.Add(cardinal.getCardinalNumber(numerator)[0].ToString().Trim());
+            return fractionaryNumber;
+        }
+        if (denominator.Equals("0"))
+        {
+            fractionaryNumber.Add("Infini");
+            fractionaryNumber.Add("Indéterminé");
+            return fractionaryNumber;
+        }
         if (numerator.Equals("1") && !denominator.Equals(""))
         {
             return justOne(denominator, isNegative);
@@ -47,6 +59,10 @@ public class Fraction
         if (denominator.Equals(""))
         {
             return justOne(numerator, isNegative);
+        }
+        if (numerator.Equals(""))
+        {
+            return justOne(denominator, isNegative);
         }
         
         String fraction = "";
@@ -65,6 +81,7 @@ public class Fraction
     private ArrayList justOne(String v, Boolean isNegative = false)
     {
         ArrayList res = new ArrayList();
+        res.Add(isNegative);
         switch (v)
         {
             case "1":
@@ -89,7 +106,7 @@ public class Fraction
         {
             for (int i = 0; i < res.Count; i++)
             {
-                res[i] = "moins " + res[i].ToString().Trim();
+                res[i] = "<b>moins</b> " + res[i].ToString().Trim();
             }
         }
 

@@ -49,10 +49,11 @@ public class Service : IService
         if (number.Equals("")) return new ArrayList();
         String unformattedNumber = number;
         String minusSign = "";
+        Boolean isNegative = false;
         String nonDecimal = "";
         String decimalPart = "";
         String divider = "";
-        int exit = TratamientoInicial.InitialTratement(ref unformattedNumber, ref minusSign, ref nonDecimal, ref decimalPart, ref divider);
+        int exit = TratamientoInicial.InitialTratement(ref unformattedNumber, ref minusSign, ref nonDecimal, ref decimalPart, ref divider, ref isNegative);
 
         Fraction fractionNumberTranslation= new Fraction();
         Cardinal cardinalNumberTranslation= new Cardinal();
@@ -70,12 +71,12 @@ public class Service : IService
         //result.Add(exit);
         //return result;
 
-        if (minusSign.Equals(""))
+        if (!isNegative)
         {
             Thread cardinalThread = new Thread(() => result.Add(cardinalNumberTranslation.getCardinalTab(nonDecimal)));
             Thread ordinalThread = new Thread(() => result.Add(ordinalNumberTranslation.getOrdinalNumberTab(nonDecimal)));
             Thread fractionThread = new Thread(() => result.Add(fractionNumberTranslation.getFractionTab(nonDecimal, divider)));
-            Thread decimalThread = new Thread(()=>result.Add(decimalNumberTranslation.getDecimalTab(nonDecimal, decimalPart)));
+            Thread decimalThread = new Thread(() => result.Add(decimalNumberTranslation.getDecimalTab(nonDecimal, decimalPart)));
 
 
 
@@ -86,16 +87,20 @@ public class Service : IService
             }
             else
             {
-                cardinalThread.Start();
-                ordinalThread.Start();
-                fractionThread.Start();
+                if (!divider.Equals(""))
+                {
+                    fractionThread.Start();
+                    fractionThread.Join();
+                }
+                else
+                {
+                    cardinalThread.Start();
+                    ordinalThread.Start();
 
-                cardinalThread.Join();
-                ordinalThread.Join();
-                fractionThread.Join();
+                    cardinalThread.Join();
+                    ordinalThread.Join();
+                }
             }
-
-
         }
         else return negativeNumberTranslation.getNegativeTabs(nonDecimal, decimalPart, divider);
         

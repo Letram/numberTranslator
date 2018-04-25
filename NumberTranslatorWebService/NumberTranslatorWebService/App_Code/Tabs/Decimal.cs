@@ -27,7 +27,7 @@ public class Decimal
         decimalTab.Add(nonDecimalPartTranslated[0].ToString().Trim() + " virgule " + decimalPartTranslated[0].ToString().Trim());
         if (nonDecimalPartTranslated.Count > 1 && decimalPartTranslated.Count > 1)
         {
-            decimalTab.Add("#Otras versiones:");
+            decimalTab.Add("&&Otras versiones:");
             for (int i = 0; i < nonDecimalPartTranslated.Count; i++)
             {
                 for(int j = 0; j < decimalPartTranslated.Count; j++)
