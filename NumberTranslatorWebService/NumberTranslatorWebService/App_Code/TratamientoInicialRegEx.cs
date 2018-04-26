@@ -67,20 +67,21 @@ public class TratamientoInicialRegEx
                 cadDivisor = regex.Groups[2].Value;
                 return 0; //número correcto
             }
-            else cadParteEntera = cadAux;
-            if (cadParteEntera.Length == 0 || cadDivisor.Length == 0) return 3; //número mal formado.
+            //if (cadParteEntera.Length == 0 || cadDivisor.Length == 0) return 3; //número mal formado.
 
             //decimales
-            regex = Regex.Match(cadAux.Replace(" ", ""), @"(\d+)\,(\d*)");
+            regex = Regex.Match(cadAux, @"(\d+),?(\d*)");
             if (regex.Success)
             {
                 cadParteEntera = regex.Groups[1].Value;
-                cadParteDecimal = regex.Groups[2].Value;
+                cadParteDecimal = regex.Groups[2].Value == ""? "0" : regex.Groups[2].Value;
                 return 0; //número correcto
             }
+            /*
             else
-                cadParteEntera = cadAux;
+                cadParteEntera = "No ha entrado";
             if (cadParteEntera.Length == 0 || cadParteDecimal.Length == 0) return 3; //número mal formado.
+            */
         }
         catch(Exception e)
         {

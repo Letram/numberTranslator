@@ -19,9 +19,15 @@ public class LessThanAThousand
 
     public LessThanAThousand(String numberString)
     {
-        this.number = Convert.ToInt32(numberString);
-        this.cent = number / 100;
-        this.reposer = number % 100;
+        try
+        {
+            this.number = Convert.ToInt32(numberString);
+            this.cent = number / 100;
+            this.reposer = number % 100;
+        }catch(Exception e)
+        {
+            System.Diagnostics.Debug.Print(e.StackTrace);
+        }
     }
 
     public String Translate()

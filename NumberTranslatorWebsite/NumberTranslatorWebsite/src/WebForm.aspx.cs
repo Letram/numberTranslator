@@ -34,9 +34,8 @@ public partial class src_WebForm : System.Web.UI.Page
         tabs_panel.Controls.Add(tabsContent);
 
         ServiceReference1.ServiceClient translator = new ServiceReference1.ServiceClient();
-
         ArrayList serviceTabs = translator.getTabs(number.Text);
-        //foreach (String text in serviceTabs) { }
+        //foreach (int text in serviceTabs) { }
         Boolean firstSet = false;
         for(int i = 0; i < serviceTabs.Count; i++)
         {
@@ -51,6 +50,7 @@ public partial class src_WebForm : System.Web.UI.Page
     private void arrayListTreatment(object obj,Boolean firstSet)
     {
         ArrayList tabObject = obj as ArrayList;
+        if (tabObject.Count < 1) return;
         String nameOfTheTab = tabObject[0].ToString().Substring(1);
         HtmlGenericControl tab = new HtmlGenericControl("li");
         tab.Attributes["class"] = "nav-item";
@@ -86,6 +86,7 @@ public partial class src_WebForm : System.Web.UI.Page
                 switch (text[0])
                 {
                     case '#':
+                        currentContainer = tabPane;
                         HtmlGenericControl greyContainer = new HtmlGenericControl("div");
                         currentContainer.Controls.Add(greyContainer);
 

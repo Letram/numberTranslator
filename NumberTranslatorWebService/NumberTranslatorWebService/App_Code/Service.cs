@@ -73,6 +73,44 @@ public class Service : IService
 
         if (!isNegative)
         {
+            ArrayList threadList = new ArrayList();
+            if (!decimalPart.Equals("") || !divider.Equals(""))
+            {
+                if (!divider.Equals(""))
+                {
+                    threadList.Add(new Thread(() => result.Add(fractionNumberTranslation.getFractionTab(nonDecimal, divider))));
+                    String unformattedAux = (float.Parse(nonDecimal) / float.Parse(divider)).ToString();
+                    Boolean minus = false;
+                    String nonDecimalAux = "";
+                    String decimalPartAux = "";
+                    String dividerAux = "";
+                    int decimalTabFromFraction = TratamientoInicialRegEx.tratamientoInicialRegEx(ref unformattedAux, ref minus, ref nonDecimalAux, ref decimalPartAux, ref dividerAux);
+                    
+                    /*result.Add("Numero: " + unformattedAux.Replace(" ", ""));
+                    result.Add("Menos: " + minus);
+                    result.Add("Parte entera: " + nonDecimalAux);
+                    result.Add("Parte decimal: " + decimalPartAux);
+                    result.Add("Divisor: " + divider);
+                    result.Add(exit);
+                    return result;*/
+                    threadList.Add(new Thread(() => result.Add(decimalNumberTranslation.getDecimalTab(nonDecimalAux, decimalPartAux))));
+                }
+                else threadList.Add(new Thread(() => result.Add(decimalNumberTranslation.getDecimalTab(nonDecimal, decimalPart))));
+            }
+            else
+            {
+                threadList.Add(new Thread(() => result.Add(ordinalNumberTranslation.getOrdinalNumberTab(nonDecimal))));
+                threadList.Add(new Thread(() => result.Add(cardinalNumberTranslation.getCardinalTab(nonDecimal))));
+            }
+            foreach (Thread thread in threadList)
+            {
+                thread.Start();
+            }
+            foreach (Thread thread in threadList)
+            {
+                thread.Join();
+            }
+            /*
             Thread cardinalThread = new Thread(() => result.Add(cardinalNumberTranslation.getCardinalTab(nonDecimal)));
             Thread ordinalThread = new Thread(() => result.Add(ordinalNumberTranslation.getOrdinalNumberTab(nonDecimal)));
             Thread fractionThread = new Thread(() => result.Add(fractionNumberTranslation.getFractionTab(nonDecimal, divider)));
@@ -101,7 +139,9 @@ public class Service : IService
                     ordinalThread.Join();
                 }
             }
+            */
         }
+        
         else return negativeNumberTranslation.getNegativeTabs(nonDecimal, decimalPart, divider);
         
         return result;

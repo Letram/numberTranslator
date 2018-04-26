@@ -21,7 +21,7 @@ public class Ordinal
         StringBuilder mask = new StringBuilder(aux);
         StringBuilder parsedNumber = mask.Append(numericValue);
         String ordinalNumberTranslated = "";
-        if (number.Length == 1 && number.Equals("0"))
+        if (number.Equals("0"))
         {
             ordinalNumberArrayList.Add("zéro");
             return ordinalNumberArrayList;
