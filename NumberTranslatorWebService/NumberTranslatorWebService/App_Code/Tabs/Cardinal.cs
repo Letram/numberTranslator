@@ -112,7 +112,6 @@ public class Cardinal
                 cardinalTab.Add(cardinalNumberConverted[i].ToString());
             }
         }
-        cardinalTab.Add(isNegative);
         return cardinalTab;
     }
 }

@@ -26,6 +26,8 @@ public class Fraction
         fractionaryTab.Add("Los números fraccionarios expresan división de un todo en partes y designan las fracciones iguales en que se ha dividido la unidad.");
         fractionaryTab.Add("#Número traducido a texto fraccional");
         fractionaryTab.Add(fractionaryNumberConverted[0].ToString());
+        fractionaryTab.Add("#Valor numérico: ");
+        fractionaryTab.Add((float.Parse(numerator)/float.Parse(denominator)).ToString());
         if (fractionaryNumberConverted.Count > 1)
         {
             fractionaryTab.Add("&&Otras versiones:");
@@ -34,7 +36,6 @@ public class Fraction
                 fractionaryTab.Add(fractionaryNumberConverted[i].ToString());
             }
         }
-        fractionaryTab.Add(isNegative);
         return fractionaryTab;
     }
 
@@ -64,24 +65,46 @@ public class Fraction
         {
             return justOne(denominator, isNegative);
         }
-        
+        if (denominator.Equals("1"))
+        {
+            fractionaryNumber.Add(cardinal.getCardinalNumber(numerator, isNegative)[0].ToString().Trim());
+            return fractionaryNumber;
+        }
+        if (numerator.Equals(denominator)) return justOne("1", isNegative);
+
         String fraction = "";
         if(!numerator.Equals("") && !denominator.Equals(""))
-            fraction = cardinal.getCardinalNumber(numerator, isNegative)[0].ToString().Trim() + " " + ordinal.getOrdinalNumber(denominator)[0].ToString().Trim();
-        fractionaryNumber.Add(pluralize(fraction.Trim()));
+        {
+            fraction = cardinal.getCardinalNumber(numerator, isNegative)[0].ToString().Trim() + " " + checkForSpecialDenominator(denominator);
+            fractionaryNumber.Add(fraction);
+        }
         return fractionaryNumber;
     }
 
-    private object pluralize(string v)
+    private string checkForSpecialDenominator(string denominator)
     {
-        if (!v[v.Length - 1].Equals("s")) v = v + "s";
-        return v;
+        switch (denominator)
+        {
+            case "2":
+                return "demi";
+            case "3":
+                return "tiers";
+            case "4":
+                return "quarts";
+            default:
+                return pluralize(ordinal.getOrdinalNumber(denominator)[0].ToString().Trim());
+        }
+    }
+
+    private string pluralize(string denominator)
+    {
+        if (!denominator[denominator.Length-1].Equals('s')) return denominator + "s";
+        else return denominator;
     }
 
     private ArrayList justOne(String v, Boolean isNegative = false)
     {
         ArrayList res = new ArrayList();
-        res.Add(isNegative);
         switch (v)
         {
             case "1":

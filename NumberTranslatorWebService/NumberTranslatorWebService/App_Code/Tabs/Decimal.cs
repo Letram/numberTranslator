@@ -17,14 +17,28 @@ public class Decimal
     public ArrayList getDecimalTab(String nonDecimal, String decimalPart)
     {
         ArrayList decimalTab = new ArrayList();
+        Boolean negativeCardinal = nonDecimal[0] == '-'? true : false;
+        Boolean negativeOrdinal = decimalPart[0] == '-'? true : false;
+        ArrayList decimalPartTranslated = new ArrayList();
+        ArrayList nonDecimalPartTranslated = new ArrayList();
 
-        ArrayList nonDecimalPartTranslated = cardinal.getCardinalNumber(nonDecimal);
-        ArrayList decimalPartTranslated = cardinal.getCardinalNumber(decimalPart);
+        if((negativeCardinal && negativeOrdinal) || (!negativeCardinal && !negativeOrdinal))
+        {
+            nonDecimalPartTranslated = cardinal.getCardinalNumber(nonDecimal);
+            decimalPartTranslated = cardinal.getCardinalNumber(decimalPart);
+        }else if(negativeOrdinal || negativeCardinal)
+        {
+            nonDecimalPartTranslated = cardinal.getCardinalNumber(nonDecimal, true);
+            decimalPartTranslated = cardinal.getCardinalNumber(decimalPart);
+        }
+
 
         decimalTab.Add("#Decimal");
         decimalTab.Add("Los números decimales expresan una cantidad en relación con la serie de los números naturales más una fracción de una unidad separada por una coma o un punto.");
         decimalTab.Add("#Número traducido a texto decimal");
         decimalTab.Add(nonDecimalPartTranslated[0].ToString().Trim() + " virgule " + decimalPartTranslated[0].ToString().Trim());
+        decimalTab.Add("&Valor numérico: ");
+        decimalTab.Add(nonDecimal + "." + decimalPart);
         if (nonDecimalPartTranslated.Count > 1 && decimalPartTranslated.Count > 1)
         {
             decimalTab.Add("&&Otras versiones:");
@@ -37,6 +51,7 @@ public class Decimal
                 }
             }
         }
+
         return decimalTab;
     }
 }

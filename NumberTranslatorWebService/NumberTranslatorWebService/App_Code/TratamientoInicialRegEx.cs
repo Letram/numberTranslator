@@ -22,13 +22,14 @@ public class TratamientoInicialRegEx
             //partimos de la suposición de que nos lo mandan bien
         {
             cadAux = numeroText;
-            /*
+            
             //tratamiento inicial para quitar valores a no tener en cuenta y preparar la string
             //Se eliminan el $ y el € y los espacios al inicio y al final
             numeroText = numeroText.Replace("$", "");
             numeroText = numeroText.Replace("€", "");
             numeroText = numeroText.Replace('\'', ',');
             numeroText = numeroText.Trim();
+
             // Tratamiento del formato con puntos y comas para los miles y los millones.
             for (int i = 0; i < numeroText.Length; i++)
             {
@@ -50,8 +51,13 @@ public class TratamientoInicialRegEx
                 else if (numeroText.IndexOf(',') > -1) especial = ',';
             }
 
-            cadAux = numeroText.Trim().Replace('.', ',');*/
-            if (cadAux[0].Equals('-')) signoMenos = true;
+            cadAux = numeroText.Trim().Replace('.', ',');
+
+            if (cadAux[0].Equals('-'))
+            {
+                signoMenos = true;
+                cadAux = cadAux.Substring(1);
+            }
 
             //fracciones
             regex = Regex.Match(cadAux.Replace(" ", ""), @"(\d+)\/(\d*)");
@@ -59,6 +65,7 @@ public class TratamientoInicialRegEx
             {
                 cadParteEntera = regex.Groups[1].Value;
                 cadDivisor = regex.Groups[2].Value;
+                return 0; //número correcto
             }
             else cadParteEntera = cadAux;
             if (cadParteEntera.Length == 0 || cadDivisor.Length == 0) return 3; //número mal formado.
@@ -69,13 +76,16 @@ public class TratamientoInicialRegEx
             {
                 cadParteEntera = regex.Groups[1].Value;
                 cadParteDecimal = regex.Groups[2].Value;
+                return 0; //número correcto
             }
-            return -1;
+            else
+                cadParteEntera = cadAux;
+            if (cadParteEntera.Length == 0 || cadParteDecimal.Length == 0) return 3; //número mal formado.
         }
         catch(Exception e)
         {
             return 3;
         }
-
+        return 0;
     }
 }
