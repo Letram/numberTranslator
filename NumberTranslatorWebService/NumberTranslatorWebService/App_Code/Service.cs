@@ -101,6 +101,7 @@ public class Service : IService
             {
                 threadList.Add(new Thread(() => result.Add(cardinalNumberTranslation.getCardinalTab(nonDecimal))));
                 threadList.Add(new Thread(() => result.Add(ordinalNumberTranslation.getOrdinalNumberTab(nonDecimal))));
+                threadList.Add(new Thread(() => result.Add(fractionNumberTranslation.getFractionTab(nonDecimal, divider))));
 
             }
             foreach (Thread thread in threadList)

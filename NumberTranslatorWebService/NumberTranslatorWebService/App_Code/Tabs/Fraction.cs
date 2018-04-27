@@ -28,9 +28,18 @@ public class Fraction
         fractionaryTab.Add("#Número traducido a texto fraccional");
         fractionaryTab.Add(fractionaryNumberConverted[0].ToString());
         fractionaryTab.Add("#Valor numérico: ");
-        NumberFormatInfo nfi = new NumberFormatInfo();
-        nfi.NumberDecimalSeparator = ".";
-        fractionaryTab.Add((float.Parse(numerator)/float.Parse(denominator)).ToString(nfi));
+        if(denominator == "")
+        {
+            NumberFormatInfo nfi = new NumberFormatInfo();
+            nfi.NumberDecimalSeparator = ".";
+            fractionaryTab.Add((float.Parse("1") / float.Parse(numerator)).ToString(nfi));
+        }
+        else
+        {
+            NumberFormatInfo nfi = new NumberFormatInfo();
+            nfi.NumberDecimalSeparator = ".";
+            fractionaryTab.Add((float.Parse(numerator) / float.Parse(denominator)).ToString(nfi));
+        }
         if (fractionaryNumberConverted.Count > 1)
         {
             fractionaryTab.Add("&&Otras versiones:");

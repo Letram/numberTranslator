@@ -43,21 +43,19 @@ public class Decimal
             nonDecimalPartTranslated = cardinal.getCardinalNumber(nonDecimal, true);
             decimalPartTranslated = cardinal.getCardinalNumber(decimalPart);
         }
-
-        System.Diagnostics.Debug.WriteLine(Scales.getShortScale()[decimalPart.Length / 3]);
-
         for (int i = 0; i < decimalPartTranslated.Count; i++)
         {
             switch (decimalPart.Length)
             {
                 case 1:
-                    decimalPartTranslated[i] = decimalPartTranslated[i] + pluralize("dixième", decimalPart);
+                    decimalPartTranslated[i] = decimalPartTranslated[i] + pluralize(" dixième", decimalPart);
                     break;
                 case 2:
-                    decimalPartTranslated[i] = decimalPartTranslated[i] + pluralize("centième", decimalPart);
+                    decimalPartTranslated[i] = decimalPartTranslated[i] + pluralize(" centième", decimalPart);
                     break;
                 default:
                     decimalPartTranslated[i] = decimalPartTranslated[i] + " " + pluralize(ordinal.ordinalTreatment(Scales.getShortScale()[decimalPart.Length / 3], decimalPart), decimalPart);
+                    System.Diagnostics.Debug.WriteLine("=> " + decimalPartTranslated[i].ToString());
                     break;
             }
         }
