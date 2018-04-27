@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Web;
@@ -59,29 +60,68 @@ public class TratamientoInicialRegEx
                 cadAux = cadAux.Substring(1);
             }
 
+            //exponencial (con la e/E)
+            regex = Regex.Match(cadAux.Replace(" ", ""), @"((\d+)(.?\d*)*)[e|E](-)?((\d+)(.?\d*)*)");
+            if (regex.Success)
+            {
+                string preExp = regex.Groups[1].Value;
+                string postExp = regex.Groups[5].Value;
+
+                double expNumber = double.Parse(preExp);
+
+                if(regex.Groups[4].Value == "-")
+                {
+                    expNumber = expNumber / Math.Pow(10, double.Parse(postExp.Replace(".", "")));
+
+                    string expNumberString = expNumber.ToString().Replace(",", ".");
+                    cadParteEntera = expNumberString.Substring(0, expNumberString.IndexOf("."));
+                    cadParteDecimal = expNumberString.Substring(expNumberString.IndexOf(".") + 1);
+                    return 0;
+                }
+                else
+                {
+                    expNumber = expNumber * Math.Pow(10, double.Parse(postExp.Replace(".", "")));
+                    cadParteEntera = expNumber.ToString();
+                    return 0;
+                }
+
+            }
+            else
+            {
+                System.Diagnostics.Debug.WriteLine("No es un exponencial: " + cadAux);
+            }
             //fracciones
-            regex = Regex.Match(cadAux.Replace(" ", ""), @"(\d+)\/(\d*)");
+            regex = Regex.Match(cadAux.Replace(" ", ""), @"(\d+)/(\d*)");
             if (regex.Success)
             {
                 cadParteEntera = regex.Groups[1].Value;
                 cadDivisor = regex.Groups[2].Value;
                 return 0; //número correcto
             }
+            else
+            {
+                System.Diagnostics.Debug.WriteLine("No es una fracción: " + cadAux);
+            }
             //if (cadParteEntera.Length == 0 || cadDivisor.Length == 0) return 3; //número mal formado.
 
-            //decimales
-            regex = Regex.Match(cadAux, @"(\d+),?(\d*)");
+            //decimales y enteros
+            regex = Regex.Match(cadAux, @"(\d*[.|,])(\d+)");
             if (regex.Success)
             {
-                cadParteEntera = regex.Groups[1].Value;
-                cadParteDecimal = regex.Groups[2].Value == ""? "0" : regex.Groups[2].Value;
+                cadParteEntera = regex.Groups[1].Value == "," ? "0" : regex.Groups[1].Value.Remove(regex.Groups[1].Value.Length-1);
+                cadParteDecimal = regex.Groups[2].Value == "" ? "0" : regex.Groups[2].Value;
                 return 0; //número correcto
+            }
+            else
+            {
+                System.Diagnostics.Debug.WriteLine("No es un decimal: " + cadAux);
             }
             /*
             else
                 cadParteEntera = "No ha entrado";
             if (cadParteEntera.Length == 0 || cadParteDecimal.Length == 0) return 3; //número mal formado.
             */
+            cadParteEntera = cadAux;
         }
         catch(Exception e)
         {

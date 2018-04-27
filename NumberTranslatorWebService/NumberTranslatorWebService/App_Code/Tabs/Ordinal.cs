@@ -120,6 +120,7 @@ public class Ordinal
 
     public ArrayList getOrdinalNumberTab(string number)
     {
+        if (number == "") return new ArrayList();
         ArrayList ordinalNumberConverted = getOrdinalNumber(number);
         ArrayList ordinalTab = new ArrayList();
         ordinalTab.Add("#Ordinal");

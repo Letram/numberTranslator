@@ -48,12 +48,12 @@ public class Service : IService
     {
         if (number.Equals("")) return new ArrayList();
         String unformattedNumber = number;
-        String minusSign = "";
         Boolean isNegative = false;
         String nonDecimal = "";
         String decimalPart = "";
         String divider = "";
-        int exit = TratamientoInicial.InitialTratement(ref unformattedNumber, ref minusSign, ref nonDecimal, ref decimalPart, ref divider, ref isNegative);
+        //int exit = TratamientoInicial.InitialTratement(ref unformattedNumber, ref minusSign, ref nonDecimal, ref decimalPart, ref divider, ref isNegative);
+        int exit = TratamientoInicialRegEx.tratamientoInicialRegEx(ref unformattedNumber, ref isNegative, ref nonDecimal, ref decimalPart, ref divider);
 
         Fraction fractionNumberTranslation= new Fraction();
         Cardinal cardinalNumberTranslation= new Cardinal();
@@ -64,7 +64,7 @@ public class Service : IService
         ArrayList result = new ArrayList();
 
         //result.Add("Numero: " + unformattedNumber.Replace(" ", ""));
-        //result.Add("Menos: " + minusSign);
+        //result.Add("Menos: " + isNegative);
         //result.Add("Parte entera: " + nonDecimal);
         //result.Add("Parte decimal: " + decimalPart);
         //result.Add("Divisor: " + divider);
@@ -99,8 +99,9 @@ public class Service : IService
             }
             else
             {
-                threadList.Add(new Thread(() => result.Add(ordinalNumberTranslation.getOrdinalNumberTab(nonDecimal))));
                 threadList.Add(new Thread(() => result.Add(cardinalNumberTranslation.getCardinalTab(nonDecimal))));
+                threadList.Add(new Thread(() => result.Add(ordinalNumberTranslation.getOrdinalNumberTab(nonDecimal))));
+
             }
             foreach (Thread thread in threadList)
             {
