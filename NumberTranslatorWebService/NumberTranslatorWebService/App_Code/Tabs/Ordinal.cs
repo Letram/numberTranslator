@@ -14,12 +14,15 @@ public class Ordinal
     Boolean treated = false;
     public Ordinal() { }
 
-    public ArrayList getOrdinalNumber(string number){
+    public ArrayList getOrdinalNumber(string number)
+    {
         ArrayList ordinalNumberArrayList = new ArrayList();
         StringBuilder numericValue = new StringBuilder(number);
         string aux = new string('0', Scales.GetMask(numericValue.Length));
         StringBuilder mask = new StringBuilder(aux);
-        StringBuilder parsedNumber = mask.Append(numericValue);
+        StringBuilder parsedNumber = new StringBuilder();
+        parsedNumber = mask.Append(numericValue);
+
         String ordinalNumberTranslated = "";
         if (number.Equals("0"))
         {
@@ -49,13 +52,13 @@ public class Ordinal
         
         ordinalNumberTranslated = ordinalTreatment(ordinalNumberTranslated.Trim(), parsedNumber.ToString(parsedNumber.Length - 3, 3));
         //traducimos el resto
-        int bigNumberIndex = 0;
+        int bigNumberIndex = 1;
         for (int i = parsedNumber.Length - 6; i >= 0; i -= 3)
         {
             string translatedGroup = new LessThanAThousand(parsedNumber.ToString(i, 3)).Translate();
             if (!translatedGroup.Equals(""))
             {
-                if (bigNumberIndex == 0)
+                if (bigNumberIndex == 1)
                 {
                     if (translatedGroup.Equals("un"))
                     {
@@ -81,16 +84,16 @@ public class Ordinal
             }
             bigNumberIndex++;
         }
-        bigNumberIndex = 0;
+        bigNumberIndex = 1;
         ordinalNumberTranslated = ordinalNumberTranslated.Trim();
         if (!treated) ordinalNumberTranslated = treatRegularCases(ordinalNumberTranslated, parsedNumber.ToString(parsedNumber.Length - 3, 3));
         ordinalNumberArrayList.Add(ordinalNumberTranslated);
         return ordinalNumberArrayList;
     }
 
-    private string ordinalTreatment(string ordinalNumber, string number)
+    public string ordinalTreatment(string ordinalNumber, string number)
     {
-        if (number.Equals("000")) return "";
+        if (ordinalNumber == "") return "";
         treated = true;
         if (ordinalNumber[ordinalNumber.Length - 1].Equals('q'))
         {
@@ -101,8 +104,6 @@ public class Ordinal
             ordinalNumber = ordinalNumber.Substring(0, ordinalNumber.Length - 1);
             ordinalNumber = ordinalNumber + "v";
         }
-        String ending = "ième";
-
         //regular cases
         return treatRegularCases(ordinalNumber, number);
     }

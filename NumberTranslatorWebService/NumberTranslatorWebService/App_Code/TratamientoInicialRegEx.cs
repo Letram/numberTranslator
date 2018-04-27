@@ -64,16 +64,19 @@ public class TratamientoInicialRegEx
             regex = Regex.Match(cadAux.Replace(" ", ""), @"((\d+)(.?\d*)*)[e|E](-)?((\d+)(.?\d*)*)");
             if (regex.Success)
             {
+
                 string preExp = regex.Groups[1].Value;
                 string postExp = regex.Groups[5].Value;
+                
 
                 double expNumber = double.Parse(preExp);
 
-                if(regex.Groups[4].Value == "-")
+                if (regex.Groups[4].Value == "-")
                 {
                     expNumber = expNumber / Math.Pow(10, double.Parse(postExp.Replace(".", "")));
 
-                    string expNumberString = expNumber.ToString().Replace(",", ".");
+                    string expNumberString = decimal.Parse(expNumber.ToString(), NumberStyles.AllowExponent | NumberStyles.AllowDecimalPoint).ToString().Replace(",", ".");
+
                     cadParteEntera = expNumberString.Substring(0, expNumberString.IndexOf("."));
                     cadParteDecimal = expNumberString.Substring(expNumberString.IndexOf(".") + 1);
                     return 0;
@@ -89,6 +92,7 @@ public class TratamientoInicialRegEx
             else
             {
                 System.Diagnostics.Debug.WriteLine("No es un exponencial: " + cadAux);
+
             }
             //fracciones
             regex = Regex.Match(cadAux.Replace(" ", ""), @"(\d+)/(\d*)");

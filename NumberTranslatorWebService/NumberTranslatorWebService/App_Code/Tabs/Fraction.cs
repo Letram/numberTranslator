@@ -95,6 +95,7 @@ public class Fraction
             case "4":
                 return "quarts";
             default:
+                System.Diagnostics.Debug.WriteLine(denominator);
                 return pluralize(ordinal.getOrdinalNumber(denominator)[0].ToString().Trim());
         }
     }
@@ -125,6 +126,7 @@ public class Fraction
                 res.Add("un quart");
                 break;
             default:
+                System.Diagnostics.Debug.WriteLine(v);
                 res.Add("un " + ordinal.getOrdinalNumber(v)[0].ToString().Trim());
                 break;
         }

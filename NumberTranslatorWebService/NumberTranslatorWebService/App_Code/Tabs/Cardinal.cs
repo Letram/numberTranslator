@@ -34,13 +34,13 @@ public class Cardinal
         longScaleNumber = new LessThanAThousand(parsedNumber.ToString(parsedNumber.Length - 3, 3)).Translate();
         shortScaleNumber = longScaleNumber;
         Boolean hasShortScale = false;
-        int bigNumberIndex = 0;
+        int bigNumberIndex = 1;
         for (int i = parsedNumber.Length - 6; i >= 0; i -= 3)
         {
             string translatedGroup = new LessThanAThousand(parsedNumber.ToString(i, 3)).Translate();
             if (!translatedGroup.Equals(""))
             {
-                if (bigNumberIndex == 0)
+                if (bigNumberIndex == 1)
                 {
                     if (translatedGroup.Equals("un"))
                     {
