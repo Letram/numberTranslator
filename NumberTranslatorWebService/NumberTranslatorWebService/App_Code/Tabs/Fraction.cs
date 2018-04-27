@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Globalization;
 using System.Linq;
 using System.Web;
 
@@ -12,22 +13,36 @@ public class Fraction
     String[] bigNumbersLargeScale = Scales.getLargeScale();
     Cardinal cardinal;
     Ordinal ordinal;
+
     public Fraction(){
         cardinal = new Cardinal();
         ordinal = new Ordinal();
     }
 
-    public ArrayList getFractionTab(String numerator, String denominator)
+    public ArrayList getFractionTab(String numerator, String denominator, Boolean isNegative = false)
     {
-        ArrayList fractionaryNumberConverted = getFractionaryNumber(numerator, denominator);
+        ArrayList fractionaryNumberConverted = getFractionaryNumber(numerator, denominator, isNegative);
         ArrayList fractionaryTab = new ArrayList();
         fractionaryTab.Add("#Fraccionario");
         fractionaryTab.Add("Los números fraccionarios expresan división de un todo en partes y designan las fracciones iguales en que se ha dividido la unidad.");
         fractionaryTab.Add("#Número traducido a texto fraccional");
         fractionaryTab.Add(fractionaryNumberConverted[0].ToString());
+        fractionaryTab.Add("#Valor numérico: ");
+        if(denominator == "")
+        {
+            NumberFormatInfo nfi = new NumberFormatInfo();
+            nfi.NumberDecimalSeparator = ".";
+            fractionaryTab.Add((float.Parse("1") / float.Parse(numerator)).ToString(nfi));
+        }
+        else
+        {
+            NumberFormatInfo nfi = new NumberFormatInfo();
+            nfi.NumberDecimalSeparator = ".";
+            fractionaryTab.Add((float.Parse(numerator) / float.Parse(denominator)).ToString(nfi));
+        }
         if (fractionaryNumberConverted.Count > 1)
         {
-            fractionaryTab.Add("#Otras versiones:");
+            fractionaryTab.Add("&&Otras versiones:");
             for (int i = 1; i < fractionaryNumberConverted.Count; i++)
             {
                 fractionaryTab.Add(fractionaryNumberConverted[i].ToString());
@@ -36,33 +51,71 @@ public class Fraction
         return fractionaryTab;
     }
 
-    private ArrayList getFractionaryNumber(string numerator, string denominator)
+    private ArrayList getFractionaryNumber(string numerator, string denominator, Boolean isNegative = false)
     {
         ArrayList fractionaryNumber = new ArrayList();
-        
+        if (numerator.Equals("0"))
+        {
+            fractionaryNumber.Add(cardinal.getCardinalNumber(numerator)[0].ToString().Trim());
+            return fractionaryNumber;
+        }
+        if (denominator.Equals("0"))
+        {
+            fractionaryNumber.Add("Infini");
+            fractionaryNumber.Add("Indéterminé");
+            return fractionaryNumber;
+        }
         if (numerator.Equals("1") && !denominator.Equals(""))
         {
-            return justOne(denominator);
+            return justOne(denominator, isNegative);
         }
         if (denominator.Equals(""))
         {
-            return cardinal.getCardinalNumber(numerator);
+            return justOne(numerator, isNegative);
         }
-        
+        if (numerator.Equals(""))
+        {
+            return justOne(denominator, isNegative);
+        }
+        if (denominator.Equals("1"))
+        {
+            fractionaryNumber.Add(cardinal.getCardinalNumber(numerator, isNegative)[0].ToString().Trim());
+            return fractionaryNumber;
+        }
+        if (numerator.Equals(denominator)) return justOne("1", isNegative);
+
         String fraction = "";
         if(!numerator.Equals("") && !denominator.Equals(""))
-            fraction = cardinal.getCardinalNumber(numerator)[0].ToString().Trim() + " " + ordinal.getOrdinalNumber(denominator)[0].ToString().Trim();
-        fractionaryNumber.Add(pluralize(fraction.Trim()));
+        {
+            fraction = cardinal.getCardinalNumber(numerator, isNegative)[0].ToString().Trim() + " " + checkForSpecialDenominator(denominator);
+            fractionaryNumber.Add(fraction);
+        }
         return fractionaryNumber;
     }
 
-    private object pluralize(string v)
+    private string checkForSpecialDenominator(string denominator)
     {
-        if (!v[v.Length - 1].Equals("s")) v = v + "s";
-        return v;
+        switch (denominator)
+        {
+            case "2":
+                return "demi";
+            case "3":
+                return "tiers";
+            case "4":
+                return "quarts";
+            default:
+                System.Diagnostics.Debug.WriteLine(denominator);
+                return pluralize(ordinal.getOrdinalNumber(denominator)[0].ToString().Trim());
+        }
     }
 
-    private ArrayList justOne(String v)
+    private string pluralize(string denominator)
+    {
+        if (!denominator[denominator.Length-1].Equals('s')) return denominator + "s";
+        else return denominator;
+    }
+
+    private ArrayList justOne(String v, Boolean isNegative = false)
     {
         ArrayList res = new ArrayList();
         switch (v)
@@ -82,9 +135,18 @@ public class Fraction
                 res.Add("un quart");
                 break;
             default:
+                System.Diagnostics.Debug.WriteLine(v);
                 res.Add("un " + ordinal.getOrdinalNumber(v)[0].ToString().Trim());
                 break;
         }
+        if (isNegative)
+        {
+            for (int i = 0; i < res.Count; i++)
+            {
+                res[i] = "<b>moins</b> " + res[i].ToString().Trim();
+            }
+        }
+
         return res;
     }
 }

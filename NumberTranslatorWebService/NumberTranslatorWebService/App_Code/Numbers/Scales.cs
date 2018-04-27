@@ -9,6 +9,7 @@ using System.Web;
 public class Scales
 {
     private static String[] bigNumbersLongScale ={
+        "",
         "mille",
         "million",
         "milliard",
@@ -50,6 +51,7 @@ public class Scales
         "vigintillon"
     };
     private static String[] bigNumbersShortScale ={
+        "",
         "mille",
         "million",
         "billion",
