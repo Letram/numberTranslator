@@ -60,6 +60,7 @@ public class Service : IService
         Ordinal ordinalNumberTranslation= new Ordinal();
         Negative negativeNumberTranslation= new Negative();
         Decimal decimalNumberTranslation = new Decimal();
+        Multiplicative multiplicativeNumberTranslation = new Multiplicative();
 
         ArrayList result = new ArrayList();
 
@@ -102,6 +103,7 @@ public class Service : IService
                 threadList.Add(new Thread(() => result.Add(cardinalNumberTranslation.getCardinalTab(nonDecimal))));
                 threadList.Add(new Thread(() => result.Add(ordinalNumberTranslation.getOrdinalNumberTab(nonDecimal))));
                 threadList.Add(new Thread(() => result.Add(fractionNumberTranslation.getFractionTab(nonDecimal, divider))));
+                threadList.Add(new Thread(() => result.Add(multiplicativeNumberTranslation.getMultiplicativeTab(nonDecimal))));
 
             }
             foreach (Thread thread in threadList)
