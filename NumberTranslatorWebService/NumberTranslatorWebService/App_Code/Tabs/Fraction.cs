@@ -21,6 +21,7 @@ public class Fraction
 
     public ArrayList getFractionTab(String numerator, String denominator, Boolean isNegative = false)
     {
+        if (numerator.Equals("0") && (denominator.Equals(""))) return new ArrayList();
         ArrayList fractionaryNumberConverted = getFractionaryNumber(numerator, denominator, isNegative);
         ArrayList fractionaryTab = new ArrayList();
         fractionaryTab.Add("#Fraccionario");
@@ -54,7 +55,7 @@ public class Fraction
     private ArrayList getFractionaryNumber(string numerator, string denominator, Boolean isNegative = false)
     {
         ArrayList fractionaryNumber = new ArrayList();
-        if (numerator.Equals("0"))
+        if (numerator.Equals("0") && !denominator.Equals(""))
         {
             fractionaryNumber.Add(cardinal.getCardinalNumber(numerator)[0].ToString().Trim());
             return fractionaryNumber;
