@@ -63,7 +63,10 @@ public class Decimal
         decimalTab.Add("#Decimal");
         decimalTab.Add("Los números decimales expresan una cantidad en relación con la serie de los números naturales más una fracción de una unidad separada por una coma o un punto.");
         decimalTab.Add("#Número traducido a texto decimal");
-        decimalTab.Add(nonDecimalPartTranslated[0].ToString().Trim() + " virgule " + decimalPartTranslated[0].ToString().Trim());
+        if (decimalPartTranslated.Count > 0)
+            decimalTab.Add(nonDecimalPartTranslated[0].ToString().Trim() + " virgule " + decimalPartTranslated[0].ToString().Trim());
+        else
+            decimalTab.Add(nonDecimalPartTranslated[0].ToString().Trim());
         decimalTab.Add("#Valor numérico: ");
         decimalTab.Add(nonDecimal + "." + decimalPart);
         if (nonDecimalPartTranslated.Count > 1 && decimalPartTranslated.Count > 1)

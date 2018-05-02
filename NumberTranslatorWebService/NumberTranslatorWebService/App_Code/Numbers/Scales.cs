@@ -93,6 +93,21 @@ public class Scales
         "octotrigintillion"
     };
 
+    private static String[] multiplicativeNumbers =
+    {
+        "Not available in this form",
+        "Single",
+        "Double",
+        "Triple",
+        "Quadruple",
+        "Quintuple",
+        "Sextuple",
+        "Septuple",
+        "Octuple",
+        "Nonuple",
+        "Décuple"
+    };
+
     public static String[] getLargeScale()
     {
         return bigNumbersLongScale;
@@ -103,6 +118,10 @@ public class Scales
         return bigNumbersShortScale;
     }
 
+    public static String[] getMultiplicativeNumbers()
+    {
+        return multiplicativeNumbers;
+    }
     public static int GetMask(int length)
     {
         int op = 3 - (length % 3);
