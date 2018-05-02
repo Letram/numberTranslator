@@ -15,6 +15,7 @@ public class Cardinal
 
     public ArrayList getCardinalNumber(string number, Boolean isNegative = false){
         ArrayList cardinalNumberArrayList = new ArrayList();
+        if (number == "") return cardinalNumberArrayList;
         StringBuilder numericValue = new StringBuilder(number);
         string aux = new string('0', Scales.GetMask(numericValue.Length));
         StringBuilder mask = new StringBuilder(aux);

@@ -43,10 +43,12 @@ public class Fraction
         }
         if (fractionaryNumberConverted.Count > 1)
         {
+
             fractionaryTab.Add("&&Otras versiones:");
             for (int i = 1; i < fractionaryNumberConverted.Count; i++)
             {
                 fractionaryTab.Add(fractionaryNumberConverted[i].ToString());
+
             }
         }
         return fractionaryTab;

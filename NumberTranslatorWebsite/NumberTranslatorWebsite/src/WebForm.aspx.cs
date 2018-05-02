@@ -113,6 +113,7 @@ public partial class src_WebForm : System.Web.UI.Page
                         if (text[1].Equals('&'))
                         {
                             HtmlGenericControl blueContainer = new HtmlGenericControl("div");
+                            blueContainer.Attributes["class"] += "blueContainer";
                             currentContainer.Controls.Add(blueContainer);
 
                             HtmlGenericControl blueContainerTitle = new HtmlGenericControl("div");
@@ -140,6 +141,7 @@ public partial class src_WebForm : System.Web.UI.Page
                         else
                         {
                             HtmlGenericControl purpleContainer = new HtmlGenericControl("div");
+                            purpleContainer.Attributes["class"] += "purpleContainer";
                             currentContainer.Controls.Add(purpleContainer);
 
                             HtmlGenericControl purpleContainerTitle = new HtmlGenericControl("div");
