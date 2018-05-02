@@ -15,9 +15,9 @@
     <script src="js/bootstrap.min.js"></script>
 </head>
     <body>
-        <div class="jumbotron justify-text-center">
-            <h1><%= Resources.Resources.Traductor %></h1>
-            <p><%= Resources.Resources.Descripcion %></p>
+        <div class="jumbotron">
+            <h1 class="text-center"><%= Resources.Resources.Traductor %></h1>
+            <p class="text-center"><%= Resources.Resources.Descripcion %></p>
 
         </div>
         <div class="container">

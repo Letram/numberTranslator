@@ -61,6 +61,7 @@ public class Service : IService
         Negative negativeNumberTranslation= new Negative();
         Decimal decimalNumberTranslation = new Decimal();
         Multiplicative multiplicativeNumberTranslation = new Multiplicative();
+        Birth_Count birthCountNumberTranslation = new Birth_Count();
 
         ArrayList result = new ArrayList();
 
@@ -105,7 +106,7 @@ public class Service : IService
                 threadList.Add(new Thread(() => result.Add(ordinalNumberTranslation.getOrdinalNumberTab(nonDecimal))));
                 threadList.Add(new Thread(() => result.Add(fractionNumberTranslation.getFractionTab(nonDecimal, divider))));
                 threadList.Add(new Thread(() => result.Add(multiplicativeNumberTranslation.getMultiplicativeTab(nonDecimal))));
-
+                threadList.Add(new Thread(() => result.Add(birthCountNumberTranslation.getBirthCountTab(nonDecimal))));
             }
             foreach (Thread thread in threadList)
             {

@@ -108,6 +108,20 @@ public class Scales
         "Décuple"
     };
 
+    private static String[] birthNumbers =
+{
+        "Not available in this form",
+        "Singleton",
+        "Twin",
+        "Triplet",
+        "Quadruplet",
+        "Quintuplet",
+        "Sextuplet",
+        "Septuplet",
+        "Octuplet",
+        "Nonuplet",
+        "Decuplet"
+    };
     public static String[] getLargeScale()
     {
         return bigNumbersLongScale;
