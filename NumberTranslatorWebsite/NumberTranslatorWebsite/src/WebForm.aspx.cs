@@ -91,16 +91,10 @@ public partial class src_WebForm : System.Web.UI.Page
                         currentContainer.Controls.Add(greyContainer);
 
                         HtmlGenericControl greyContainerTitle = new HtmlGenericControl("div");
-                        greyContainerTitle.Attributes["style"] = "background-color:#d6d6d6;";
+                        greyContainerTitle.Attributes["class"] += " greyContainerTitle";
                         greyContainer.Controls.Add(greyContainerTitle);
 
-                        HtmlGenericControl greyContainerTitleIcon = new HtmlGenericControl("span");
-                        greyContainerTitleIcon.InnerText = "+";
-                        greyContainerTitleIcon.Attributes["style"] = "font-size:32px;padding:10px;";
-                        greyContainerTitle.Controls.Add(greyContainerTitleIcon);
-
                         HtmlGenericControl greyTitleSpan = new HtmlGenericControl("span");
-                        greyTitleSpan.Attributes["style"] = "font-size:32px;padding:0px;";
                         greyTitleSpan.InnerHtml = text.Substring(1);
                         greyContainerTitle.Controls.Add(greyTitleSpan);
 
@@ -117,24 +111,21 @@ public partial class src_WebForm : System.Web.UI.Page
                             currentContainer.Controls.Add(blueContainer);
 
                             HtmlGenericControl blueContainerTitle = new HtmlGenericControl("div");
-                            blueContainerTitle.Attributes["style"] = "background-color:#B3E5FC;";
+                            blueContainerTitle.Attributes["class"] += "blueContainerTitle";
                             blueContainer.Controls.Add(blueContainerTitle);
 
                             HtmlGenericControl blueContainerTitleIcon = new HtmlGenericControl("span");
                             blueContainerTitleIcon.Attributes["id"] = "blueContainerIcon";
                             blueContainerTitleIcon.InnerText = "+";
-                            blueContainerTitleIcon.Attributes["style"] = "font-size:32px;padding:10px;";
                             blueContainerTitle.Controls.Add(blueContainerTitleIcon);
 
                             HtmlGenericControl blueTitleSpan = new HtmlGenericControl("span");
-                            blueTitleSpan.Attributes["style"] = "font-size:32px;padding:0px;";
                             blueTitleSpan.InnerHtml = text.Substring(2);
                             blueContainerTitle.Controls.Add(blueTitleSpan);
 
                             HtmlGenericControl blueContainerBody = new HtmlGenericControl("div");
                             blueContainerBody.Attributes["id"] = "blueContainer";
                             blueContainerBody.Attributes["class"] += "hideOnStart";
-                            blueContainerBody.Attributes["style"] = "padding:10px;";
                             blueContainer.Controls.Add(blueContainerBody);
                             currentContainer = blueContainerBody;
                         }
@@ -145,24 +136,21 @@ public partial class src_WebForm : System.Web.UI.Page
                             currentContainer.Controls.Add(purpleContainer);
 
                             HtmlGenericControl purpleContainerTitle = new HtmlGenericControl("div");
-                            purpleContainerTitle.Attributes["style"] = "background-color:#D1C4E9;";
+                            purpleContainerTitle.Attributes["class"] += "purpleContainerTitle";
                             purpleContainer.Controls.Add(purpleContainerTitle);
 
                             HtmlGenericControl purpleContainerTitleIcon = new HtmlGenericControl("span");
                             purpleContainerTitleIcon.Attributes["id"] = "purpleContainerIcon";
                             purpleContainerTitleIcon.InnerText = "+";
-                            purpleContainerTitleIcon.Attributes["style"] = "font-size:32px;padding:10px;";
                             purpleContainerTitle.Controls.Add(purpleContainerTitleIcon);
 
                             HtmlGenericControl purpleTitleSpan = new HtmlGenericControl("span");
-                            purpleTitleSpan.Attributes["style"] = "font-size:32px;padding:0px;";
                             purpleTitleSpan.InnerHtml = text.Substring(1);
                             purpleContainerTitle.Controls.Add(purpleTitleSpan);
 
                             HtmlGenericControl purpleContainerBody = new HtmlGenericControl("div");
                             purpleContainerBody.Attributes["id"] = "purpleContainer";
                             purpleContainerBody.Attributes["class"] += "hideOnStart";
-                            purpleContainerBody.Attributes["style"] = "padding:10px;";
                             purpleContainer.Controls.Add(purpleContainerBody);
                             currentContainer = purpleContainerBody;
                         }

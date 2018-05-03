@@ -33,13 +33,13 @@ public class Fraction
         {
             NumberFormatInfo nfi = new NumberFormatInfo();
             nfi.NumberDecimalSeparator = ".";
-            fractionaryTab.Add((float.Parse("1") / float.Parse(numerator)).ToString(nfi));
+            fractionaryTab.Add((double.Parse("1") / double.Parse(numerator)).ToString(nfi));
         }
         else
         {
             NumberFormatInfo nfi = new NumberFormatInfo();
             nfi.NumberDecimalSeparator = ".";
-            fractionaryTab.Add((float.Parse(numerator) / float.Parse(denominator)).ToString(nfi));
+            fractionaryTab.Add((double.Parse(numerator) / double.Parse(denominator)).ToString(nfi));
         }
         if (fractionaryNumberConverted.Count > 1)
         {

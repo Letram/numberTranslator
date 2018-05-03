@@ -61,18 +61,19 @@ public class TratamientoInicialRegEx
             }
 
             //exponencial (con la e/E)
-            regex = Regex.Match(cadAux.Replace(" ", ""), @"((\d+)(.?\d*)*)[e|E](-)?((\d+)(.?\d*)*)");
+            
+            regex = Regex.Match(cadAux.Replace(" ", ""), @"([-+]?(\d*\,?\d+))[eE](([-+])?(\d*\.?\d+))");
             if (regex.Success)
             {
-
-                string preExp = regex.Groups[1].Value;
+                string preExp = regex.Groups[2].Value;
                 string postExp = regex.Groups[5].Value;
-                
+                if (int.Parse(postExp) > 120) return 1; //exponente demasiado grande.
 
                 double expNumber = double.Parse(preExp);
-
+                System.Diagnostics.Debug.WriteLine(expNumber);
                 if (regex.Groups[4].Value == "-")
                 {
+
                     expNumber = expNumber / Math.Pow(10, double.Parse(postExp.Replace(".", "")));
 
                     string expNumberString = decimal.Parse(expNumber.ToString(), NumberStyles.AllowExponent | NumberStyles.AllowDecimalPoint).ToString().Replace(",", ".");
@@ -94,6 +95,7 @@ public class TratamientoInicialRegEx
                 System.Diagnostics.Debug.WriteLine("No es un exponencial: " + cadAux);
 
             }
+            
             //fracciones
             regex = Regex.Match(cadAux.Replace(" ", ""), @"(\d+)/(\d*)");
             if (regex.Success)

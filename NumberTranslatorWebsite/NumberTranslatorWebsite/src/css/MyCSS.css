@@ -1,3 +1,37 @@
 ﻿.hideOnStart{
-    display:none
+    display:none;
+    padding:10px;
+}
+
+.blueContainerTitle {
+    background-color: #B3E5FC;
+    cursor: pointer;
+}
+
+.blueContainerTitle span {
+    font-size: 32px;
+    padding: 10px;
+}
+
+.purpleContainerTitle {
+    cursor: pointer;
+    background-color: #D1C4E9;
+}
+
+.purpleContainerTitle span {
+    font-size: 32px;
+    padding: 10px;
+}
+
+.greyContainerTitle {
+    background-color: #d6d6d6;
+}
+
+.greyContainerTitle span {
+    font-size: 32px;
+    padding: 10px;
+}
+
+.greyContainer div{
+    padding: 10px;
 }
