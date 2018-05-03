@@ -14,7 +14,7 @@ public class Birth_Count
 
     private ArrayList getBirthCountNumber(String number)
     {
-        float aux = float.Parse(number);
+        double aux = double.Parse(number);
         ArrayList res = new ArrayList();
         if (aux < 10)
         {

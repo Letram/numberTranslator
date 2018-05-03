@@ -81,7 +81,7 @@ public class Service : IService
                 if (!divider.Equals(""))
                 {
                     threadList.Add(new Thread(() => result.Add(fractionNumberTranslation.getFractionTab(nonDecimal, divider))));
-                    String unformattedAux = (float.Parse(nonDecimal) / float.Parse(divider)).ToString();
+                    String unformattedAux = (double.Parse(nonDecimal) / double.Parse(divider)).ToString();
                     Boolean minus = false;
                     String nonDecimalAux = "";
                     String decimalPartAux = "";

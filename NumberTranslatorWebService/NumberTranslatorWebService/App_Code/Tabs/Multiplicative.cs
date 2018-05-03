@@ -16,7 +16,7 @@ public class Multiplicative
 
     private ArrayList getMultiplicativeNumber(String number)
     {
-        float aux = float.Parse(number);
+        double aux = double.Parse(number);
         ArrayList res = new ArrayList();
         String numberTranslated = cardinal.getCardinalNumber(number)[0].ToString();
         if(aux == 1)
@@ -35,7 +35,7 @@ public class Multiplicative
 
     public ArrayList getMultiplicativeTab(String number)
     {
-        float aux = float.Parse(number);
+        double aux = double.Parse(number);
         if (aux == 0) return new ArrayList();
         ArrayList multiplicativeNumber = getMultiplicativeNumber(number);
         ArrayList multiplicativeTab = new ArrayList();
