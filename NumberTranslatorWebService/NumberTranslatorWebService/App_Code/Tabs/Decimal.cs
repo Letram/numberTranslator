@@ -69,7 +69,8 @@ public class Decimal
         else
             decimalTab.Add(nonDecimalPartTranslated[0].ToString().Trim());
         decimalTab.Add(Resources.Resource.value);
-        decimalTab.Add(nonDecimal + "." + decimalPart);
+        if(isNegative) decimalTab.Add("-" + nonDecimal + "." + decimalPart);
+        else decimalTab.Add(nonDecimal + "." + decimalPart);
         if (nonDecimalPartTranslated.Count > 1 && decimalPartTranslated.Count > 1)
         {
             decimalTab.Add(Resources.Resource.other);

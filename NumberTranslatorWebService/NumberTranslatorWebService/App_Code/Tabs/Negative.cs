@@ -25,11 +25,11 @@ public class Negative
 
         
 
-        if (!divider.Equals(""))
+        if (divider.Equals("") && decimalPart.Equals(""))
         {
             threadList.Add(new Thread(() => negativeTabs.Add(cardinal.getCardinalTab(nonDecimal, true))));
         }
-        else
+        else if(decimalPart.Equals("") && !divider.Equals(""))
         {
             threadList.Add(new Thread(() => negativeTabs.Add(fraction.getFractionTab(nonDecimal, divider, true))));
             String unformattedAux = (double.Parse(nonDecimal) / double.Parse(divider)).ToString();
@@ -39,6 +39,10 @@ public class Negative
             String dividerAux = "";
             int decimalTabFromFraction = TratamientoInicialRegEx.tratamientoInicialRegEx(ref unformattedAux, ref minus, ref nonDecimalAux, ref decimalPartAux, ref dividerAux);
             threadList.Add(new Thread(() => negativeTabs.Add(decimalTab.getDecimalTab(nonDecimalAux, decimalPartAux, true))));
+        }
+        else
+        {
+            threadList.Add(new Thread(() => negativeTabs.Add(decimalTab.getDecimalTab(nonDecimal, decimalPart, true))));
         }
 
 

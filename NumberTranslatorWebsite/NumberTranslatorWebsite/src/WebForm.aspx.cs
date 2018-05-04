@@ -16,7 +16,7 @@ public partial class src_WebForm : System.Web.UI.Page
     private HtmlGenericControl tabsContent;
     protected void Page_Load(object sender, EventArgs e)
     {
-        Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo("fr-FR");
+        Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo("fr");
     }
 
     protected void convertButton_Click(object sender, EventArgs e)

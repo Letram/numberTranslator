@@ -103,7 +103,7 @@ public class Cardinal
         ArrayList cardinalTab = new ArrayList();
         cardinalTab.Add(Resources.Resource.cardinal);
         cardinalTab.Add(Resources.Resource.cardinalDescription);
-        cardinalTab.Add(Resources.Resource.numberDescription);
+        cardinalTab.Add(Resources.Resource.numberCardinalDescription);
         cardinalTab.Add(cardinalNumberConverted[0].ToString());
         if (cardinalNumberConverted.Count > 1)
         {
