@@ -24,11 +24,11 @@ public class Fraction
         if (numerator.Equals("0") && (denominator.Equals(""))) return new ArrayList();
         ArrayList fractionaryNumberConverted = getFractionaryNumber(numerator, denominator, isNegative);
         ArrayList fractionaryTab = new ArrayList();
-        fractionaryTab.Add("#Fraccionario");
-        fractionaryTab.Add("Los números fraccionarios expresan división de un todo en partes y designan las fracciones iguales en que se ha dividido la unidad.");
-        fractionaryTab.Add("#Número traducido a texto fraccional");
+        fractionaryTab.Add(Resources.Resource.fractional);
+        fractionaryTab.Add(Resources.Resource.fractionalDescription);
+        fractionaryTab.Add(Resources.Resource.numberFractionalDescription);
         fractionaryTab.Add(fractionaryNumberConverted[0].ToString());
-        fractionaryTab.Add("#Valor numérico: ");
+        fractionaryTab.Add(Resources.Resource.value);
         if(denominator == "")
         {
             NumberFormatInfo nfi = new NumberFormatInfo();
@@ -44,7 +44,7 @@ public class Fraction
         if (fractionaryNumberConverted.Count > 1)
         {
 
-            fractionaryTab.Add("&&Otras versiones:");
+            fractionaryTab.Add(Resources.Resource.other);
             for (int i = 1; i < fractionaryNumberConverted.Count; i++)
             {
                 fractionaryTab.Add(fractionaryNumberConverted[i].ToString());

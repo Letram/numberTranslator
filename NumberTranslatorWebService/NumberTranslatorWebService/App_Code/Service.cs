@@ -65,14 +65,6 @@ public class Service : IService
 
         ArrayList result = new ArrayList();
 
-        //result.Add("Numero: " + unformattedNumber.Replace(" ", ""));
-        //result.Add("Menos: " + isNegative);
-        //result.Add("Parte entera: " + nonDecimal);
-        //result.Add("Parte decimal: " + decimalPart);
-        //result.Add("Divisor: " + divider);
-        //result.Add(exit);
-        //return result;
-
         if (!isNegative)
         {
             ArrayList threadList = new ArrayList();
@@ -87,15 +79,6 @@ public class Service : IService
                     String decimalPartAux = "";
                     String dividerAux = "";
                     int decimalTabFromFraction = TratamientoInicialRegEx.tratamientoInicialRegEx(ref unformattedAux, ref minus, ref nonDecimalAux, ref decimalPartAux, ref dividerAux);
-                    /*
-                    result.Add("Numero: " + unformattedAux.Replace(" ", ""));
-                    result.Add("Menos: " + minus);
-                    result.Add("Parte entera: " + nonDecimalAux);
-                    result.Add("Parte decimal: " + decimalPartAux);
-                    result.Add("Divisor: " + divider);
-                    result.Add(exit);
-                    return result;
-                    */
                     threadList.Add(new Thread(() => result.Add(decimalNumberTranslation.getDecimalTab(nonDecimalAux, decimalPartAux))));
                 }
                 else threadList.Add(new Thread(() => result.Add(decimalNumberTranslation.getDecimalTab(nonDecimal, decimalPart))));

@@ -16,7 +16,7 @@ public class Decimal
         ordinal = new Ordinal();
     }
 
-    public ArrayList getDecimalTab(String nonDecimal, String decimalPart)
+    public ArrayList getDecimalTab(String nonDecimal, String decimalPart, Boolean isNegative = false)
     {
         ArrayList decimalTab = new ArrayList();
 
@@ -60,18 +60,19 @@ public class Decimal
             }
         }
 
-        decimalTab.Add("#Decimal");
-        decimalTab.Add("Los números decimales expresan una cantidad en relación con la serie de los números naturales más una fracción de una unidad separada por una coma o un punto.");
-        decimalTab.Add("#Número traducido a texto decimal");
+        decimalTab.Add(Resources.Resource.decimalTitle);
+        decimalTab.Add(Resources.Resource.decimalDescription);
+        decimalTab.Add(Resources.Resource.decimalNumberDescription);
+        if (isNegative) nonDecimalPartTranslated[0] = "<b>moins </b>" + nonDecimalPartTranslated[0].ToString().Trim();
         if (decimalPartTranslated.Count > 0)
             decimalTab.Add(nonDecimalPartTranslated[0].ToString().Trim() + " virgule " + decimalPartTranslated[0].ToString().Trim());
         else
             decimalTab.Add(nonDecimalPartTranslated[0].ToString().Trim());
-        decimalTab.Add("#Valor numérico: ");
+        decimalTab.Add(Resources.Resource.value);
         decimalTab.Add(nonDecimal + "." + decimalPart);
         if (nonDecimalPartTranslated.Count > 1 && decimalPartTranslated.Count > 1)
         {
-            decimalTab.Add("&&Otras versiones:");
+            decimalTab.Add(Resources.Resource.other);
             for (int i = 0; i < nonDecimalPartTranslated.Count; i++)
             {
                 for(int j = 0; j < decimalPartTranslated.Count; j++)

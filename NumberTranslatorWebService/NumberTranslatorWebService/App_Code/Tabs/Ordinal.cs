@@ -124,13 +124,13 @@ public class Ordinal
         if (number == "0") return new ArrayList();
         ArrayList ordinalNumberConverted = getOrdinalNumber(number);
         ArrayList ordinalTab = new ArrayList();
-        ordinalTab.Add("#Ordinal");
-        ordinalTab.Add("Los números ordinales expresan orden o sucesión e indican el lugar que ocupa el elemento en una serie ordenada.");
-        ordinalTab.Add("#Número traducido a texto ordinal");
+        ordinalTab.Add(Resources.Resource.ordinal);
+        ordinalTab.Add(Resources.Resource.ordinalDescription);
+        ordinalTab.Add(Resources.Resource.numberOrdinalDescription);
         ordinalTab.Add(ordinalNumberConverted[0].ToString());
         if (ordinalNumberConverted.Count > 1)
         {
-            ordinalTab.Add("#Otras versiones:");
+            ordinalTab.Add(Resources.Resource.other);
             for (int i = 1; i < ordinalNumberConverted.Count; i++)
             {
                 ordinalTab.Add(ordinalNumberConverted[i].ToString());

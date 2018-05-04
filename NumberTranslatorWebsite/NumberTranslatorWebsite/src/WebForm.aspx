@@ -16,8 +16,8 @@
 </head>
     <body>
         <div class="jumbotron">
-            <h1 class="text-center"><%= Resources.Resources.Traductor %></h1>
-            <p class="text-center"><%= Resources.Resources.Descripcion %></p>
+            <h1 class="text-center"><%= Resources.Resource.translator %></h1>
+            <p class="text-center"><%= Resources.Resource.description %></p>
 
         </div>
         <div class="container">
@@ -26,7 +26,7 @@
                     <form id="webForm" runat="server">
                         <div class="form-group">
                             <div class="input-group">
-                                <div class="input-group-prepend"><span class="input-group-text"><%= Resources.Resources.Introducir_numero %></span></div><asp:TextBox ID="number" runat="server" CssClass="form-control"></asp:TextBox>
+                                <div class="input-group-prepend"><span class="input-group-text"><%= Resources.Resource.writeNumber %></span></div><asp:TextBox ID="number" runat="server" CssClass="form-control"></asp:TextBox>
                                 <div class="input-group-append"><asp:Button ID="convertButton" runat="server" CssClass="btn btn-primary" Text="Traducir!" OnClick="convertButton_Click" /></div>
                             </div>
                         </div>
