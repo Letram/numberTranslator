@@ -105,6 +105,7 @@ public class Cardinal
         cardinalTab.Add(Resources.Resource.cardinalDescription);
         cardinalTab.Add(Resources.Resource.numberCardinalDescription);
         cardinalTab.Add(cardinalNumberConverted[0].ToString());
+        cardinalTab.Add("@" + cardinalNumberConverted[0].ToString());
         if (cardinalNumberConverted.Count > 1)
         {
             cardinalTab.Add(Resources.Resource.other);

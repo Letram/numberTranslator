@@ -120,6 +120,9 @@
   <data name="description" xml:space="preserve">
     <value>Use this tool to translate numbers to their french text translation.</value>
   </data>
+  <data name="translateButton" xml:space="preserve">
+    <value>Translate!</value>
+  </data>
   <data name="translator" xml:space="preserve">
     <value>Number to french text translator</value>
   </data>

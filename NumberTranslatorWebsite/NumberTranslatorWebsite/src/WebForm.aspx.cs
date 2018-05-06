@@ -16,7 +16,7 @@ public partial class src_WebForm : System.Web.UI.Page
     private HtmlGenericControl tabsContent;
     protected void Page_Load(object sender, EventArgs e)
     {
-        Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo("fr");
+        //Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo("fr");
     }
 
     protected void convertButton_Click(object sender, EventArgs e)
@@ -35,7 +35,6 @@ public partial class src_WebForm : System.Web.UI.Page
 
         ServiceReference1.ServiceClient translator = new ServiceReference1.ServiceClient();
         ArrayList serviceTabs = translator.getTabs(number.Text);
-        //foreach (int text in serviceTabs) { }
         Boolean firstSet = false;
         for(int i = 0; i < serviceTabs.Count; i++)
         {
@@ -155,12 +154,20 @@ public partial class src_WebForm : System.Web.UI.Page
                             currentContainer = purpleContainerBody;
                         }
                         break;
+                    case '@':
+                        HtmlGenericControl button = new HtmlGenericControl("button");
+                        button.Attributes["class"] += "btn btn-primary btn-lg btn-block my-2";
+                        button.Attributes["onclick"] = "responsiveVoice.speak(\'" + text.Substring(1) + "\', \'French Female\');";
+                        button.InnerText = "Click on me to hear how it sounds!";
+                        currentContainer.Controls.Add(button);
+                        break;
+
                     default:
                         HtmlGenericControl p = new HtmlGenericControl("p");
+                        p.Attributes["class"] += "text-justify";
                         p.InnerHtml = text;
                         currentContainer.Controls.Add(p);
                         break;
-
                 }
             }
         }

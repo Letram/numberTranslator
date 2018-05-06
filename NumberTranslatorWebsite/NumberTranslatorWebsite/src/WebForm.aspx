@@ -13,6 +13,7 @@
     <script src="js/jquery-3.3.1.min.js"></script>
     <script src="js/tether.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
+    <script src="js/responsivevoice.js"></script>
 </head>
     <body>
         <div class="jumbotron">
@@ -27,7 +28,7 @@
                         <div class="form-group">
                             <div class="input-group">
                                 <div class="input-group-prepend"><span class="input-group-text"><%= Resources.Resource.writeNumber %></span></div><asp:TextBox ID="number" runat="server" CssClass="form-control"></asp:TextBox>
-                                <div class="input-group-append"><asp:Button ID="convertButton" runat="server" CssClass="btn btn-primary" Text="Traducir!" OnClick="convertButton_Click" /></div>
+                                <div class="input-group-append"><asp:Button ID="convertButton" runat="server" CssClass="btn btn-primary" Text="Translate!" OnClick="convertButton_Click" /></div>
                             </div>
                         </div>
                     </form>

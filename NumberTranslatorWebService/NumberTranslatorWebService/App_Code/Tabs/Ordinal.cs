@@ -14,7 +14,7 @@ public class Ordinal
     Boolean treated = false;
     public Ordinal() { }
 
-    public ArrayList getOrdinalNumber(string number)
+    public ArrayList getOrdinalNumber(string number, Boolean isDecimal = false)
     {
         ArrayList ordinalNumberArrayList = new ArrayList();
         StringBuilder numericValue = new StringBuilder(number);
@@ -78,7 +78,8 @@ public class Ordinal
 
                     else
                     {
-                        ordinalNumberTranslated = translatedGroup + " " + bigNumbersLongScale[bigNumberIndex] + " " + ordinalNumberTranslated;
+                        if (isDecimal) ordinalNumberTranslated = bigNumbersLongScale[bigNumberIndex] + " " + ordinalNumberTranslated;
+                        else ordinalNumberTranslated = translatedGroup + " " + bigNumbersLongScale[bigNumberIndex] + " " + ordinalNumberTranslated;
                     }
                 }
             }
@@ -110,10 +111,9 @@ public class Ordinal
 
     private string treatRegularCases(string ordinalNumber, string number)
     {
+        System.Diagnostics.Debug.WriteLine(ordinalNumber);
         String ending = "ième";
-        if (ordinalNumber[ordinalNumber.Length - 1].Equals('e') ||
-           (ordinalNumber[ordinalNumber.Length - 1].Equals('s') && !number[number.Length - 1].Equals('3')))
-        {
+        if (ordinalNumber[ordinalNumber.Length - 1].Equals('e')){
             ordinalNumber = ordinalNumber.Substring(0, ordinalNumber.Length - 1);
         }
         return ordinalNumber + ending;
@@ -128,6 +128,7 @@ public class Ordinal
         ordinalTab.Add(Resources.Resource.ordinalDescription);
         ordinalTab.Add(Resources.Resource.numberOrdinalDescription);
         ordinalTab.Add(ordinalNumberConverted[0].ToString());
+        ordinalTab.Add("@" + ordinalNumberConverted[0].ToString());
         if (ordinalNumberConverted.Count > 1)
         {
             ordinalTab.Add(Resources.Resource.other);
