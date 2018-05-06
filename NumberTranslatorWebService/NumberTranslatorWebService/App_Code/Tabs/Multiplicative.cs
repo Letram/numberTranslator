@@ -43,6 +43,7 @@ public class Multiplicative
         multiplicativeTab.Add(Resources.Resource.multiplicativeDescription);
         multiplicativeTab.Add(Resources.Resource.numberMultiplicativeDescription);
         multiplicativeTab.Add(multiplicativeNumber[0].ToString());
+        multiplicativeTab.Add("@" + multiplicativeNumber[0].ToString());
         if (multiplicativeNumber.Count > 1)
         {
             multiplicativeTab.Add(Resources.Resource.other);

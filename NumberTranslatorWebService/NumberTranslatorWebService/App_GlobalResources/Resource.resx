@@ -124,7 +124,7 @@
     <value>Born in a multiple childbirth.</value>
   </data>
   <data name="birthNumberDescription" xml:space="preserve">
-    <value>Born of a childbirth with none or more siblings. (French)</value>
+    <value>#Born of a childbirth with none or more siblings. (French)</value>
   </data>
   <data name="cardinal" xml:space="preserve">
     <value>#Cardinal</value>
@@ -160,7 +160,7 @@
     <value>#Number converted to partitive text (French)</value>
   </data>
   <data name="numberMultiplicativeDescription" xml:space="preserve">
-    <value>Number converted to multiplicative text (French)</value>
+    <value>#Number converted to multiplicative text (French)</value>
   </data>
   <data name="numberOrdinalDescription" xml:space="preserve">
     <value>#Number converted to ordinal text (French)</value>

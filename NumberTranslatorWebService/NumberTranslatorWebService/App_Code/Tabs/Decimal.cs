@@ -65,9 +65,15 @@ public class Decimal
         decimalTab.Add(Resources.Resource.decimalNumberDescription);
         if (isNegative) nonDecimalPartTranslated[0] = "<b>moins </b>" + nonDecimalPartTranslated[0].ToString().Trim();
         if (decimalPartTranslated.Count > 0)
+        {
             decimalTab.Add(nonDecimalPartTranslated[0].ToString().Trim() + " virgule " + decimalPartTranslated[0].ToString().Trim());
+            decimalTab.Add("@" + nonDecimalPartTranslated[0].ToString().Trim() + " virgule " + decimalPartTranslated[0].ToString().Trim());
+        }
         else
+        {
             decimalTab.Add(nonDecimalPartTranslated[0].ToString().Trim());
+            decimalTab.Add("@" + nonDecimalPartTranslated[0].ToString().Trim());
+        }
         decimalTab.Add(Resources.Resource.value);
         if(isNegative) decimalTab.Add("-" + nonDecimal + "." + decimalPart);
         else decimalTab.Add(nonDecimal + "." + decimalPart);
