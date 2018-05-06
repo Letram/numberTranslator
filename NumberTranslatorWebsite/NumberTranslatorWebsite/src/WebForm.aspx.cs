@@ -34,7 +34,8 @@ public partial class src_WebForm : System.Web.UI.Page
         tabs_panel.Controls.Add(tabsContent);
 
         ServiceReference1.ServiceClient translator = new ServiceReference1.ServiceClient();
-        ArrayList serviceTabs = translator.getTabs(number.Text);
+        String language = Thread.CurrentThread.CurrentUICulture.Name;
+        ArrayList serviceTabs = translator.getTabs(number.Text, language);
         Boolean firstSet = false;
         for(int i = 0; i < serviceTabs.Count; i++)
         {
