@@ -16,7 +16,7 @@ public class Birth_Count
         ArrayList res = new ArrayList();
         if (aux < 10)
         {
-            res.Add(Scales.getMultiplicativeNumbers()[int.Parse(aux.ToString())]);
+            res.Add(Scales.getBirthNumbers()[int.Parse(aux.ToString())]);
         }
         return res;
     }

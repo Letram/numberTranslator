@@ -23,7 +23,7 @@ public class Cardinal
         string longScaleNumber = "";
         string shortScaleNumber = "";
         string negative = "";
-        if (isNegative) negative = "<b>moins</b> ";
+        if (isNegative) negative = "moins ";
         if(number.Length == 1 && number.Equals("0"))
         {
             cardinalNumberArrayList.Add("zéro");
@@ -105,6 +105,7 @@ public class Cardinal
         cardinalTab.Add(Resources.Resource.cardinalDescription);
         cardinalTab.Add(Resources.Resource.numberCardinalDescription);
         cardinalTab.Add(cardinalNumberConverted[0].ToString());
+        String negativePreffix = "";
         cardinalTab.Add("@" + cardinalNumberConverted[0].ToString());
         if (cardinalNumberConverted.Count > 1)
         {

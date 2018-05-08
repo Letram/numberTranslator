@@ -26,7 +26,7 @@ public class Ordinal
         String ordinalNumberTranslated = "";
         if (number.Equals("0"))
         {
-            ordinalNumberArrayList.Add("zéro");
+            ordinalNumberArrayList.Add("zéroième");
             return ordinalNumberArrayList;
         }
         //traducimos los primeros tres números
@@ -121,7 +121,6 @@ public class Ordinal
 
     public ArrayList getOrdinalNumberTab(string number)
     {
-        if (number == "0") return new ArrayList();
         ArrayList ordinalNumberConverted = getOrdinalNumber(number);
         ArrayList ordinalTab = new ArrayList();
         ordinalTab.Add(Resources.Resource.ordinal);

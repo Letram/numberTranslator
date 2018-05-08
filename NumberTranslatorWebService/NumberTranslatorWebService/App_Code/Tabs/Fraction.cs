@@ -149,7 +149,7 @@ public class Fraction
         {
             for (int i = 0; i < res.Count; i++)
             {
-                res[i] = "<b>moins</b> " + res[i].ToString().Trim();
+                res[i] = "moins " + res[i].ToString().Trim();
             }
         }
 
