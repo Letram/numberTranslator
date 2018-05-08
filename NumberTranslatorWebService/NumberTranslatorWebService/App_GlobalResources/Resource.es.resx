@@ -117,13 +117,64 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="description" xml:space="preserve">
-    <value>Utilisez cet outil pour traduire les chiffres en traduction française.</value>
+  <data name="birth" xml:space="preserve">
+    <value>#Nacimientos</value>
   </data>
-  <data name="translator" xml:space="preserve">
-    <value>Numéro au traducteur de texte français</value>
+  <data name="birthDescripion" xml:space="preserve">
+    <value>Nacido de un parto múltiple</value>
   </data>
-  <data name="writeNumber" xml:space="preserve">
-    <value>Écrivez votre numéro</value>
+  <data name="birthNumberDescription" xml:space="preserve">
+    <value>#Nacimiento de un parto solo o con más hermanos. (French)</value>
+  </data>
+  <data name="cardinal" xml:space="preserve">
+    <value>#Cardinal</value>
+  </data>
+  <data name="cardinalDescription" xml:space="preserve">
+    <value>Los números cardinales expresan cantidad en relación con la serie de los números naturales.</value>
+  </data>
+  <data name="decimalDescription" xml:space="preserve">
+    <value>Los números decimales expresan una cantidad en relación con la serie de los números naturales más una fracción de una unidad separada por una coma o un punto.</value>
+  </data>
+  <data name="decimalNumberDescription" xml:space="preserve">
+    <value>#Número traducido a texto decimal.(French)</value>
+  </data>
+  <data name="decimalTitle" xml:space="preserve">
+    <value>#Decimal</value>
+  </data>
+  <data name="fractional" xml:space="preserve">
+    <value>#Fraccionario</value>
+  </data>
+  <data name="fractionalDescription" xml:space="preserve">
+    <value>Los números fraccionarios expresan división de un todo en partes y designan las fracciones iguales en que se ha dividido la unidad.</value>
+  </data>
+  <data name="multiplicative" xml:space="preserve">
+    <value>#Multiplicativo</value>
+  </data>
+  <data name="multiplicativeDescription" xml:space="preserve">
+    <value>Los números multiplicativos expresan que el sustantivo al que se refieren se compone de tantas unidades o implica tantas repeticiones como el numeral indica.</value>
+  </data>
+  <data name="numberCardinalDescription" xml:space="preserve">
+    <value>#Número traducido a texto cardinal. (French)</value>
+  </data>
+  <data name="numberFractionalDescription" xml:space="preserve">
+    <value>#Número traducido a texto fraccionario o partitivo. (French)</value>
+  </data>
+  <data name="numberMultiplicativeDescription" xml:space="preserve">
+    <value>#Número traducido a texto multiplicativo. (French)</value>
+  </data>
+  <data name="numberOrdinalDescription" xml:space="preserve">
+    <value>#Número traducido a texto ordinal.(French)</value>
+  </data>
+  <data name="ordinal" xml:space="preserve">
+    <value>#Ordinal</value>
+  </data>
+  <data name="ordinalDescription" xml:space="preserve">
+    <value>Los números ordinales expresan orden o sucesión e indican el lugar que ocupa el elemento en una serie ordenada.</value>
+  </data>
+  <data name="other" xml:space="preserve">
+    <value>&amp;&amp;Otras formas de decirlo:</value>
+  </data>
+  <data name="value" xml:space="preserve">
+    <value>#Valor numérico</value>
   </data>
 </root>

@@ -7,9 +7,7 @@ using System.Web;
 /// Descripción breve de Class1
 /// </summary>
 public class Birth_Count
-{
-    Cardinal cardinal;
-    public Birth_Count()
+{    public Birth_Count()
     { }
 
     private ArrayList getBirthCountNumber(String number)
@@ -18,7 +16,7 @@ public class Birth_Count
         ArrayList res = new ArrayList();
         if (aux < 10)
         {
-            res.Add(Scales.getMultiplicativeNumbers()[int.Parse(aux.ToString())]);
+            res.Add(Scales.getBirthNumbers()[int.Parse(aux.ToString())]);
         }
         return res;
     }
@@ -29,13 +27,14 @@ public class Birth_Count
         ArrayList birthCountNumberTab = new ArrayList();
         if (birthCountNumber.Count < 1)
             return birthCountNumberTab;
-        birthCountNumberTab.Add("#Nacimientos");
-        birthCountNumberTab.Add("Nacido de un parto con más hermanos.");
-        birthCountNumberTab.Add("#Nacido de un parto de " + number + "hermanos.");
+        birthCountNumberTab.Add(Resources.Resource.birth);
+        birthCountNumberTab.Add(Resources.Resource.birthDescripion);
+        birthCountNumberTab.Add(Resources.Resource.birthNumberDescription);
         birthCountNumberTab.Add(birthCountNumber[0].ToString());
+        birthCountNumberTab.Add("@" + birthCountNumber[0].ToString());
         if (birthCountNumber.Count > 1)
         {
-            birthCountNumberTab.Add("&&Otras versiones:");
+            birthCountNumberTab.Add(Resources.Resource.other);
             for (int i = 1; i < birthCountNumber.Count; i++)
             {
                 birthCountNumberTab.Add(birthCountNumber[i].ToString());

@@ -24,27 +24,30 @@ public class Fraction
         if (numerator.Equals("0") && (denominator.Equals(""))) return new ArrayList();
         ArrayList fractionaryNumberConverted = getFractionaryNumber(numerator, denominator, isNegative);
         ArrayList fractionaryTab = new ArrayList();
-        fractionaryTab.Add("#Fraccionario");
-        fractionaryTab.Add("Los números fraccionarios expresan división de un todo en partes y designan las fracciones iguales en que se ha dividido la unidad.");
-        fractionaryTab.Add("#Número traducido a texto fraccional");
+        fractionaryTab.Add(Resources.Resource.fractional);
+        fractionaryTab.Add(Resources.Resource.fractionalDescription);
+        fractionaryTab.Add(Resources.Resource.numberFractionalDescription);
         fractionaryTab.Add(fractionaryNumberConverted[0].ToString());
-        fractionaryTab.Add("#Valor numérico: ");
+        fractionaryTab.Add("@" + fractionaryNumberConverted[0].ToString());
+        fractionaryTab.Add(Resources.Resource.value);
         if(denominator == "")
         {
             NumberFormatInfo nfi = new NumberFormatInfo();
             nfi.NumberDecimalSeparator = ".";
-            fractionaryTab.Add((double.Parse("1") / double.Parse(numerator)).ToString(nfi));
+            if (isNegative) fractionaryTab.Add("-" + (double.Parse("1") / double.Parse(numerator)).ToString(nfi));
+            else fractionaryTab.Add((double.Parse("1") / double.Parse(numerator)).ToString(nfi));
         }
         else
         {
             NumberFormatInfo nfi = new NumberFormatInfo();
             nfi.NumberDecimalSeparator = ".";
-            fractionaryTab.Add((double.Parse(numerator) / double.Parse(denominator)).ToString(nfi));
+            if(isNegative) fractionaryTab.Add("-"+(double.Parse(numerator) / double.Parse(denominator)).ToString(nfi));
+            else fractionaryTab.Add((double.Parse(numerator) / double.Parse(denominator)).ToString(nfi));
         }
         if (fractionaryNumberConverted.Count > 1)
         {
 
-            fractionaryTab.Add("&&Otras versiones:");
+            fractionaryTab.Add(Resources.Resource.other);
             for (int i = 1; i < fractionaryNumberConverted.Count; i++)
             {
                 fractionaryTab.Add(fractionaryNumberConverted[i].ToString());
@@ -70,11 +73,11 @@ public class Fraction
         }
         if (numerator.Equals("1") && !denominator.Equals(""))
         {
-            return justOne(denominator, isNegative);
+            return justOne(denominator, isNegative, true);
         }
         if (denominator.Equals(""))
         {
-            return justOne(numerator, isNegative);
+            return justOne(numerator, isNegative, true);
         }
         if (numerator.Equals(""))
         {
@@ -107,8 +110,7 @@ public class Fraction
             case "4":
                 return "quarts";
             default:
-                System.Diagnostics.Debug.WriteLine(denominator);
-                return pluralize(ordinal.getOrdinalNumber(denominator)[0].ToString().Trim());
+                return pluralize(ordinal.getOrdinalNumber(denominator, true)[0].ToString().Trim());
         }
     }
 
@@ -118,7 +120,7 @@ public class Fraction
         else return denominator;
     }
 
-    private ArrayList justOne(String v, Boolean isNegative = false)
+    private ArrayList justOne(String v, Boolean isNegative = false, Boolean isDecimal = false)
     {
         ArrayList res = new ArrayList();
         switch (v)
@@ -138,15 +140,16 @@ public class Fraction
                 res.Add("un quart");
                 break;
             default:
-                System.Diagnostics.Debug.WriteLine(v);
-                res.Add("un " + ordinal.getOrdinalNumber(v)[0].ToString().Trim());
+                String prefix = "";
+                if (!isDecimal) prefix = "un ";
+                res.Add(prefix + ordinal.getOrdinalNumber(v)[0].ToString().Trim());
                 break;
         }
         if (isNegative)
         {
             for (int i = 0; i < res.Count; i++)
             {
-                res[i] = "<b>moins</b> " + res[i].ToString().Trim();
+                res[i] = "moins " + res[i].ToString().Trim();
             }
         }
 

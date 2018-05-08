@@ -23,7 +23,7 @@ public class Cardinal
         string longScaleNumber = "";
         string shortScaleNumber = "";
         string negative = "";
-        if (isNegative) negative = "<b>moins</b> ";
+        if (isNegative) negative = "moins ";
         if(number.Length == 1 && number.Equals("0"))
         {
             cardinalNumberArrayList.Add("zéro");
@@ -101,13 +101,15 @@ public class Cardinal
     {
         ArrayList cardinalNumberConverted = getCardinalNumber(number, isNegative);
         ArrayList cardinalTab = new ArrayList();
-        cardinalTab.Add("#Cardinal");
-        cardinalTab.Add("Los números cardinales expresan cantidad en relación con los números naturales.");
-        cardinalTab.Add("#Número traducido a texto cardinal");
+        cardinalTab.Add(Resources.Resource.cardinal);
+        cardinalTab.Add(Resources.Resource.cardinalDescription);
+        cardinalTab.Add(Resources.Resource.numberCardinalDescription);
         cardinalTab.Add(cardinalNumberConverted[0].ToString());
+        String negativePreffix = "";
+        cardinalTab.Add("@" + cardinalNumberConverted[0].ToString());
         if (cardinalNumberConverted.Count > 1)
         {
-            cardinalTab.Add("&&Otras versiones:");
+            cardinalTab.Add(Resources.Resource.other);
             for (int i = 1; i < cardinalNumberConverted.Count; i++)
             {
                 cardinalTab.Add(cardinalNumberConverted[i].ToString());

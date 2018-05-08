@@ -118,12 +118,12 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="description" xml:space="preserve">
-    <value>Utilisez cet outil pour traduire les chiffres en traduction française.</value>
+    <value>Usa esta útil herramienta para poder traducir números del dígito al francés de una forma cómoda y sencilla.</value>
   </data>
   <data name="translator" xml:space="preserve">
-    <value>Numéro au traducteur de texte français</value>
+    <value>Traductor de números a texto en francés</value>
   </data>
   <data name="writeNumber" xml:space="preserve">
-    <value>Écrivez votre numéro</value>
+    <value>Escriba su número</value>
   </data>
 </root>

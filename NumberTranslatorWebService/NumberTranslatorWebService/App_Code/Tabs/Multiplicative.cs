@@ -39,13 +39,14 @@ public class Multiplicative
         if (aux == 0) return new ArrayList();
         ArrayList multiplicativeNumber = getMultiplicativeNumber(number);
         ArrayList multiplicativeTab = new ArrayList();
-        multiplicativeTab.Add("#Multiplicativo");
-        multiplicativeTab.Add("Los números multiplicativos expresan que el sustantivo al que se refieren se compone de tantas unidades o implica tantas repeticiones como indica el numeral.");
-        multiplicativeTab.Add("#Número traducido a texto multiplicativo");
+        multiplicativeTab.Add(Resources.Resource.multiplicative);
+        multiplicativeTab.Add(Resources.Resource.multiplicativeDescription);
+        multiplicativeTab.Add(Resources.Resource.numberMultiplicativeDescription);
         multiplicativeTab.Add(multiplicativeNumber[0].ToString());
+        multiplicativeTab.Add("@" + multiplicativeNumber[0].ToString());
         if (multiplicativeNumber.Count > 1)
         {
-            multiplicativeTab.Add("&&Otras versiones:");
+            multiplicativeTab.Add(Resources.Resource.other);
             for (int i = 1; i < multiplicativeNumber.Count; i++)
             {
                 multiplicativeTab.Add(multiplicativeNumber[i].ToString());

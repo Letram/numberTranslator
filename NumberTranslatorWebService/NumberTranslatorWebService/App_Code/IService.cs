@@ -18,7 +18,7 @@ public interface IService
 	CompositeType GetDataUsingDataContract(CompositeType composite);
 
     [OperationContract]
-    ArrayList getTabs(String number);
+    ArrayList getTabs(String number, String language);
     // TODO: agregue aquí sus operaciones de servicio
 }
 

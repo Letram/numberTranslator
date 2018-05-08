@@ -30,29 +30,19 @@ public class Service : IService
 		return composite;
 	}
 
-
-    private ArrayList getNegativeNumberTab(String number)
+    public ArrayList getTabs(string number, String language)
     {
-        return new ArrayList();
-        /*
-        ArrayList res = new ArrayList();
-        res.Add("#Negativo");
-        res.Add("Los números negativos expresan pérdidas, deudas, disminuciones, etc. en relaciones con los números naturales.");
-        res.Add("#Número traducido a texto cardinal.");
-        res.Add("moins " + getCardinalNumber(number.Substring(1))[0].ToString());
-        return res;
-        */
-    }
-
-    public ArrayList getTabs(string number)
-    {
+        System.Diagnostics.Debug.WriteLine(language);
+        if(language.Contains("fr") || language.Contains("es"))
+        {
+            Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo(language, false);
+        }
         if (number.Equals("")) return new ArrayList();
         String unformattedNumber = number;
         Boolean isNegative = false;
         String nonDecimal = "";
         String decimalPart = "";
         String divider = "";
-        //int exit = TratamientoInicial.InitialTratement(ref unformattedNumber, ref minusSign, ref nonDecimal, ref decimalPart, ref divider, ref isNegative);
         int exit = TratamientoInicialRegEx.tratamientoInicialRegEx(ref unformattedNumber, ref isNegative, ref nonDecimal, ref decimalPart, ref divider);
 
         Fraction fractionNumberTranslation= new Fraction();
@@ -64,14 +54,6 @@ public class Service : IService
         Birth_Count birthCountNumberTranslation = new Birth_Count();
 
         ArrayList result = new ArrayList();
-
-        //result.Add("Numero: " + unformattedNumber.Replace(" ", ""));
-        //result.Add("Menos: " + isNegative);
-        //result.Add("Parte entera: " + nonDecimal);
-        //result.Add("Parte decimal: " + decimalPart);
-        //result.Add("Divisor: " + divider);
-        //result.Add(exit);
-        //return result;
 
         if (!isNegative)
         {
@@ -87,15 +69,6 @@ public class Service : IService
                     String decimalPartAux = "";
                     String dividerAux = "";
                     int decimalTabFromFraction = TratamientoInicialRegEx.tratamientoInicialRegEx(ref unformattedAux, ref minus, ref nonDecimalAux, ref decimalPartAux, ref dividerAux);
-                    /*
-                    result.Add("Numero: " + unformattedAux.Replace(" ", ""));
-                    result.Add("Menos: " + minus);
-                    result.Add("Parte entera: " + nonDecimalAux);
-                    result.Add("Parte decimal: " + decimalPartAux);
-                    result.Add("Divisor: " + divider);
-                    result.Add(exit);
-                    return result;
-                    */
                     threadList.Add(new Thread(() => result.Add(decimalNumberTranslation.getDecimalTab(nonDecimalAux, decimalPartAux))));
                 }
                 else threadList.Add(new Thread(() => result.Add(decimalNumberTranslation.getDecimalTab(nonDecimal, decimalPart))));

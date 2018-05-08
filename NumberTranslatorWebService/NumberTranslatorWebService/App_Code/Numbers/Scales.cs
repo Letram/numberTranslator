@@ -136,6 +136,11 @@ public class Scales
     {
         return multiplicativeNumbers;
     }
+
+    public static String[] getBirthNumbers()
+    {
+        return birthNumbers;
+    }
     public static int GetMask(int length)
     {
         int op = 3 - (length % 3);
