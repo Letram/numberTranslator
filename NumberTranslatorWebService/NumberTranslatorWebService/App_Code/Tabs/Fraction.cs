@@ -73,7 +73,7 @@ public class Fraction
         }
         if (numerator.Equals("1") && !denominator.Equals(""))
         {
-            return justOne(denominator, isNegative, true);
+            return justOne(denominator, isNegative);
         }
         if (denominator.Equals(""))
         {

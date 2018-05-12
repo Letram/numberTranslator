@@ -46,7 +46,7 @@ public class Cardinal
                     if (translatedGroup.Equals("un"))
                     {
                         longScaleNumber = bigNumbersLongScale[bigNumberIndex] + " " + longScaleNumber;
-                        if(bigNumberIndex >= 2)
+                        if(bigNumberIndex >= 3)
                         {
                             shortScaleNumber = bigNumbersShortScale[bigNumberIndex] + " " + shortScaleNumber;
                             hasShortScale = true;
@@ -55,7 +55,7 @@ public class Cardinal
                     else
                     {
                         longScaleNumber = translatedGroup + " " + bigNumbersLongScale[bigNumberIndex] + " " + longScaleNumber;
-                        if (bigNumberIndex >= 2)
+                        if (bigNumberIndex >= 3)
                         {
                             hasShortScale = true;
                             shortScaleNumber = translatedGroup + " " + bigNumbersShortScale[bigNumberIndex] + " " + shortScaleNumber;
@@ -67,7 +67,7 @@ public class Cardinal
                     if (!translatedGroup.Equals("un"))
                     {
                         longScaleNumber = translatedGroup + " " + bigNumbersLongScale[bigNumberIndex] + "s " + longScaleNumber;
-                        if (bigNumberIndex >= 2)
+                        if (bigNumberIndex >= 3)
                         {
                             hasShortScale = true;
                             shortScaleNumber = translatedGroup + " " + bigNumbersShortScale[bigNumberIndex] + "s " + shortScaleNumber;
@@ -77,7 +77,7 @@ public class Cardinal
                     else
                     {
                         longScaleNumber = translatedGroup + " " + bigNumbersLongScale[bigNumberIndex] + " " + longScaleNumber;
-                        if (bigNumberIndex >= 2)
+                        if (bigNumberIndex >= 3)
                         {
                             hasShortScale = true;
                             shortScaleNumber = translatedGroup + " " + bigNumbersShortScale[bigNumberIndex] + " " + shortScaleNumber;

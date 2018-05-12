@@ -16,20 +16,21 @@ public class Decimal
         ordinal = new Ordinal();
     }
 
-    public ArrayList getDecimalTab(String nonDecimal, String decimalPart, Boolean isNegative = false)
+    public ArrayList getDecimalTab(String nonDecimalPart, String decimalPart, Boolean isNegative = false)
     {
         ArrayList decimalTab = new ArrayList();
 
         bool negativeCardinal = false;
         bool negativeDecimal = false;
         bool isDecimal = false;
-        if (nonDecimal != "")
+
+        if (nonDecimalPart != "")
         {
-            negativeCardinal = nonDecimal[0] == '-' ? true : false;
-            if ((negativeCardinal && (nonDecimal.Substring(1) == "0")) || !negativeCardinal && (nonDecimal == "0")) isDecimal = true;
+            negativeCardinal = nonDecimalPart[0] == '-' ? true : false;
+            if (nonDecimalPart == "0") isDecimal = true;
         }
 
-        if(decimalPart != "")
+        if (decimalPart != "")
             negativeDecimal = decimalPart[0] == '-'? true : false;
 
         ArrayList decimalPartTranslated = new ArrayList();
@@ -37,10 +38,10 @@ public class Decimal
 
         if((negativeCardinal && negativeDecimal) || (!negativeCardinal && !negativeDecimal))
         {
-            nonDecimalPartTranslated = cardinal.getCardinalNumber(nonDecimal);
+            nonDecimalPartTranslated = cardinal.getCardinalNumber(nonDecimalPart);
             decimalPartTranslated = cardinal.getCardinalNumber(decimalPart);
         }else if(negativeDecimal || negativeCardinal){
-            nonDecimalPartTranslated = cardinal.getCardinalNumber(nonDecimal, true);
+            nonDecimalPartTranslated = cardinal.getCardinalNumber(nonDecimalPart, true);
             decimalPartTranslated = cardinal.getCardinalNumber(decimalPart);
         }
         for (int i = 0; i < decimalPartTranslated.Count; i++)
@@ -54,8 +55,19 @@ public class Decimal
                     decimalPartTranslated[i] = decimalPartTranslated[i] + pluralize(" centième", decimalPart);
                     break;
                 default:
-                    decimalPartTranslated[i] = decimalPartTranslated[i] + " " + pluralize(ordinal.ordinalTreatment(Scales.getShortScale()[decimalPart.Length / 3], decimalPart), decimalPart);
-                    System.Diagnostics.Debug.WriteLine("=> " + decimalPartTranslated[i].ToString());
+                    string preffix = "";
+                    switch (Scales.GetMask(decimalPart.Length))
+                    {
+                        case 0:
+                            break;
+                        case 1:
+                            preffix = "cent-";
+                            break;
+                        case 2:
+                            preffix = "dix-";
+                            break;
+                    }
+                    decimalPartTranslated[i] = decimalPartTranslated[i] + " " + preffix + pluralize(ordinal.ordinalTreatment(Scales.getShortScale()[decimalPart.Length / 3], decimalPart), decimalPart);
                     break;
             }
         }
@@ -66,8 +78,14 @@ public class Decimal
         if (isNegative) nonDecimalPartTranslated[0] = "moins " + nonDecimalPartTranslated[0].ToString().Trim();
         if (decimalPartTranslated.Count > 0)
         {
-            decimalTab.Add(nonDecimalPartTranslated[0].ToString().Trim() + " virgule " + decimalPartTranslated[0].ToString().Trim());
-            decimalTab.Add("@" + nonDecimalPartTranslated[0].ToString().Trim() + " virgule " + decimalPartTranslated[0].ToString().Trim());
+            if (isDecimal)
+            {
+                decimalTab.Add(decimalPartTranslated[0].ToString().Trim());
+                decimalTab.Add("@" + decimalPartTranslated[0].ToString().Trim());
+            } else {
+                decimalTab.Add(nonDecimalPartTranslated[0].ToString().Trim() + " virgule " + decimalPartTranslated[0].ToString().Trim());
+                decimalTab.Add("@" + nonDecimalPartTranslated[0].ToString().Trim() + " virgule " + decimalPartTranslated[0].ToString().Trim());
+            }
         }
         else
         {
@@ -75,8 +93,8 @@ public class Decimal
             decimalTab.Add("@" + nonDecimalPartTranslated[0].ToString().Trim());
         }
         decimalTab.Add(Resources.Resource.value);
-        if(isNegative) decimalTab.Add("-" + nonDecimal + "." + decimalPart);
-        else decimalTab.Add(nonDecimal + "." + decimalPart);
+        if(isNegative) decimalTab.Add("-" + nonDecimalPart + "." + decimalPart);
+        else decimalTab.Add(nonDecimalPart + "." + decimalPart);
         if (nonDecimalPartTranslated.Count > 1 && decimalPartTranslated.Count > 1)
         {
             decimalTab.Add(Resources.Resource.other);

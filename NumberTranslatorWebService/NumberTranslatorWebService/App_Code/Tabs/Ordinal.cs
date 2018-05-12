@@ -36,8 +36,8 @@ public class Ordinal
         if (number.Length == 1){
             if (ordinalNumberTranslated.Equals("un"))
             {
-                ordinalNumberArrayList.Add("prèmier");
-                ordinalNumberArrayList.Add("prèmiere");
+                ordinalNumberArrayList.Add("premier");
+                ordinalNumberArrayList.Add("première");
                 return ordinalNumberArrayList;
             }
 
@@ -46,6 +46,7 @@ public class Ordinal
             {
                 ordinalNumberArrayList.Add("deuxième");
                 ordinalNumberArrayList.Add("second");
+                ordinalNumberArrayList.Add("seconde");
                 return ordinalNumberArrayList;
             }
         }

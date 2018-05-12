@@ -4,7 +4,7 @@ using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Web;
-
+using System.Numerics;
 /// <summary>
 /// Descripción breve de Class1
 /// </summary>
@@ -13,11 +13,8 @@ public class TratamientoInicialRegEx
     public TratamientoInicialRegEx(){}
     public static int tratamientoInicialRegEx(ref String numeroText, ref Boolean signoMenos, ref String cadParteEntera, ref String cadParteDecimal, ref String cadDivisor)
     {
-        String cadAux, cadAux1, expRistra = null;
-        String Digitos = "0123456789";
-        bool tieneCero = false, signoMas = false, blancosMal = false, tieneBlancos = false;
+        String cadAux;
         int cantidadPuntos = 0, cantidadComas = 0;
-        char especial = ' ';
         Match regex;
         try
             //partimos de la suposición de que nos lo mandan bien
@@ -46,11 +43,6 @@ public class TratamientoInicialRegEx
                 if (numeroText.LastIndexOf('.') > numeroText.LastIndexOf(',')) numeroText = numeroText.Replace(',', ' ');
                 else numeroText = numeroText.Replace('.', ' ');
             }
-            if ((cantidadComas > 0) || (cantidadPuntos > 0))
-            {
-                if (numeroText.IndexOf('.') > -1) especial = '.';
-                else if (numeroText.IndexOf(',') > -1) especial = ',';
-            }
 
             cadAux = numeroText.Trim().Replace('.', ',');
 
@@ -59,13 +51,18 @@ public class TratamientoInicialRegEx
                 signoMenos = true;
                 cadAux = cadAux.Substring(1);
             }
-
+            //en el caso de que hayan letras de por medio que no estén contempladas
+            regex = Regex.Match(cadAux, @"[a-df-zA-DF-Z]+");
+            if (regex.Success) return 3; //número que no está bien escrito
             //exponencial (con la e/E)
-            
+            cadAux = new Regex("\\s+").Replace(cadAux, "");
             regex = Regex.Match(cadAux.Replace(" ", ""), @"([-+]?(\d*\,?\d+))[eE](([-+])?(\d*\.?\d+))");
             if (regex.Success)
             {
                 string preExp = regex.Groups[2].Value;
+                int decimalDigits = 0;
+                if(preExp.IndexOf(",") != -1)
+                    decimalDigits = Convert.ToInt16(preExp.Substring(preExp.IndexOf(",")+1).Length);
                 string postExp = regex.Groups[5].Value;
                 if (int.Parse(postExp) > 120) return 1; //exponente demasiado grande.
 
@@ -73,19 +70,16 @@ public class TratamientoInicialRegEx
                 System.Diagnostics.Debug.WriteLine(expNumber);
                 if (regex.Groups[4].Value == "-")
                 {
-
                     expNumber = expNumber / Math.Pow(10, double.Parse(postExp.Replace(".", "")));
-
-                    string expNumberString = decimal.Parse(expNumber.ToString(), NumberStyles.AllowExponent | NumberStyles.AllowDecimalPoint).ToString().Replace(",", ".");
-
-                    cadParteEntera = expNumberString.Substring(0, expNumberString.IndexOf("."));
-                    cadParteDecimal = expNumberString.Substring(expNumberString.IndexOf(".") + 1);
+                    string expNumberString = expNumber.ToString("N" + (Convert.ToInt16(postExp.Replace(".", "")) + decimalDigits));
+                    cadParteEntera = expNumberString.Substring(0, expNumberString.IndexOf(","));
+                    cadParteDecimal = expNumberString.Substring(expNumberString.IndexOf(",") + 1);
                     return 0;
                 }
                 else
                 {
-                    expNumber = expNumber * Math.Pow(10, double.Parse(postExp.Replace(".", "")));
-                    cadParteEntera = expNumber.ToString();
+                    expNumber = expNumber * Math.Pow(10, double.Parse(postExp.Replace(".", ""), NumberStyles.AllowDecimalPoint | NumberStyles.AllowExponent));
+                    cadParteEntera = expNumber.ToString("N0").Replace(".", "");
                     return 0;
                 }
 

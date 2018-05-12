@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="WebForm.aspx.cs" Inherits="src_WebForm" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="WebForm.aspx.cs" Inherits="src_WebForm" Culture="auto" UICulture="auto"%>
 
 <!DOCTYPE html>
 

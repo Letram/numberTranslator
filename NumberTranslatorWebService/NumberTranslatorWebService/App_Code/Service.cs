@@ -32,7 +32,8 @@ public class Service : IService
 
     public ArrayList getTabs(string number, String language)
     {
-        System.Diagnostics.Debug.WriteLine(language);
+        Handler errorHandler = Handler.getInstance();
+        ArrayList result = new ArrayList();
         if(language.Contains("fr") || language.Contains("es"))
         {
             Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo(language, false);
@@ -44,7 +45,11 @@ public class Service : IService
         String decimalPart = "";
         String divider = "";
         int exit = TratamientoInicialRegEx.tratamientoInicialRegEx(ref unformattedNumber, ref isNegative, ref nonDecimal, ref decimalPart, ref divider);
-
+        if (exit != 0)
+        {
+            result.Add(errorHandler.errorHandler(exit));
+            return result;
+        }
         Fraction fractionNumberTranslation= new Fraction();
         Cardinal cardinalNumberTranslation= new Cardinal();
         Ordinal ordinalNumberTranslation= new Ordinal();
@@ -53,7 +58,6 @@ public class Service : IService
         Multiplicative multiplicativeNumberTranslation = new Multiplicative();
         Birth_Count birthCountNumberTranslation = new Birth_Count();
 
-        ArrayList result = new ArrayList();
 
         if (!isNegative)
         {
