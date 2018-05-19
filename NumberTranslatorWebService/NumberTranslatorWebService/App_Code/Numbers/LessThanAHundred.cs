@@ -83,13 +83,13 @@ public class LessThanAHundred
                 }
                 else
                 {
-                    separator = " et ";
+                    separator = "-et-";
                 }
                 break;
             case 11:
                 if (dizaine == 7)
                 {
-                    separator = " et ";
+                    separator = "-et-";
                 }
                 break;
             default:

@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Web;
 
 /// <summary>
@@ -24,14 +25,14 @@ public class Ordinal
         parsedNumber = mask.Append(numericValue);
 
         String ordinalNumberTranslated = "";
-        if (number.Equals("0"))
+        if (Regex.Match(number, @"\b(0+)\b").Success)
         {
             ordinalNumberArrayList.Add("zéroième");
             return ordinalNumberArrayList;
         }
         //traducimos los primeros tres números
 
-        ordinalNumberTranslated = new LessThanAThousand(parsedNumber.ToString(parsedNumber.Length - 3, 3)).Translate();
+        ordinalNumberTranslated = new LessThanAThousand(parsedNumber.ToString(parsedNumber.Length - 3, 3)).Translate(true);
 
         if (number.Length == 1){
             if (ordinalNumberTranslated.Equals("un"))
@@ -63,24 +64,24 @@ public class Ordinal
                 {
                     if (translatedGroup.Equals("un"))
                     {
-                        ordinalNumberTranslated = bigNumbersLongScale[bigNumberIndex] + " " + ordinalNumberTranslated;
+                        ordinalNumberTranslated = bigNumbersLongScale[bigNumberIndex] + "-" + ordinalNumberTranslated;
                     }
                     else
                     {
-                        ordinalNumberTranslated = translatedGroup + " " + bigNumbersLongScale[bigNumberIndex] + " " + ordinalNumberTranslated;
+                        ordinalNumberTranslated = translatedGroup + "-" + bigNumbersLongScale[bigNumberIndex] + "-" + ordinalNumberTranslated;
                     }
                 }
                 else
                 {
                     if (!translatedGroup.Equals("un"))
                     {
-                        ordinalNumberTranslated = translatedGroup + " " + bigNumbersLongScale[bigNumberIndex] + "s " + ordinalNumberTranslated;
+                        ordinalNumberTranslated = translatedGroup + "-" + bigNumbersLongScale[bigNumberIndex] + "s-" + ordinalNumberTranslated;
                     }
 
                     else
                     {
-                        if (isDecimal) ordinalNumberTranslated = bigNumbersLongScale[bigNumberIndex] + " " + ordinalNumberTranslated;
-                        else ordinalNumberTranslated = translatedGroup + " " + bigNumbersLongScale[bigNumberIndex] + " " + ordinalNumberTranslated;
+                        if (isDecimal) ordinalNumberTranslated = bigNumbersLongScale[bigNumberIndex] + "-" + ordinalNumberTranslated;
+                        else ordinalNumberTranslated = translatedGroup + "-" + bigNumbersLongScale[bigNumberIndex] + "-" + ordinalNumberTranslated;
                     }
                 }
             }
@@ -114,7 +115,7 @@ public class Ordinal
     {
         System.Diagnostics.Debug.WriteLine(ordinalNumber);
         String ending = "ième";
-        if (ordinalNumber[ordinalNumber.Length - 1].Equals('e')){
+        if (ordinalNumber[ordinalNumber.Length - 1].Equals('e') || (number[number.Length-1]) != '3' && (ordinalNumber[ordinalNumber.Length-1] == 's')){
             ordinalNumber = ordinalNumber.Substring(0, ordinalNumber.Length - 1);
         }
         return ordinalNumber + ending;
@@ -128,7 +129,7 @@ public class Ordinal
         ordinalTab.Add(Resources.Resource.ordinalDescription);
         ordinalTab.Add(Resources.Resource.numberOrdinalDescription);
         ordinalTab.Add(ordinalNumberConverted[0].ToString());
-        ordinalTab.Add("@" + ordinalNumberConverted[0].ToString());
+        ordinalTab.Add("@" + ordinalNumberConverted[0].ToString().Replace('-',' '));
         if (ordinalNumberConverted.Count > 1)
         {
             ordinalTab.Add(Resources.Resource.other);

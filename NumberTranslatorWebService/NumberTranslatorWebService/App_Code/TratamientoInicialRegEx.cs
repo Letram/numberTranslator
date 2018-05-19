@@ -54,9 +54,10 @@ public class TratamientoInicialRegEx
             //en el caso de que hayan letras de por medio que no estén contempladas
             regex = Regex.Match(cadAux, @"[a-df-zA-DF-Z]+");
             if (regex.Success) return 3; //número que no está bien escrito
+
             //exponencial (con la e/E)
             cadAux = new Regex("\\s+").Replace(cadAux, "");
-            regex = Regex.Match(cadAux.Replace(" ", ""), @"([-+]?(\d*\,?\d+))[eE](([-+])?(\d*\.?\d+))");
+            regex = Regex.Match(cadAux.Replace(" ", ""), @"([-+]?(\d*\,?\d+))[eE](([-+])?(\d{1,120}))");
             if (regex.Success)
             {
                 string preExp = regex.Groups[2].Value;
@@ -87,25 +88,27 @@ public class TratamientoInicialRegEx
             else
             {
                 System.Diagnostics.Debug.WriteLine("No es un exponencial: " + cadAux);
-
             }
             
             //fracciones
-            regex = Regex.Match(cadAux.Replace(" ", ""), @"(\d+)/(\d*)");
+            regex = Regex.Match(cadAux.Replace(" ", ""), @"\b(\d{1,120})/([-+])?(\d{1,120})\b");
             if (regex.Success)
             {
                 cadParteEntera = regex.Groups[1].Value;
-                cadDivisor = regex.Groups[2].Value;
+                if (regex.Groups[2].Value == "-")
+                {
+                    signoMenos = !signoMenos;
+                };
+                cadDivisor = regex.Groups[3].Value;
                 return 0; //número correcto
             }
             else
             {
                 System.Diagnostics.Debug.WriteLine("No es una fracción: " + cadAux);
             }
-            //if (cadParteEntera.Length == 0 || cadDivisor.Length == 0) return 3; //número mal formado.
 
             //decimales y enteros
-            regex = Regex.Match(cadAux, @"(\d*[.|,])(\d+)");
+            regex = Regex.Match(cadAux, @"\b(\d{1,120}[.|,])(\d{1,120})\b");
             if (regex.Success)
             {
                 cadParteEntera = regex.Groups[1].Value == "," ? "0" : regex.Groups[1].Value.Remove(regex.Groups[1].Value.Length-1);
@@ -116,17 +119,23 @@ public class TratamientoInicialRegEx
             {
                 System.Diagnostics.Debug.WriteLine("No es un decimal: " + cadAux);
             }
+
+            regex = Regex.Match(cadAux, @"^(\d{1,120})$");
+            if (regex.Success)
+            {
+                cadParteEntera = regex.Groups[1].Value;
+                return 0;
+            }
             /*
             else
                 cadParteEntera = "No ha entrado";
             if (cadParteEntera.Length == 0 || cadParteDecimal.Length == 0) return 3; //número mal formado.
             */
-            cadParteEntera = cadAux;
         }
         catch(Exception e)
         {
             return 3;
         }
-        return 0;
+        return 2;
     }
 }

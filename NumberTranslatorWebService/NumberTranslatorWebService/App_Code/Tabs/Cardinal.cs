@@ -3,6 +3,7 @@ using System.Collections;
 using System.Linq;
 using System.Text;
 using System.Web;
+using System.Text.RegularExpressions;
 
 /// <summary>
 /// Descripción breve de Class1
@@ -24,7 +25,7 @@ public class Cardinal
         string shortScaleNumber = "";
         string negative = "";
         if (isNegative) negative = "moins ";
-        if(number.Length == 1 && number.Equals("0"))
+        if(Regex.Match(number, @"\b(0+)\b").Success)
         {
             cardinalNumberArrayList.Add("zéro");
             return cardinalNumberArrayList;
@@ -32,7 +33,7 @@ public class Cardinal
         //we parse the first group apart so we can add some more control to our translation process
 
         //tanto en LongScale(default) como ShortScale
-        longScaleNumber = new LessThanAThousand(parsedNumber.ToString(parsedNumber.Length - 3, 3)).Translate();
+        longScaleNumber = new LessThanAThousand(parsedNumber.ToString(parsedNumber.Length - 3, 3)).Translate(true);
         shortScaleNumber = longScaleNumber;
         Boolean hasShortScale = false;
         int bigNumberIndex = 1;
@@ -45,20 +46,20 @@ public class Cardinal
                 {
                     if (translatedGroup.Equals("un"))
                     {
-                        longScaleNumber = bigNumbersLongScale[bigNumberIndex] + " " + longScaleNumber;
+                        longScaleNumber = bigNumbersLongScale[bigNumberIndex] + "-" + longScaleNumber;
                         if(bigNumberIndex >= 3)
                         {
-                            shortScaleNumber = bigNumbersShortScale[bigNumberIndex] + " " + shortScaleNumber;
+                            shortScaleNumber = bigNumbersShortScale[bigNumberIndex] + "-" + shortScaleNumber;
                             hasShortScale = true;
                         }
                     }
                     else
                     {
-                        longScaleNumber = translatedGroup + " " + bigNumbersLongScale[bigNumberIndex] + " " + longScaleNumber;
+                        longScaleNumber = translatedGroup + "-" + bigNumbersLongScale[bigNumberIndex] + "-" + longScaleNumber;
                         if (bigNumberIndex >= 3)
                         {
                             hasShortScale = true;
-                            shortScaleNumber = translatedGroup + " " + bigNumbersShortScale[bigNumberIndex] + " " + shortScaleNumber;
+                            shortScaleNumber = translatedGroup + "-" + bigNumbersShortScale[bigNumberIndex] + "-" + shortScaleNumber;
                         }
                     }
                 }
@@ -66,21 +67,21 @@ public class Cardinal
                 {
                     if (!translatedGroup.Equals("un"))
                     {
-                        longScaleNumber = translatedGroup + " " + bigNumbersLongScale[bigNumberIndex] + "s " + longScaleNumber;
+                        longScaleNumber = translatedGroup + "-" + bigNumbersLongScale[bigNumberIndex] + "s-" + longScaleNumber;
                         if (bigNumberIndex >= 3)
                         {
                             hasShortScale = true;
-                            shortScaleNumber = translatedGroup + " " + bigNumbersShortScale[bigNumberIndex] + "s " + shortScaleNumber;
+                            shortScaleNumber = translatedGroup + "-" + bigNumbersShortScale[bigNumberIndex] + "s-" + shortScaleNumber;
                         }
                     }
 
                     else
                     {
-                        longScaleNumber = translatedGroup + " " + bigNumbersLongScale[bigNumberIndex] + " " + longScaleNumber;
+                        longScaleNumber = translatedGroup + "-" + bigNumbersLongScale[bigNumberIndex] + "-" + longScaleNumber;
                         if (bigNumberIndex >= 3)
                         {
                             hasShortScale = true;
-                            shortScaleNumber = translatedGroup + " " + bigNumbersShortScale[bigNumberIndex] + " " + shortScaleNumber;
+                            shortScaleNumber = translatedGroup + "-" + bigNumbersShortScale[bigNumberIndex] + "-" + shortScaleNumber;
                         }
                     }
                 }
@@ -106,7 +107,7 @@ public class Cardinal
         cardinalTab.Add(Resources.Resource.numberCardinalDescription);
         cardinalTab.Add(cardinalNumberConverted[0].ToString());
         String negativePreffix = "";
-        cardinalTab.Add("@" + cardinalNumberConverted[0].ToString());
+        cardinalTab.Add("@" + cardinalNumberConverted[0].ToString().Replace('-', ' '));
         if (cardinalNumberConverted.Count > 1)
         {
             cardinalTab.Add(Resources.Resource.other);

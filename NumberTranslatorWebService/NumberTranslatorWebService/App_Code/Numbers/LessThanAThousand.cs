@@ -30,19 +30,21 @@ public class LessThanAThousand
         }
     }
 
-    public String Translate()
+    public String Translate(Boolean isLast = false)
     {
+        String aux = "s";
+        if (!isLast) aux = "";
         switch (cent)
         {
             case 0:
                 return new LessThanAHundred(reposer).Translate();
             case 1:
-                return "cent " + new LessThanAHundred(reposer).Translate();
+                return "cent-" + new LessThanAHundred(reposer).Translate();
             default:
                 if (reposer > 0)
-                    return new LessThanAHundred(cent).Translate() + " cent " + new LessThanAHundred(reposer).Translate();
+                    return new LessThanAHundred(cent).Translate() + "-cent-" + new LessThanAHundred(reposer).Translate();
                 else
-                    return new LessThanAHundred(cent).Translate() + " cents ";
+                    return new LessThanAHundred(cent).Translate() + "-cent" + aux;
         }
     }
 }

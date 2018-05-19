@@ -28,7 +28,7 @@ public class Fraction
         fractionaryTab.Add(Resources.Resource.fractionalDescription);
         fractionaryTab.Add(Resources.Resource.numberFractionalDescription);
         fractionaryTab.Add(fractionaryNumberConverted[0].ToString());
-        fractionaryTab.Add("@" + fractionaryNumberConverted[0].ToString());
+        fractionaryTab.Add("@" + fractionaryNumberConverted[0].ToString().Replace('-', ' '));
         fractionaryTab.Add(Resources.Resource.value);
         if(denominator == "")
         {
@@ -141,7 +141,7 @@ public class Fraction
                 break;
             default:
                 String prefix = "";
-                if (!isDecimal) prefix = "un ";
+                if (!isDecimal) prefix = "un-";
                 res.Add(prefix + ordinal.getOrdinalNumber(v)[0].ToString().Trim());
                 break;
         }
