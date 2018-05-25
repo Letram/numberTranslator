@@ -1,49 +1,26 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.Serialization;
-using System.ServiceModel;
-using System.ServiceModel.Web;
-using System.Text;
 using System.Threading;
+using System.Web;
 
-// NOTA: puede usar el comando "Rename" del menú "Refactorizar" para cambiar el nombre de clase "Service1" en el código, en svc y en el archivo de configuración.
-public class Service : IService
+/// <summary>
+/// Descripción breve de Class1
+/// </summary>
+public class Servicio
 {
-
-    public string GetData(int value)
-	{
-		return string.Format("You entered: {0}", value);
-	}
-
-	public CompositeType GetDataUsingDataContract(CompositeType composite)
-	{
-		if (composite == null)
-		{
-			throw new ArgumentNullException("composite");
-		}
-		if (composite.BoolValue)
-		{
-			composite.StringValue += "Suffix";
-		}
-		return composite;
-	}
-
-    public ArrayList getTabs(string number, String language)
+    private Fraction fractionNumberTranslation;
+    private Cardinal cardinalNumberTranslation;
+    private Ordinal ordinalNumberTranslation;
+    private Negative negativeNumberTranslation;
+    private Decimal decimalNumberTranslation;
+    private Multiplicative multiplicativeNumberTranslation;
+    private Birth_Count birthCountNumberTranslation;
+    public Servicio(){}
+    public ArrayList getTabs(String number)
     {
-        if (language.Contains("fr") || language.Contains("es"))
-        {
-            Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo(language, false);
-        }
-        return new Servicio().getTabs(number);
-        /*
         Handler errorHandler = Handler.getInstance();
         ArrayList result = new ArrayList();
-        if(language.Contains("fr") || language.Contains("es"))
-        {
-            Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo(language, false);
-        }
         if (number.Equals("")) return new ArrayList();
         String unformattedNumber = number;
         Boolean isNegative = false;
@@ -56,13 +33,13 @@ public class Service : IService
             result.Add(errorHandler.errorHandler(exit));
             return result;
         }
-        Fraction fractionNumberTranslation= new Fraction();
-        Cardinal cardinalNumberTranslation= new Cardinal();
-        Ordinal ordinalNumberTranslation= new Ordinal();
-        Negative negativeNumberTranslation= new Negative();
-        Decimal decimalNumberTranslation = new Decimal();
-        Multiplicative multiplicativeNumberTranslation = new Multiplicative();
-        Birth_Count birthCountNumberTranslation = new Birth_Count();
+        fractionNumberTranslation = new Fraction();
+        cardinalNumberTranslation = new Cardinal();
+        ordinalNumberTranslation = new Ordinal();
+        negativeNumberTranslation = new Negative();
+        decimalNumberTranslation = new Decimal();
+        multiplicativeNumberTranslation = new Multiplicative();
+        birthCountNumberTranslation = new Birth_Count();
 
 
         if (!isNegative)
@@ -100,10 +77,9 @@ public class Service : IService
                 thread.Join();
             }
         }
-        
+
         else return negativeNumberTranslation.getNegativeTabs(nonDecimal, decimalPart, divider);
-        
+
         return result;
-     */   
     }
 }

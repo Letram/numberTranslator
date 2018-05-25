@@ -8,7 +8,6 @@ using System.Web.UI.HtmlControls;
 using System.Threading;
 using System.Globalization;
 using System.Collections;
-
 public partial class src_WebForm : System.Web.UI.Page
 {
     private HtmlGenericControl currentContainer;
@@ -16,7 +15,6 @@ public partial class src_WebForm : System.Web.UI.Page
     private HtmlGenericControl tabsContent;
     protected void Page_Load(object sender, EventArgs e)
     {
-        //Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo("fr");
     }
 
     protected void convertButton_Click(object sender, EventArgs e)

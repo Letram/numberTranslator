@@ -31,7 +31,7 @@ public class Birth_Count
         birthCountNumberTab.Add(Resources.Resource.birthDescripion);
         birthCountNumberTab.Add(Resources.Resource.birthNumberDescription);
         birthCountNumberTab.Add(birthCountNumber[0].ToString());
-        birthCountNumberTab.Add("@" + birthCountNumber[0].ToString());
+        birthCountNumberTab.Add("@" + birthCountNumber[0].ToString().Replace('-', ' '));
         if (birthCountNumber.Count > 1)
         {
             birthCountNumberTab.Add(Resources.Resource.other);

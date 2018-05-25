@@ -9,8 +9,6 @@ using System.Web;
 /// </summary>
 public class Fraction
 {
-    String [] bigNumbersShortScale = Scales.getShortScale();
-    String[] bigNumbersLargeScale = Scales.getLargeScale();
     Cardinal cardinal;
     Ordinal ordinal;
 
@@ -28,7 +26,7 @@ public class Fraction
         fractionaryTab.Add(Resources.Resource.fractionalDescription);
         fractionaryTab.Add(Resources.Resource.numberFractionalDescription);
         fractionaryTab.Add(fractionaryNumberConverted[0].ToString());
-        fractionaryTab.Add("@" + fractionaryNumberConverted[0].ToString());
+        fractionaryTab.Add("@" + fractionaryNumberConverted[0].ToString().Replace('-', ' '));
         fractionaryTab.Add(Resources.Resource.value);
         if(denominator == "")
         {
@@ -73,7 +71,7 @@ public class Fraction
         }
         if (numerator.Equals("1") && !denominator.Equals(""))
         {
-            return justOne(denominator, isNegative, true);
+            return justOne(denominator, isNegative);
         }
         if (denominator.Equals(""))
         {
@@ -120,10 +118,10 @@ public class Fraction
         else return denominator;
     }
 
-    private ArrayList justOne(String v, Boolean isNegative = false, Boolean isDecimal = false)
+    private ArrayList justOne(String value, Boolean isNegative = false, Boolean isDecimal = false)
     {
         ArrayList res = new ArrayList();
-        switch (v)
+        switch (value)
         {
             case "1":
                 res.Add("une unité");
@@ -141,8 +139,8 @@ public class Fraction
                 break;
             default:
                 String prefix = "";
-                if (!isDecimal) prefix = "un ";
-                res.Add(prefix + ordinal.getOrdinalNumber(v)[0].ToString().Trim());
+                if (!isDecimal) prefix = "un-";
+                res.Add(prefix + ordinal.getOrdinalNumber(value)[0].ToString().Trim());
                 break;
         }
         if (isNegative)
