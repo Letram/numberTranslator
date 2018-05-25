@@ -10,11 +10,9 @@ using System.Web;
 public class Decimal
 {
     Cardinal cardinal;
-    Ordinal ordinal;
     public Decimal()
     {
         cardinal = new Cardinal();
-        ordinal = new Ordinal();
     }
 
     public ArrayList getDecimalTab(String nonDecimalPart, String decimalPart, Boolean isNegative = false)

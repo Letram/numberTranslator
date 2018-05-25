@@ -57,7 +57,74 @@ public class TratamientoInicialRegEx
 
             //exponencial (con la e/E)
             cadAux = new Regex("\\s+").Replace(cadAux, "");
-            regex = Regex.Match(cadAux.Replace(" ", ""), @"([-+]?(\d*\,?\d+))[eE](([-+])?(\d{1,120}))");
+            cadAux = cadAux + " "; 
+            regex = Regex.Match(cadAux, @"((\d+)([,](\d+))?)[eE]([+-]?(\d+)) ");
+            if (regex.Success)
+            {
+                string numberPreExp = regex.Groups[1].Value;
+                int exponent = Convert.ToInt16(regex.Groups[5].Value);
+                normalize(ref numberPreExp);
+                if (exponent == 0)
+                {
+                    if(numberPreExp.IndexOf(',') != -1)
+                    {
+                        cadParteEntera = numberPreExp.Substring(0, numberPreExp.IndexOf(','));
+                        cadParteDecimal = numberPreExp.Substring(numberPreExp.IndexOf(','));
+                    }
+                    else
+                    {
+                        cadParteEntera = numberPreExp;
+                    }
+                    return 0;
+                }
+                int decimalLength = 0;
+                if(numberPreExp.IndexOf(',') != 1 && numberPreExp.IndexOf(',') != -1) decimalLength = numberPreExp.Substring(numberPreExp.IndexOf(',')+1).Length;
+                exponent += decimalLength;
+                if (exponent > 120) return 1;
+                numberPreExp = numberPreExp.Replace(",", "");
+                numberPreExp = numberPreExp.Substring(0, 1) + "," + numberPreExp.Substring(1);
+                string formattedNumber = "";
+                if(exponent < 0)
+                {
+                    string aux = "0,";
+                    while(exponent < 0)
+                    {
+                        aux += "0";
+                        exponent++;
+                    }
+                    numberPreExp = numberPreExp.Replace(",", "");
+                    formattedNumber = aux + numberPreExp;
+                    cadParteEntera = formattedNumber.Substring(0, formattedNumber.IndexOf(','));
+                    cadParteDecimal = formattedNumber.Substring(formattedNumber.IndexOf(','));
+                    return 0;
+                }
+                else
+                {
+                    decimalLength = numberPreExp.Substring(numberPreExp.IndexOf(',') + 1).Length;
+                    if(exponent == decimalLength)
+                    {
+                        cadParteEntera = numberPreExp.Replace(",", "");
+                        return 0;
+                    }
+                    if(exponent > decimalLength)
+                    {
+                        if(regex.Groups[3].Value.IndexOf(",") != -1)
+                        {
+                            exponent -= decimalLength;
+                        }
+                        formattedNumber = numberPreExp.Replace(",", "") + new string('0', exponent);
+                        cadParteEntera = formattedNumber;
+                        return 0;
+                    }
+                    numberPreExp = numberPreExp.Replace(",", "");
+                    formattedNumber = numberPreExp.Substring(0, exponent) + "," + numberPreExp.Substring(exponent+1);
+                    cadParteEntera = formattedNumber.Substring(0, formattedNumber.IndexOf(','));
+                    cadParteDecimal = formattedNumber.Substring(formattedNumber.IndexOf(','));
+                    return 0;
+                }
+            }
+            /*
+            regex = Regex.Match(cadAux.Replace(" ", ""), @"((\d*\,?\d+))[eE](([-+])?(\d{1,3}))");
             if (regex.Success)
             {
                 string preExp = regex.Groups[2].Value;
@@ -85,13 +152,14 @@ public class TratamientoInicialRegEx
                 }
 
             }
+            */
             else
             {
                 System.Diagnostics.Debug.WriteLine("No es un exponencial: " + cadAux);
             }
             
             //fracciones
-            regex = Regex.Match(cadAux.Replace(" ", ""), @"\b(\d{1,120})/([-+])?(\d{1,120})\b");
+            regex = Regex.Match(cadAux.Replace(" ", ""), @"(\d{1,120})/([-+])?(\d{1,120})");
             if (regex.Success)
             {
                 cadParteEntera = regex.Groups[1].Value;
@@ -108,7 +176,7 @@ public class TratamientoInicialRegEx
             }
 
             //decimales y enteros
-            regex = Regex.Match(cadAux, @"\b(\d{1,120}[.|,])(\d{1,120})\b");
+            regex = Regex.Match(cadAux, @"(\d{1,120}[.|,])(\d{1,120})");
             if (regex.Success)
             {
                 cadParteEntera = regex.Groups[1].Value == "," ? "0" : regex.Groups[1].Value.Remove(regex.Groups[1].Value.Length-1);
@@ -119,23 +187,24 @@ public class TratamientoInicialRegEx
             {
                 System.Diagnostics.Debug.WriteLine("No es un decimal: " + cadAux);
             }
-
+            cadAux = cadAux.Trim();
             regex = Regex.Match(cadAux, @"^(\d{1,120})$");
             if (regex.Success)
             {
                 cadParteEntera = regex.Groups[1].Value;
                 return 0;
             }
-            /*
-            else
-                cadParteEntera = "No ha entrado";
-            if (cadParteEntera.Length == 0 || cadParteDecimal.Length == 0) return 3; //número mal formado.
-            */
         }
         catch(Exception e)
         {
             return 3;
         }
         return 2;
+    }
+
+    private static void normalize(ref string numberPreExp)
+    {
+        numberPreExp = numberPreExp.TrimStart('0');
+        numberPreExp = numberPreExp.TrimEnd('0');
     }
 }

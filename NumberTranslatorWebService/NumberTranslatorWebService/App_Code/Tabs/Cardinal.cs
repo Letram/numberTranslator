@@ -10,9 +10,12 @@ using System.Text.RegularExpressions;
 /// </summary>
 public class Cardinal
 {
-    String[] bigNumbersLongScale = Scales.getLargeScale();
-    String[] bigNumbersShortScale = Scales.getShortScale();
-    public Cardinal(){}
+    String[] bigNumbersLongScale;
+    String[] bigNumbersShortScale;
+    public Cardinal(){
+        bigNumbersLongScale = Scales.getLargeScale();
+        bigNumbersShortScale = Scales.getShortScale();
+    }
 
     public ArrayList getCardinalNumber(string number, Boolean isNegative = false){
         ArrayList cardinalNumberArrayList = new ArrayList();
@@ -89,9 +92,14 @@ public class Cardinal
             bigNumberIndex++;
         }
         bigNumberIndex = 0;
+        if (longScaleNumber[longScaleNumber.Length - 1] == '-') longScaleNumber = longScaleNumber.Substring(0, longScaleNumber.Length - 1);
         cardinalNumberArrayList.Add(negative + longScaleNumber);
-        if(hasShortScale)
+
+        if (hasShortScale)
+        {
+            if (shortScaleNumber[shortScaleNumber.Length - 1] == '-') shortScaleNumber = shortScaleNumber.Substring(0, shortScaleNumber.Length - 1);
             cardinalNumberArrayList.Add(negative + shortScaleNumber);
+        }
 
         return cardinalNumberArrayList;
     }

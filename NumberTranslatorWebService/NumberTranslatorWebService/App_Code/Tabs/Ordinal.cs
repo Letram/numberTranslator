@@ -10,10 +10,13 @@ using System.Web;
 /// </summary>
 public class Ordinal
 {
-    String[] bigNumbersLongScale = Scales.getLargeScale();
-    String[] bigNumbersShortScale = Scales.getShortScale();
+    String[] bigNumbersLongScale;
+    String[] bigNumbersShortScale;
     Boolean treated = false;
-    public Ordinal() { }
+    public Ordinal() {
+        bigNumbersLongScale = Scales.getLargeScale();
+        bigNumbersShortScale = Scales.getShortScale();
+    }
 
     public ArrayList getOrdinalNumber(string number, Boolean isDecimal = false)
     {
@@ -88,13 +91,13 @@ public class Ordinal
             bigNumberIndex++;
         }
         bigNumberIndex = 1;
-        ordinalNumberTranslated = ordinalNumberTranslated.Trim();
+        if (ordinalNumberTranslated[ordinalNumberTranslated.Length - 1] == '-') ordinalNumberTranslated = ordinalNumberTranslated.Substring(0, ordinalNumberTranslated.Length - 1);
         if (!treated) ordinalNumberTranslated = treatRegularCases(ordinalNumberTranslated, parsedNumber.ToString(parsedNumber.Length - 3, 3));
         ordinalNumberArrayList.Add(ordinalNumberTranslated);
         return ordinalNumberArrayList;
     }
 
-    public string ordinalTreatment(string ordinalNumber, string number)
+    private string ordinalTreatment(string ordinalNumber, string number)
     {
         if (ordinalNumber == "") return "";
         treated = true;

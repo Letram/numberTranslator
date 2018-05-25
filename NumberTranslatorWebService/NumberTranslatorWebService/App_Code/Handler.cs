@@ -27,6 +27,9 @@ public class Handler
             case 3:
                 errorArray.Add("Number is not written properly.");
                 break;
+            case 4:
+                errorArray.Add("Max number supported in scientific notation is 999E120");
+                break;
         }
         return errorArray;
     }

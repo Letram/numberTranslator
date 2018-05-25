@@ -9,8 +9,6 @@ using System.Web;
 /// </summary>
 public class Fraction
 {
-    String [] bigNumbersShortScale = Scales.getShortScale();
-    String[] bigNumbersLargeScale = Scales.getLargeScale();
     Cardinal cardinal;
     Ordinal ordinal;
 
@@ -120,10 +118,10 @@ public class Fraction
         else return denominator;
     }
 
-    private ArrayList justOne(String v, Boolean isNegative = false, Boolean isDecimal = false)
+    private ArrayList justOne(String value, Boolean isNegative = false, Boolean isDecimal = false)
     {
         ArrayList res = new ArrayList();
-        switch (v)
+        switch (value)
         {
             case "1":
                 res.Add("une unité");
@@ -142,7 +140,7 @@ public class Fraction
             default:
                 String prefix = "";
                 if (!isDecimal) prefix = "un-";
-                res.Add(prefix + ordinal.getOrdinalNumber(v)[0].ToString().Trim());
+                res.Add(prefix + ordinal.getOrdinalNumber(value)[0].ToString().Trim());
                 break;
         }
         if (isNegative)
