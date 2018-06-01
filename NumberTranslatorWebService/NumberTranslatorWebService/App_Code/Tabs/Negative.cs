@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Web;
 
 /// <summary>
@@ -21,33 +22,33 @@ public class Negative
     public ArrayList getNegativeTabs(String nonDecimal, String decimalPart, String divider)
     {
         ArrayList negativeTabs = new ArrayList();
-        ArrayList threadList = new ArrayList();
+        ArrayList taskList = new ArrayList();
 
         
 
         if (divider.Equals("") && decimalPart.Equals(""))
         {
-            threadList.Add(new Thread(() => negativeTabs.Add(cardinal.getCardinalTab(nonDecimal, true))));
+            taskList.Add(new Task(() => negativeTabs.Add(cardinal.getCardinalTab(nonDecimal, true))));
         }
         else if(decimalPart.Equals("") && !divider.Equals(""))
         {
-            threadList.Add(new Thread(() => negativeTabs.Add(fraction.getFractionTab(nonDecimal, divider, true))));
+            taskList.Add(new Task(() => negativeTabs.Add(fraction.getFractionTab(nonDecimal, divider, true))));
             String unformattedAux = (double.Parse(nonDecimal) / double.Parse(divider)).ToString();
             Boolean minus = false;
             String nonDecimalAux = "";
             String decimalPartAux = "";
             String dividerAux = "";
             int decimalTabFromFraction = TratamientoInicialRegEx.tratamientoInicialRegEx(ref unformattedAux, ref minus, ref nonDecimalAux, ref decimalPartAux, ref dividerAux);
-            threadList.Add(new Thread(() => negativeTabs.Add(decimalTab.getDecimalTab(nonDecimalAux, decimalPartAux, true))));
+            taskList.Add(new Task(() => negativeTabs.Add(decimalTab.getDecimalTab(nonDecimalAux, decimalPartAux, true))));
         }
         else
         {
-            threadList.Add(new Thread(() => negativeTabs.Add(decimalTab.getDecimalTab(nonDecimal, decimalPart, true))));
+            taskList.Add(new Task(() => negativeTabs.Add(decimalTab.getDecimalTab(nonDecimal, decimalPart, true))));
         }
 
-
-        foreach (Thread thread in threadList) thread.Start();
-        foreach (Thread thread in threadList) thread.Join();
+        foreach (Task task in taskList) task.Start();
+        Task[] taskArr = (Task[])taskList.ToArray(typeof(Task));
+        Task.WaitAll(taskArr);
 
         return negativeTabs;
     }

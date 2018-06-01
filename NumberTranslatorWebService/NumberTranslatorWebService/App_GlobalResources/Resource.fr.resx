@@ -141,6 +141,18 @@
   <data name="decimalTitle" xml:space="preserve">
     <value>#Décimal</value>
   </data>
+  <data name="error1" xml:space="preserve">
+    <value>Exposant trop grand. Le maximum est ~ E120.</value>
+  </data>
+  <data name="error2" xml:space="preserve">
+    <value>Le nombre n'est pas compatible.</value>
+  </data>
+  <data name="error3" xml:space="preserve">
+    <value>Numéro non écrit correctement.</value>
+  </data>
+  <data name="error4" xml:space="preserve">
+    <value>Le nombre maximal compatible est de mille vigintillions moins un.</value>
+  </data>
   <data name="fractional" xml:space="preserve">
     <value>#Fractionnaire</value>
   </data>

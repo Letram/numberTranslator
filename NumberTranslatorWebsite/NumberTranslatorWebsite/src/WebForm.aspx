@@ -29,7 +29,7 @@
                             <div class="input-group">
                                 <div class="input-group-prepend"><span class="input-group-text"><%= Resources.Resource.writeNumber %></span></div><asp:TextBox ID="number" runat="server" CssClass="form-control"></asp:TextBox>
                             </div>
-                            <asp:Button ID="convertButton" runat="server" CssClass="btn btn-primary btn-block" Text="Translate!" OnClick="convertButton_Click" />
+                            <asp:Button ID="convertButton" runat="server" CssClass="btn btn-primary btn-block my-1" Text="Translate!" OnClick="convertButton_Click" />
                         </div>
                     </form>
                     <asp:Panel runat="server" CssClass="container" ID="tabs_panel"></asp:Panel>

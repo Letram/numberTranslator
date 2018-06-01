@@ -118,41 +118,12 @@ public class TratamientoInicialRegEx
                     }
                     numberPreExp = numberPreExp.Replace(",", "");
                     formattedNumber = numberPreExp.Substring(0, exponent) + "," + numberPreExp.Substring(exponent+1);
+                    if (formattedNumber.Length > 120) return 4;
                     cadParteEntera = formattedNumber.Substring(0, formattedNumber.IndexOf(','));
                     cadParteDecimal = formattedNumber.Substring(formattedNumber.IndexOf(','));
                     return 0;
                 }
             }
-            /*
-            regex = Regex.Match(cadAux.Replace(" ", ""), @"((\d*\,?\d+))[eE](([-+])?(\d{1,3}))");
-            if (regex.Success)
-            {
-                string preExp = regex.Groups[2].Value;
-                int decimalDigits = 0;
-                if(preExp.IndexOf(",") != -1)
-                    decimalDigits = Convert.ToInt16(preExp.Substring(preExp.IndexOf(",")+1).Length);
-                string postExp = regex.Groups[5].Value;
-                if (int.Parse(postExp) > 120) return 1; //exponente demasiado grande.
-
-                double expNumber = double.Parse(preExp);
-                System.Diagnostics.Debug.WriteLine(expNumber);
-                if (regex.Groups[4].Value == "-")
-                {
-                    expNumber = expNumber / Math.Pow(10, double.Parse(postExp.Replace(".", "")));
-                    string expNumberString = expNumber.ToString("N" + (Convert.ToInt16(postExp.Replace(".", "")) + decimalDigits));
-                    cadParteEntera = expNumberString.Substring(0, expNumberString.IndexOf(","));
-                    cadParteDecimal = expNumberString.Substring(expNumberString.IndexOf(",") + 1);
-                    return 0;
-                }
-                else
-                {
-                    expNumber = expNumber * Math.Pow(10, double.Parse(postExp.Replace(".", ""), NumberStyles.AllowDecimalPoint | NumberStyles.AllowExponent));
-                    cadParteEntera = expNumber.ToString("N0").Replace(".", "");
-                    return 0;
-                }
-
-            }
-            */
             else
             {
                 System.Diagnostics.Debug.WriteLine("No es un exponencial: " + cadAux);
