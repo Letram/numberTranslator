@@ -141,6 +141,18 @@
   <data name="decimalTitle" xml:space="preserve">
     <value>#Decimal</value>
   </data>
+  <data name="error1" xml:space="preserve">
+    <value>El exponente es demasiado grande, el máximo permitido es ~E120.</value>
+  </data>
+  <data name="error2" xml:space="preserve">
+    <value>Número no soportado.</value>
+  </data>
+  <data name="error3" xml:space="preserve">
+    <value>Número no escrito correctamente.</value>
+  </data>
+  <data name="error4" xml:space="preserve">
+    <value>Número máximo soportado es mil vigintillones menos uno.</value>
+  </data>
   <data name="fractional" xml:space="preserve">
     <value>#Fraccionario</value>
   </data>

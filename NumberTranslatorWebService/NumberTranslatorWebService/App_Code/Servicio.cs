@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Web;
 
 /// <summary>
@@ -44,38 +45,40 @@ public class Servicio
 
         if (!isNegative)
         {
+
             ArrayList threadList = new ArrayList();
+            ArrayList taskList = new ArrayList();
             if (!decimalPart.Equals("") || !divider.Equals(""))
             {
                 if (!divider.Equals(""))
                 {
-                    threadList.Add(new Thread(() => result.Add(fractionNumberTranslation.getFractionTab(nonDecimal, divider))));
+                    taskList.Add(new Task(() => result.Add(fractionNumberTranslation.getFractionTab(nonDecimal, divider))));
                     String unformattedAux = (double.Parse(nonDecimal) / double.Parse(divider)).ToString();
                     Boolean minus = false;
                     String nonDecimalAux = "";
                     String decimalPartAux = "";
                     String dividerAux = "";
                     int decimalTabFromFraction = TratamientoInicialRegEx.tratamientoInicialRegEx(ref unformattedAux, ref minus, ref nonDecimalAux, ref decimalPartAux, ref dividerAux);
-                    threadList.Add(new Thread(() => result.Add(decimalNumberTranslation.getDecimalTab(nonDecimalAux, decimalPartAux))));
+                    taskList.Add(new Task(() => result.Add(decimalNumberTranslation.getDecimalTab(nonDecimalAux, decimalPartAux))));
                 }
-                else threadList.Add(new Thread(() => result.Add(decimalNumberTranslation.getDecimalTab(nonDecimal, decimalPart))));
+                else
+                    taskList.Add(new Task(() => result.Add(decimalNumberTranslation.getDecimalTab(nonDecimal, decimalPart))));
             }
             else
             {
-                threadList.Add(new Thread(() => result.Add(cardinalNumberTranslation.getCardinalTab(nonDecimal))));
-                threadList.Add(new Thread(() => result.Add(ordinalNumberTranslation.getOrdinalNumberTab(nonDecimal))));
-                threadList.Add(new Thread(() => result.Add(fractionNumberTranslation.getFractionTab(nonDecimal, divider))));
-                threadList.Add(new Thread(() => result.Add(multiplicativeNumberTranslation.getMultiplicativeTab(nonDecimal))));
-                threadList.Add(new Thread(() => result.Add(birthCountNumberTranslation.getBirthCountTab(nonDecimal))));
+                taskList.Add(new Task(() => result.Add(cardinalNumberTranslation.getCardinalTab(nonDecimal))));
+                taskList.Add(new Task(() => result.Add(ordinalNumberTranslation.getOrdinalNumberTab(nonDecimal))));
+                taskList.Add(new Task(() => result.Add(fractionNumberTranslation.getFractionTab(nonDecimal, divider))));
+                taskList.Add(new Task(() => result.Add(multiplicativeNumberTranslation.getMultiplicativeTab(nonDecimal))));
+                taskList.Add(new Task(() => result.Add(birthCountNumberTranslation.getBirthCountTab(nonDecimal))));
             }
-            foreach (Thread thread in threadList)
+
+            foreach(Task task in taskList)
             {
-                thread.Start();
+                task.Start();
             }
-            foreach (Thread thread in threadList)
-            {
-                thread.Join();
-            }
+            Task[] taskArr= (Task[])taskList.ToArray(typeof(Task));
+            Task.WaitAll(taskArr);
         }
 
         else return negativeNumberTranslation.getNegativeTabs(nonDecimal, decimalPart, divider);

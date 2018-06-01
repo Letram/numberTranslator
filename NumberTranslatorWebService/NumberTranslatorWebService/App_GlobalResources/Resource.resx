@@ -141,6 +141,18 @@
   <data name="decimalTitle" xml:space="preserve">
     <value>#Decimal</value>
   </data>
+  <data name="error1" xml:space="preserve">
+    <value>Exponent is too high. Limit is ~E120</value>
+  </data>
+  <data name="error2" xml:space="preserve">
+    <value>Number not supported</value>
+  </data>
+  <data name="error3" xml:space="preserve">
+    <value>Number is not written properly.</value>
+  </data>
+  <data name="error4" xml:space="preserve">
+    <value>Max number supported in scientific notation is a thousand vigintillions minus one.</value>
+  </data>
   <data name="fractional" xml:space="preserve">
     <value>#Fractional</value>
   </data>

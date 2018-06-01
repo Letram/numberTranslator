@@ -114,7 +114,6 @@ public class Cardinal
         cardinalTab.Add(Resources.Resource.cardinalDescription);
         cardinalTab.Add(Resources.Resource.numberCardinalDescription);
         cardinalTab.Add(cardinalNumberConverted[0].ToString());
-        String negativePreffix = "";
         cardinalTab.Add("@" + cardinalNumberConverted[0].ToString().Replace('-', ' '));
         if (cardinalNumberConverted.Count > 1)
         {

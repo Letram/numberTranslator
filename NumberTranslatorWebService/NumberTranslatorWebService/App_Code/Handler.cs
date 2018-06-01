@@ -19,16 +19,16 @@ public class Handler
         switch (err)
         {
             case 1:
-                errorArray.Add("Exponent is too high. Limit is ~E120");
+                errorArray.Add(Resources.Resource.error1);
                 break;
             case 2:
-                errorArray.Add("Number not supported");
+                errorArray.Add(Resources.Resource.error2);
                 break;
             case 3:
-                errorArray.Add("Number is not written properly.");
+                errorArray.Add(Resources.Resource.error3);
                 break;
             case 4:
-                errorArray.Add("Max number supported in scientific notation is 999E120");
+                errorArray.Add(Resources.Resource.error4);
                 break;
         }
         return errorArray;
