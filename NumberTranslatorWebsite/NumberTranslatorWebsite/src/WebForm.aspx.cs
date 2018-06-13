@@ -33,6 +33,7 @@ public partial class src_WebForm : System.Web.UI.Page
 
         ServiceReference1.ServiceClient translator = new ServiceReference1.ServiceClient();
         String language = Thread.CurrentThread.CurrentUICulture.Name;
+        System.Diagnostics.Debug.WriteLine(language);
         ArrayList serviceTabs = translator.getTabs(number.Text, language);
         Boolean firstSet = false;
         for(int i = 0; i < serviceTabs.Count; i++)

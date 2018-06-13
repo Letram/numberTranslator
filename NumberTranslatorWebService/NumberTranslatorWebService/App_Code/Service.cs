@@ -32,9 +32,14 @@ public class Service : IService
 
     public ArrayList getTabs(string number, String language)
     {
+        System.Diagnostics.Debug.WriteLine(language);
         if (language.Contains("fr") || language.Contains("es"))
         {
             Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo(language, false);
+        }
+        else
+        {
+            Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo("en", false);
         }
         return new Servicio().getTabs(number);
         /*
