@@ -39,17 +39,15 @@ public partial class src_WebForm : System.Web.UI.Page
         for(int i = 0; i < serviceTabs.Count; i++)
         {
             if (serviceTabs[i].GetType() == typeof(ArrayList))
-                arrayListTreatment(serviceTabs[i], firstSet);
-            if (!firstSet) firstSet = true;
-
+                if (arrayListTreatment(serviceTabs[i], firstSet))
+                    firstSet = true;
         }
-
     }
 
-    private void arrayListTreatment(object obj,Boolean firstSet)
+    private Boolean arrayListTreatment(object obj,Boolean firstSet)
     {
         ArrayList tabObject = obj as ArrayList;
-        if (tabObject.Count < 1) return;
+        if (tabObject.Count < 1) return false;
         String nameOfTheTab = tabObject[0].ToString().Substring(1);
         HtmlGenericControl tab = new HtmlGenericControl("li");
         tab.Attributes["class"] = "nav-item";
@@ -158,7 +156,7 @@ public partial class src_WebForm : System.Web.UI.Page
                         HtmlGenericControl button = new HtmlGenericControl("button");
                         button.Attributes["class"] += "btn btn-primary btn-lg btn-block my-2";
                         button.Attributes["onclick"] = "responsiveVoice.speak(\'" + text.Substring(1) + "\', \'French Female\');";
-                        button.InnerText = "Click on me to hear how it sounds!";
+                        button.InnerText = Resources.Resource.voiceButton;
                         currentContainer.Controls.Add(button);
                         break;
 
@@ -171,5 +169,6 @@ public partial class src_WebForm : System.Web.UI.Page
                 }
             }
         }
+        return true;
     }
 }

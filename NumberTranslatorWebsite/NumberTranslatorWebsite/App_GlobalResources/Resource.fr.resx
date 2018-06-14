@@ -126,6 +126,9 @@
   <data name="translator" xml:space="preserve">
     <value>Numéro au traducteur de texte français</value>
   </data>
+  <data name="voiceButton" xml:space="preserve">
+    <value>Appuyez sur moi pour savoir comment le prononcer!</value>
+  </data>
   <data name="writeNumber" xml:space="preserve">
     <value>Écrivez votre numéro</value>
   </data>

@@ -126,6 +126,9 @@
   <data name="translator" xml:space="preserve">
     <value>Traductor de números a texto en francés</value>
   </data>
+  <data name="voiceButton" xml:space="preserve">
+    <value>¡Clickéame para saber cómo se pronuncia!</value>
+  </data>
   <data name="writeNumber" xml:space="preserve">
     <value>Escriba su número</value>
   </data>
