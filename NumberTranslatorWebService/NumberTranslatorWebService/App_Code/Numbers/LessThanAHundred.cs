@@ -5,7 +5,7 @@ using System.Web;
 
 public class LessThanAHundred
 {
-    private static String[] dizaines = {
+    private static String[] tensArr = {
     "",
     "",
     "vingt",
@@ -18,7 +18,7 @@ public class LessThanAHundred
     "quatre-vingt"
   };
 
-    private static String[] unitès = {
+    private static String[] unitsArr = {
     "",
     "un",
     "deux",
@@ -49,16 +49,16 @@ public class LessThanAHundred
 
     public String Translate()
     {
-        int dizaine = number / 10;
-        int unitè = number % 10;
+        int tens = number / 10;
+        int units = number % 10;
         String result = "";
 
-        switch (dizaine)
+        switch (tens)
         {
             case 1:
             case 7:
             case 9:
-                unitè = unitè + 10;
+                units = units + 10;
                 break;
             default:
                 break;
@@ -66,18 +66,18 @@ public class LessThanAHundred
 
         // separadores "-", "et" o "" 
         String separator = "";
-        if (dizaine > 1)
+        if (tens > 1)
         {
             separator = "-";
         }
         // casos particulares
-        switch (unitè)
+        switch (units)
         {
             case 0:
                 separator = "";
                 break;
             case 1:
-                if (dizaine == 8)
+                if (tens == 8)
                 {
                     separator = "-";
                 }
@@ -87,7 +87,7 @@ public class LessThanAHundred
                 }
                 break;
             case 11:
-                if (dizaine == 7)
+                if (tens == 7)
                 {
                     separator = "-et-";
                 }
@@ -97,25 +97,25 @@ public class LessThanAHundred
         }
 
         // dizaines en lettres
-        switch (dizaine)
+        switch (tens)
         {
             case 0:
-                result = unitès[unitè];
+                result = unitsArr[units];
                 break;
             case 8:
-                if (unitè == 0)
+                if (units == 0)
                 {
-                    result = dizaines[dizaine];
+                    result = tensArr[tens];
                 }
                 else
                 {
-                    result = dizaines[dizaine]
-                                            + separator + unitès[unitè];
+                    result = tensArr[tens]
+                                            + separator + unitsArr[units];
                 }
                 break;
             default:
-                result = dizaines[dizaine]
-                                        + separator + unitès[unitè];
+                result = tensArr[tens]
+                                        + separator + unitsArr[units];
                 break;
         }
         return result;
