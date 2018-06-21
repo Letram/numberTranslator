@@ -20,7 +20,7 @@ public class Decimal
 
         ArrayList res = new ArrayList();
         if (decimalPart == "") return res;
-        ArrayList nonDecimalTranslation = cardinal.getCardinalNumber(nonDecimalPart, isNegative);
+        ArrayList nonDecimalTranslation = cardinal.getCardinalNumber(nonDecimalPart);
         ArrayList decimalPartTranlation = cardinal.getCardinalNumber(decimalPart);
 
         String beforeComma = nonDecimalTranslation[0].ToString();
@@ -53,8 +53,14 @@ public class Decimal
         res.Add(Resources.Resource.decimalTitle);
         res.Add(Resources.Resource.decimalDescription);
         res.Add(Resources.Resource.decimalNumberDescription);
-        res.Add(decimalNumber);
-        res.Add("@" + decimalNumber.Replace('-', ' '));
+        if (isNegative)
+            res.Add("moins " + decimalNumber);
+        else
+            res.Add(decimalNumber);
+        if(isNegative)
+            res.Add("@moins " + decimalNumber.Replace('-', ' '));
+        else
+            res.Add("@" + decimalNumber.Replace('-', ' '));
 
         if (nonDecimalTranslation.Count > 1 && decimalPartTranlation.Count > 1)
         {
